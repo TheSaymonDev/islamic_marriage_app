@@ -1,4 +1,4 @@
-package com.example.islamic_marriage
+package com.softronixs.islamicmarraige
 
 import io.flutter.embedding.android.FlutterActivity
 
