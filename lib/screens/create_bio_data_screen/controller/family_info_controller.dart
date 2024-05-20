@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/model/family_info.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/styles.dart';
@@ -24,7 +25,6 @@ class FamilyInfoController extends GetxController {
   final sistersInfoController = TextEditingController();
   final brothersInfoController = TextEditingController();
   final professionOfUnclesController = TextEditingController();
-  String? selectedFamilyFinancialStatus;
   final descriptionOfFinancialConditionController = TextEditingController();
   final religiousConditionController = TextEditingController();
 
@@ -44,7 +44,7 @@ class FamilyInfoController extends GetxController {
         sistersCount: sistersInfoController.text,
         sisterInformation: sistersInfoController.text,
         occupationOfUnclesAndAunts: professionOfUnclesController.text,
-        familyIncome: selectedFamilyFinancialStatus,
+        familyIncome: descriptionOfFinancialConditionController.text,
         familyReligionEnvironment: religiousConditionController.text,
       );
       final response = await ApiService().post(
@@ -53,6 +53,7 @@ class FamilyInfoController extends GetxController {
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Family Info Created Successful');
+        Get.find<MyBioDataController>().readMyBioData();
         isLoading = false;
         update();
         return true;
@@ -113,7 +114,7 @@ class FamilyInfoController extends GetxController {
         sistersCount: sistersInfoController.text,
         sisterInformation: sistersInfoController.text,
         occupationOfUnclesAndAunts: professionOfUnclesController.text,
-        familyIncome: selectedFamilyFinancialStatus,
+        familyIncome: descriptionOfFinancialConditionController.text,
         familyReligionEnvironment: religiousConditionController.text,
       );
       final response = await ApiService().put(
@@ -122,6 +123,7 @@ class FamilyInfoController extends GetxController {
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Family Info Updated Successful');
+        Get.find<MyBioDataController>().readMyBioData();
         isLoading = false;
         update();
         return true;

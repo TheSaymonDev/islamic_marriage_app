@@ -40,8 +40,8 @@ class GeneralInfoController extends GetxController {
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'General Info Created Successful');
-        String id = response.data['data']['id'];
-        readGeneralInfo(id: id);
+        // String id = response.data['data']['id'];
+        // readGeneralInfo(id: id);
         Get.find<MyBioDataController>().readMyBioData();
         isLoading = false;
         update();
@@ -100,8 +100,9 @@ class GeneralInfoController extends GetxController {
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'General Info Update Successful');
-        String id = response.data['data']['id'];
-        readGeneralInfo(id: id);
+        Get.find<MyBioDataController>().readMyBioData();
+        // String id = response.data['data']['id'];
+        // readGeneralInfo(id: id);
         isLoading = false;
         update();
         return true;

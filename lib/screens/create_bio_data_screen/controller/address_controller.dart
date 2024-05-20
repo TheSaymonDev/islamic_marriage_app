@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/model/address.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/model/test_data.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/styles.dart';
@@ -24,35 +25,46 @@ class AddressController extends GetxController {
   final growUpController = TextEditingController();
   bool isSameAsPermanent = false;
   String get permanentAddress {
-    if (selectedDivision != null && selectedDistrict != null && selectedSubDistrict != null) {
-      return '$selectedDivision, $selectedDistrict, $selectedSubDistrict';
+    if (selectedDivision != null &&
+        selectedDistrict != null &&
+        selectedSubDistrict != null) {
+      return '$selectedDivision, $selectedDistrict, $selectedSubDistrict, ${permanentAreaController.text}';
     } else {
       return ''; // Or a default value indicating incomplete address
     }
   }
+
   String get presentAddress {
-    if (selectedDivision1 != null && selectedDistrict1 != null && selectedSubDistrict1 != null) {
-      return '$selectedDivision1, $selectedDistrict1, $selectedSubDistrict1';
+    if (selectedDivision1 != null &&
+        selectedDistrict1 != null &&
+        selectedSubDistrict1 != null) {
+      return '$selectedDivision1, $selectedDistrict1, $selectedSubDistrict1, ${presentAreaController.text}';
     } else {
       return ''; // Or a default value indicating incomplete address
     }
   }
+
   Future<bool> createAddress() async {
     isLoading = true;
     update();
     try {
-      final address = Address(
-        permanentAddress: permanentAddress,
-        isSameCurrentAddress: isSameAsPermanent,
-        currentAddress: presentAddress,
-        growUp: growUpController.text
-      );
+      final address = isSameAsPermanent
+          ? Address(
+              permanentAddress: permanentAddress,
+              isSameCurrentAddress: isSameAsPermanent,
+              growUp: growUpController.text)
+          : Address(
+              permanentAddress: permanentAddress,
+              isSameCurrentAddress: isSameAsPermanent,
+              currentAddress: presentAddress,
+              growUp: growUpController.text);
       final response = await ApiService().post(
           url: AppUrls.createAddressUrl,
           data: address,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Address Created Successful');
+        Get.find<MyBioDataController>().readMyBioData();
         isLoading = false;
         update();
         return true;
@@ -99,18 +111,23 @@ class AddressController extends GetxController {
     isLoading = true;
     update();
     try {
-      final address = Address(
+      final address = isSameAsPermanent
+          ? Address(
+          permanentAddress: permanentAddress,
+          isSameCurrentAddress: isSameAsPermanent,
+          growUp: growUpController.text)
+          : Address(
           permanentAddress: permanentAddress,
           isSameCurrentAddress: isSameAsPermanent,
           currentAddress: presentAddress,
-          growUp: growUpController.text
-      );
+          growUp: growUpController.text);
       final response = await ApiService().put(
           url: AppUrls.updateAddressUrl,
           data: address,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Address Updated Successful');
+        Get.find<MyBioDataController>().readMyBioData();
         isLoading = false;
         update();
         return true;
@@ -129,5 +146,4 @@ class AddressController extends GetxController {
       return false;
     }
   }
-
 }

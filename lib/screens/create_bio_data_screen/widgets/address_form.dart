@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/address_controller.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/model/test_data.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/validator.dart';
@@ -20,7 +21,7 @@ class AddressForm extends StatefulWidget {
 
 class _AddressFormState extends State<AddressForm> {
   final AddressController _addressController = Get.find<AddressController>();
-
+  final _address = Get.find<MyBioDataController>().myBioData!.address;
   late List<Division> divisions;
 
 
@@ -28,8 +29,8 @@ class _AddressFormState extends State<AddressForm> {
   void initState() {
     super.initState();
     divisions = getDivisions;
-    if(_addressController.address != null){
-      List<String> addressParts = _addressController.address!.permanentAddress!.split(',');
+    if(_address != null){
+      List<String> addressParts = _address.permanentAddress!.split(',');
       for(final division in divisions){
         if(division.name.toLowerCase() == addressParts[0].trim().toLowerCase()){
           _addressController.selectedDivision = division;
@@ -52,6 +53,12 @@ class _AddressFormState extends State<AddressForm> {
           }
         }
       }
+      _addressController.presentAreaController.text = addressParts[3];
+      _addressController.isSameAsPermanent = _address.isSameCurrentAddress!;
+      _addressController.growUpController.text = _address.growUp!;
+    }
+    else{
+      print('Address is null');
     }
   }
 

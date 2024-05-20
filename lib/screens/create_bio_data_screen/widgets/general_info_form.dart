@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/general_info_controller.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/validator.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/widgets//input_title_text.dart';
@@ -49,31 +50,40 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
 
   final GeneralInfoController _generalInfoController =
       Get.find<GeneralInfoController>();
+  final  _generalInfo = Get.find<MyBioDataController>().myBioData!.personalInformation;
 
   @override
   void initState() {
     super.initState();
     _height = _createHeightList();
     _weight = _createWeightList();
-    if (_generalInfoController.generalInfo != null) {
+    if (_generalInfo != null) {
       _generalInfoController.selectedBioDataType =
-          _generalInfoController.generalInfo!.typeOfBiodata;
+          _generalInfo.typeOfBiodata;
       _generalInfoController.selectedMaritalStatus =
-          _generalInfoController.generalInfo!.maritalStatus;
+          _generalInfo.maritalStatus;
       _generalInfoController.dateOfBirthController.text =
-          formatDate(_generalInfoController.generalInfo!.dateOfBirth!);
+          formatDate(_generalInfo.dateOfBirth!);
       _generalInfoController.selectedHeight =
-          _generalInfoController.generalInfo!.height;
+          _generalInfo.height;
       _generalInfoController.selectedComplexion =
-          _generalInfoController.generalInfo!.complexion;
+          _generalInfo.complexion;
       _generalInfoController.selectedWeight =
-          _generalInfoController.generalInfo!.weight;
+          _generalInfo.weight;
       _generalInfoController.selectedBloodGroup =
-          _generalInfoController.generalInfo!.bloodGroup;
+          _generalInfo.bloodGroup;
       _generalInfoController.selectedNationality =
-          _generalInfoController.generalInfo!.nationality;
+          _generalInfo.nationality;
     } else {
       print('general Info is null');
+      _generalInfoController.selectedBioDataType = null;
+      _generalInfoController.selectedMaritalStatus = null;
+      _generalInfoController.dateOfBirthController.text = '';
+      _generalInfoController.selectedHeight = null;
+      _generalInfoController.selectedComplexion = null;
+      _generalInfoController.selectedWeight = null;
+      _generalInfoController.selectedBloodGroup = null;
+      _generalInfoController.selectedNationality = null;
     }
   }
 

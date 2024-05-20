@@ -47,16 +47,6 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
   @override
   void initState() {
     super.initState();
-    // Get.find<AddressController>().readAddress();
-    // Get.find<EduQualificationsController>().readEduQualification();
-    // Get.find<FamilyInfoController>().readFamilyInfo();
-    // Get.find<PersonalInfoController>().readPersonalInfo();
-    // Get.find<OccupationalInfoController>().readOccupationalInfo();
-    // Get.find<MarriageRelatedInfoController>().readMarriageInfo();
-    // Get.find<ExpectedLifePartnerController>().readExpectedLifePartner();
-    // Get.find<PledgeController>().readPledge();
-    // Get.find<ContactController>().readContact();
-
   }
 
   @override
@@ -285,12 +275,26 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.createAddress();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
+                      if (Get.find<MyBioDataController>()
+                          .myBioData!
+                          .address !=
+                          null) {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.updateAddress();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
+                        }
+                      } else {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.createAddress();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
                         }
                       }
                     },
@@ -311,13 +315,26 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result =
-                            await controller.createEduQualification();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
+                      if (Get.find<MyBioDataController>()
+                          .myBioData!
+                          .education !=
+                          null) {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.updateEduQualification();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
+                        }
+                      } else {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.createEduQualification();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
                         }
                       }
                     },
@@ -338,12 +355,26 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.createFamilyInfo();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
+                      if (Get.find<MyBioDataController>()
+                          .myBioData!
+                          .familyInformation !=
+                          null) {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.updateFamilyInfo();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
+                        }
+                      } else {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.createFamilyInfo();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
                         }
                       }
                     },
@@ -364,12 +395,26 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                 const Spacer(),
                 CustomElevatedButton(
                   onPressed: () async {
-                    if (controller.formKey.currentState!.validate()) {
-                      final result = await controller.createPersonalInfo();
-                      if (result) {
-                        setState(() {
-                          activeStep++;
-                        });
+                    if (Get.find<MyBioDataController>()
+                        .myBioData!
+                        .lifeStyleInformation !=
+                        null) {
+                      if (controller.formKey.currentState!.validate()) {
+                        final result = await controller.updatePersonalInfo();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
+                        }
+                      }
+                    } else {
+                      if (controller.formKey.currentState!.validate()) {
+                        final result = await controller.createPersonalInfo();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
+                        }
                       }
                     }
                   },
@@ -391,12 +436,26 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                 const Spacer(),
                 CustomElevatedButton(
                   onPressed: () async {
-                    if (controller.formKey.currentState!.validate()) {
-                      final result = await controller.createOccupationalInfo();
-                      if (result) {
-                        setState(() {
-                          activeStep++;
-                        });
+                    if (Get.find<MyBioDataController>()
+                        .myBioData!
+                        .occupation !=
+                        null) {
+                      if (controller.formKey.currentState!.validate()) {
+                        final result = await controller.updateOccupationalInfo();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
+                        }
+                      }
+                    } else {
+                      if (controller.formKey.currentState!.validate()) {
+                        final result = await controller.createOccupationalInfo();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
+                        }
                       }
                     }
                   },
@@ -418,12 +477,26 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.createMarriageInfo();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
+                      if (Get.find<MyBioDataController>()
+                          .myBioData!
+                          .marriageInfo !=
+                          null) {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.updateMarriageInfo();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
+                        }
+                      } else {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.createMarriageInfo();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
                         }
                       }
                     },
@@ -444,13 +517,26 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result =
-                            await controller.createExpectedLifePartner();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
+                      if (Get.find<MyBioDataController>()
+                          .myBioData!
+                          .partner !=
+                          null) {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.updateExpectedLifePartner();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
+                        }
+                      } else {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.createExpectedLifePartner();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
                         }
                       }
                     },
@@ -471,12 +557,26 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.createPledge();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
+                      if (Get.find<MyBioDataController>()
+                          .myBioData!
+                          .pledge !=
+                          null) {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.updatePledge();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
+                        }
+                      } else {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.createPledge();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
                         }
                       }
                     },
@@ -497,16 +597,30 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.createContact();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
+                      if (Get.find<MyBioDataController>()
+                          .myBioData!
+                          .contact !=
+                          null) {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.updateContact();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
+                        }
+                      } else {
+                        if (controller.formKey.currentState!.validate()) {
+                          final result = await controller.createContact();
+                          if (result) {
+                            setState(() {
+                              activeStep++;
+                            });
+                          }
                         }
                       }
                     },
-                    buttonName: 'Save & Finish',
+                    buttonName: 'Save & Next',
                     buttonWidth: 140.w,
                   ),
                 ],

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/family_info_controller.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/validator.dart';
@@ -19,19 +20,47 @@ class FamilyInfoForm extends StatefulWidget {
 
 class _FamilyInfoFormState extends State<FamilyInfoForm> {
 
+  final FamilyInfoController _familyInfoController =
+  Get.find<FamilyInfoController>();
+  final _familyInfo = Get.find<MyBioDataController>().myBioData!.familyInformation;
+
   final List<String> _alive = ["Yes, Alive", "Not Alive"];
   final List<String> _brotherCount = ["No Brother","1", "2", "3", "4", "5", "more than 5"];
   final List<String> _sisterCount = ["No Sister","1", "2", "3", "4", "5", "more than 5"];
-  final List<String> _familyFinancialStatus = [
-    "Upper Class",
-    "Upper Middle Class",
-    "Middle Class",
-    "Lower Middle Class",
-    "Lower Class"
-  ];
 
-  final FamilyInfoController _familyInfoController =
-      Get.find<FamilyInfoController>();
+  @override
+  void initState() {
+    super.initState();
+    if(_familyInfo != null){
+      _familyInfoController.fathersNameController.text = _familyInfo.fatherName!;
+      _familyInfoController.selectedFatherAlive = _familyInfo.isFatherAlive;
+      _familyInfoController.fathersProfessionController.text = _familyInfo.fatherOccupation!;
+      _familyInfoController.mothersNameController.text = _familyInfo.motherName!;
+      _familyInfoController.selectedMotherAlive = _familyInfo.isMotherAlive;
+      _familyInfoController.mothersProfessionController.text = _familyInfo.motherOccupation!;
+      _familyInfoController.selectedBrotherCount = _familyInfo.brothersCount;
+      _familyInfoController.brothersInfoController.text = _familyInfo.brotherInformation!;
+      _familyInfoController.selectedSisterCount = _familyInfo.sistersCount;
+      _familyInfoController.sistersInfoController.text = _familyInfo.sisterInformation!;
+      _familyInfoController.professionOfUnclesController.text = _familyInfo.occupationOfUnclesAndAunts!;
+      _familyInfoController.descriptionOfFinancialConditionController.text = _familyInfo.familyIncome!;
+      _familyInfoController.religiousConditionController.text = _familyInfo.familyReligionEnvironment!;
+    }else{
+      _familyInfoController.fathersNameController.text = '';
+      _familyInfoController.selectedFatherAlive = null;
+      _familyInfoController.fathersProfessionController.text = '';
+      _familyInfoController.mothersNameController.text = '';
+      _familyInfoController.selectedMotherAlive = null;
+      _familyInfoController.mothersProfessionController.text = '';
+      _familyInfoController.selectedBrotherCount = null;
+      _familyInfoController.brothersInfoController.text = '';
+      _familyInfoController.selectedSisterCount = null;
+      _familyInfoController.sistersInfoController.text = '';
+      _familyInfoController.professionOfUnclesController.text = '';
+      _familyInfoController.descriptionOfFinancialConditionController.text = '';
+      _familyInfoController.religiousConditionController.text = '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +83,7 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
           const InputTitleText(title: "Is your father alive?"),
           Gap(4.h),
           CustomDropdownButton(
+            value: _familyInfoController.selectedFatherAlive,
             validator: dropdownValidator,
               items: _alive,
               onChanged: (newValue) {
@@ -87,6 +117,7 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
           const InputTitleText(title: "Is your mother alive?"),
           Gap(4.h),
           CustomDropdownButton(
+            value: _familyInfoController.selectedMotherAlive,
             validator: dropdownValidator,
               items: _alive,
               onChanged: (newValue) {
@@ -106,6 +137,7 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
           const InputTitleText(title: "How many brothers do you have?"),
           Gap(4.h),
           CustomDropdownButton(
+            value: _familyInfoController.selectedBrotherCount,
             validator: dropdownValidator,
               items: _brotherCount,
               onChanged: (newValue) {
@@ -125,6 +157,7 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
           const InputTitleText(title: "How many sisters do you have?"),
           Gap(4.h),
           CustomDropdownButton(
+            value: _familyInfoController.selectedSisterCount,
             validator: dropdownValidator,
               items: _sisterCount,
               onChanged: (newValue) {
@@ -154,17 +187,6 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
             controller: _familyInfoController.professionOfUnclesController,
             maxLines: 5,
           ),
-          Gap(16.h),
-          const InputTitleText(title: "Family Financial Status"),
-          Gap(4.h),
-          CustomDropdownButton(
-            validator: dropdownValidator,
-              items: _familyFinancialStatus,
-              onChanged: (newValue) {
-                setState(() {
-                  _familyInfoController.selectedFamilyFinancialStatus = newValue!;
-                });
-              }),
           Gap(16.h),
           const InputTitleText(
             title: "Description of Financial Condition",

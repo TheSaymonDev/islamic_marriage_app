@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/edu_qualifications_controller.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/validator.dart';
@@ -21,6 +22,7 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
 
   final EduQualificationsController _eduQualificationsController =
       Get.find<EduQualificationsController>();
+  final _eduQualifications = Get.find<MyBioDataController>().myBioData!.education;
 
   final List<String> _eduMethod = ['general', 'qawmi', 'alia'];
   final List<String> _highestEduQualification = [
@@ -47,17 +49,24 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
   @override
   void initState() {
     super.initState();
-    if(_eduQualificationsController.eduQualifications != null){
-      _eduQualificationsController.selectedEduMethod= _eduQualificationsController.eduQualifications!.medium;
-      _eduQualificationsController.selectedHighestEduQualification= _eduQualificationsController.eduQualifications!.qualification;
-      _eduQualificationsController.passingYearController.text= _eduQualificationsController.eduQualifications!.passingYear!;
-      _eduQualificationsController.selectedGroup= _eduQualificationsController.eduQualifications!.category;
-      _eduQualificationsController.selectedResult= _eduQualificationsController.eduQualifications!.result;
-      _eduQualificationsController.institutionController.text= _eduQualificationsController.eduQualifications!.institution!;
-      _eduQualificationsController.othersController.text= _eduQualificationsController.eduQualifications!.otherQualifications!;
-      _eduQualificationsController.selectedTitle= _eduQualificationsController.eduQualifications!.religiousEducation;
+    if(_eduQualifications != null){
+      _eduQualificationsController.selectedEduMethod= _eduQualifications.medium;
+      _eduQualificationsController.selectedHighestEduQualification= _eduQualifications.qualification;
+      _eduQualificationsController.passingYearController.text= _eduQualifications.passingYear!;
+      _eduQualificationsController.selectedGroup= _eduQualifications.category;
+      _eduQualificationsController.selectedResult= _eduQualifications.result;
+      _eduQualificationsController.institutionController.text= _eduQualifications.institution!;
+      _eduQualificationsController.othersController.text= _eduQualifications.otherQualifications!;
+      _eduQualificationsController.selectedTitle= _eduQualifications.religiousEducation;
     }else{
-      print('edu is null');
+      _eduQualificationsController.selectedEduMethod= null;
+      _eduQualificationsController.selectedHighestEduQualification= null;
+      _eduQualificationsController.passingYearController.text= '';
+      _eduQualificationsController.selectedGroup= null;
+      _eduQualificationsController.selectedResult= null;
+      _eduQualificationsController.institutionController.text= '';
+      _eduQualificationsController.othersController.text= '';
+      _eduQualificationsController.selectedTitle= null;
     }
   }
 
@@ -71,6 +80,7 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
           const InputTitleText(title: 'Educational Method'),
           Gap(4.h),
           CustomDropdownButton(
+            value: _eduQualificationsController.selectedEduMethod,
               validator: dropdownValidator,
               items: _eduMethod,
               onChanged: (newValue) {
@@ -82,6 +92,7 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
           const InputTitleText(title: 'Highest Educational Qualification'),
           Gap(4.h),
           CustomDropdownButton(
+            value: _eduQualificationsController.selectedHighestEduQualification,
               validator: dropdownValidator,
               items: _highestEduQualification,
               onChanged: (newValue) {
@@ -103,6 +114,7 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
           const InputTitleText(title: 'Group', isRequired: false),
           Gap(4.h),
           CustomDropdownButton(
+            value: _eduQualificationsController.selectedGroup,
               items: _group,
               onChanged: (newValue) {
                 setState(() {
@@ -113,6 +125,7 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
           const InputTitleText(title: 'Result'),
           Gap(4.h),
           CustomDropdownButton(
+            value: _eduQualificationsController.selectedResult,
               items: _result,
               onChanged: (newValue) {
                 setState(() {
@@ -149,6 +162,7 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
           ),
           Gap(4.h),
           CustomDropdownButton(
+            value: _eduQualificationsController.selectedTitle,
               items: _title,
               onChanged: (newValue) {
                 setState(() {
