@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/model/pledge.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/styles.dart';
@@ -29,6 +30,7 @@ class PledgeController extends GetxController {
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Pledge Created Successful');
+        Get.find<MyBioDataController>().readMyBioData();
         isLoading = false;
         update();
         return true;
@@ -86,6 +88,7 @@ class PledgeController extends GetxController {
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Pledge Updated Successful');
+        Get.find<MyBioDataController>().readMyBioData();
         isLoading = false;
         update();
         return true;

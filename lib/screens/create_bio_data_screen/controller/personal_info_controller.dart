@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/model/personal_life_info.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/styles.dart';
@@ -30,13 +31,14 @@ class PersonalInfoController extends GetxController {
   String? selectedSpecial;
   final hobbiesController = TextEditingController();
   final mobileController = TextEditingController();
+  String? imageUrl;
 
-  File? image;
+  File? imageFile;
   Future<void> getImageFromCamera() async {
     final pickedImage =
     await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
-      image = File(pickedImage.path);
+      imageFile = File(pickedImage.path);
     }
    update();
   }
@@ -64,24 +66,31 @@ class PersonalInfoController extends GetxController {
         'hobbies': hobbiesController.text,
         'groomMobileNumber': mobileController.text
       };
-      final response = await ApiService().postMultipart(
-          url: AppUrls.createPersonalInfoUrl,
-          data: personalInfo,
-          file: image!,
-          headers: AppUrls.getHeaderWithToken);
-      if (response.success) {
-        customSuccessMessage(message: 'Personal Info Created Successful');
-        isLoading = false;
-        update();
-        return true;
-      } else {
-        final errorMessage =
-            response.message['message'] ?? 'Personal Info Create Failed';
-        customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
-        return false;
-      }
+     if(imageFile != null){
+       final response = await ApiService().postMultipart(
+           url: AppUrls.createPersonalInfoUrl,
+           data: personalInfo,
+           file: imageFile!,
+           headers: AppUrls.getHeaderWithToken);
+       if (response.success) {
+         customSuccessMessage(message: 'Personal Info Created Successful');
+         Get.find<MyBioDataController>().readMyBioData();
+         isLoading = false;
+         update();
+         return true;
+       } else {
+         final errorMessage = response.message['message'] ?? 'Personal Info Create Failed';
+         customErrorMessage(message: errorMessage);
+         isLoading = false;
+         update();
+         return false;
+       }
+     }else{
+       customErrorMessage(message: 'Please take a image');
+       isLoading = false;
+       update();
+       return false;
+     }
     } catch (error) {
       customErrorMessage(message: error.toString());
       isLoading = false;
@@ -138,24 +147,26 @@ class PersonalInfoController extends GetxController {
         'hobbies': hobbiesController.text,
         'groomMobileNumber': mobileController.text
       };
+
       final response = await ApiService().putMultipart(
-          url: AppUrls.updatePersonalInfoUrl,
-          data: personalInfo,
-          file: image!,
-          headers: AppUrls.getHeaderWithToken);
+        url: AppUrls.updatePersonalInfoUrl,
+        data: personalInfo,
+        file: imageFile,
+        headers: AppUrls.getHeaderWithToken,
+      );
+
       if (response.success) {
-        customSuccessMessage(message: 'Personal Info Updated Successful');
-        isLoading = false;
-        update();
-        return true;
+        customSuccessMessage(message: 'Personal Info Updated Successfully');
+        Get.find<MyBioDataController>().readMyBioData();
       } else {
-        final errorMessage =
-            response.message['message'] ?? 'Personal Info Update Failed';
+        final errorMessage = response.message['message'] ?? 'Personal Info Update Failed';
         customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
-        return false;
       }
+
+      isLoading = false;
+      update();
+      return response.success;
+
     } catch (error) {
       customErrorMessage(message: error.toString());
       isLoading = false;
@@ -163,4 +174,5 @@ class PersonalInfoController extends GetxController {
       return false;
     }
   }
+
 }

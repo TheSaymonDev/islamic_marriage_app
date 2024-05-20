@@ -142,7 +142,7 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
               items: _brotherCount,
               onChanged: (newValue) {
                 setState(() {
-                  _familyInfoController.selectedBrotherCount = newValue!;
+                  _familyInfoController.selectedBrotherCount = newValue;
                 });
               }),
           Gap(16.h),
@@ -154,15 +154,16 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
             maxLines: 5,
           ),
           Gap(16.h),
-          const InputTitleText(title: "How many sisters do you have?"),
+
+          const InputTitleText(title: "How many sister do you have?"),
           Gap(4.h),
           CustomDropdownButton(
-            value: _familyInfoController.selectedSisterCount,
-            validator: dropdownValidator,
+              value: _familyInfoController.selectedSisterCount,
+              validator: dropdownValidator,
               items: _sisterCount,
               onChanged: (newValue) {
                 setState(() {
-                  _familyInfoController.selectedSisterCount = newValue!;
+                  _familyInfoController.selectedSisterCount = newValue;
                 });
               }),
           Gap(16.h),

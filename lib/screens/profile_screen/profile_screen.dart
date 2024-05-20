@@ -3,10 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:islamic_marriage/screens/about_us_screen/about_us_screen.dart';
 import 'package:islamic_marriage/screens/cart_screen/cart_screen.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/create_bio_data_screen.dart';
 import 'package:islamic_marriage/screens/help_center_screens/help_center_screen.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/my_bio_data_screen.dart';
+import 'package:islamic_marriage/screens/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:islamic_marriage/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:islamic_marriage/screens/subscription_screens/subscription_screen.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
@@ -16,7 +18,6 @@ import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_bottom_sheet.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/widgets/profile_widgets/custom_button.dart';
-
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -77,39 +78,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Gap(8.h),
               CustomButton(
                 onTap: () {
-                  Get.to(()=>  CartScreen());
+                  Get.to(() => CartScreen());
                 },
                 iconData: Icons.shopping_bag,
                 title: 'My Bag',
               ),
-              // CustomCard(
-              //   height: 56.h,
-              //   padding: EdgeInsets.symmetric(horizontal: 16.w),
-              //   border: Border.all(color: violetClr, width: 1.w),
-              //   cardClr: const Color(0xFFE6E6E6),
-              //   child: Row(
-              //     children: [
-              //       Icon(
-              //         Icons.language,
-              //         size: 22.sp,
-              //         color: blackClr,
-              //       ),
-              //       Gap(16.w),
-              //       Text(
-              //         _isLanguage==true? 'বাংলা' : 'English',
-              //         style: Theme.of(context).textTheme.bodyMedium,
-              //       ),
-              //       const Spacer(),
-              //       CustomFlutterSwitch(
-              //           onToggle: (value) {
-              //             setState(() {
-              //               _isLanguage = value;
-              //             });
-              //           },
-              //           value: _isLanguage),
-              //     ],
-              //   ),
-              // ),
               Gap(8.h),
               CustomButton(
                 onTap: () {
@@ -119,10 +92,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: 'Help Center',
               ),
               Gap(8.h),
-              CustomButton(onTap: (){}, iconData: FontAwesomeIcons.shieldHalved, title: 'Privacy Policy'),
+              CustomButton(
+                  onTap: () {
+                    Get.to(()=> PrivacyPolicyScreen());
+                  },
+                  iconData: FontAwesomeIcons.shieldHalved,
+                  title: 'Privacy Policy'),
               Gap(8.h),
               CustomButton(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => AboutUsScreen());
+                },
                 iconData: Icons.info,
                 title: 'About Us',
               ),
@@ -132,25 +112,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Get.bottomSheet(CustomBottomSheet(children: [
                     Center(
                       child: Container(
-                        height: 5.h,
-                        width: 60.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.r),
-                            color: AppColors.violetClr)
-                      ),
+                          height: 5.h,
+                          width: 60.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.r),
+                              color: AppColors.violetClr)),
                     ),
                     Gap(16.h),
                     Center(
-                        child: Text(
-                      'Logout',
-                      style: AppTextStyles.titleLarge()
-                    )),
+                        child:
+                            Text('Logout', style: AppTextStyles.titleLarge())),
                     Gap(16.h),
                     Center(
-                        child: Text(
-                      'Are you sure want to logout?',
-                      style: AppTextStyles.bodyMedium()
-                    )),
+                        child: Text('Are you sure want to logout?',
+                            style: AppTextStyles.bodyMedium())),
                     Gap(16.h),
                     Row(
                       children: [

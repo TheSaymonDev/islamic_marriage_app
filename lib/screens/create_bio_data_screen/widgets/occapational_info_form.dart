@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/occupational_info_controller.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/validator.dart';
@@ -19,6 +20,11 @@ class OccupationalInfoForm extends StatefulWidget {
 }
 
 class _OccupationalInfoFormState extends State<OccupationalInfoForm> {
+
+  final OccupationalInfoController _occupationalInfoController =
+  Get.find<OccupationalInfoController>();
+  final _occupationalInfo = Get.find<MyBioDataController>().myBioData!.occupation;
+
   final List<String> _occupations = [
     'imam',
     'madrasaTeacher',
@@ -34,8 +40,21 @@ class _OccupationalInfoFormState extends State<OccupationalInfoForm> {
     'others',
     'noProfession',
   ];
-  final OccupationalInfoController _occupationalInfoController =
-      Get.find<OccupationalInfoController>();
+
+  @override
+  void initState() {
+    super.initState();
+    if(_occupationalInfo != null){
+      _occupationalInfoController.selectedOccupation = _occupationalInfo.occupation;
+      _occupationalInfoController.descriptionController.text = _occupationalInfo.description!;
+      _occupationalInfoController.incomeController.text = _occupationalInfo.monthlyIncome!;
+    }else{
+      _occupationalInfoController.selectedOccupation = null;
+      _occupationalInfoController.descriptionController.text = '';
+      _occupationalInfoController.incomeController.text = '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -46,6 +65,7 @@ class _OccupationalInfoFormState extends State<OccupationalInfoForm> {
           const InputTitleText(title: "Occupation"),
           Gap(4.h),
           CustomDropdownButton(
+            value: _occupationalInfoController.selectedOccupation,
               validator: dropdownValidator,
               items: _occupations,
               onChanged: (newValue) {
@@ -70,7 +90,7 @@ class _OccupationalInfoFormState extends State<OccupationalInfoForm> {
           Gap(16.h),
           const InputTitleText(
             title: "Monthly Income",
-            isRequired: false,
+            isRequired: true,
           ),
           Gap(4.h),
           CustomTextFormField(

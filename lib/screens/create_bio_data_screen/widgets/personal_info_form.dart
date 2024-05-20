@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/personal_info_controller.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/validator.dart';
@@ -19,6 +20,11 @@ class PersonalInfoForm extends StatefulWidget {
 }
 
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
+
+  final PersonalInfoController _personalInfoController =
+  Get.find<PersonalInfoController>();
+  final _personalInfo = Get.find<MyBioDataController>().myBioData!.lifeStyleInformation;
+
   final List<String> _special = [
     "Disable",
     "Infertile",
@@ -35,8 +41,48 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     'ahleHadis'
   ];
 
-  final PersonalInfoController _personalInfoController =
-      Get.find<PersonalInfoController>();
+  @override
+  void initState() {
+    super.initState();
+    if(_personalInfo != null){
+      _personalInfoController.clothesController.text = _personalInfo.clothesInfo!;
+      _personalInfoController.beardController.text = _personalInfo.breadInfo!;
+      _personalInfoController.aboveTheAnklesController.text = _personalInfo.clothesAnkles!;
+      _personalInfoController.prayController.text = _personalInfo.prayInfo!;
+      _personalInfoController.qazaController.text = _personalInfo.qazaInfo!;
+      _personalInfoController.mahramController.text = _personalInfo.marhamInfo!;
+      _personalInfoController.reciteQuranController.text = _personalInfo.reciteTheQuran!;
+      _personalInfoController.selectedFiqh = _personalInfo.fiqh;
+      _personalInfoController.watchOrListenController.text = _personalInfo.moviesOrSongs!;
+      _personalInfoController.diseaseController.text = _personalInfo.physicalDiseases!;
+      _personalInfoController.specialWorkController.text = _personalInfo.applicable!;
+      _personalInfoController.mazarController.text = _personalInfo.mazarInfo!;
+      _personalInfoController.islamicBooksController.text = _personalInfo.books!;
+      _personalInfoController.islamicScholarsController.text = _personalInfo.islamicScholars!;
+      _personalInfoController.hobbiesController.text = _personalInfo.hobbies!;
+      _personalInfoController.mobileController.text = _personalInfo.groomMobileNumber!;
+      _personalInfoController.imageUrl = _personalInfo.photo;
+      _personalInfoController.imageFile = null;
+    }else{
+      _personalInfoController.clothesController.text = '';
+      _personalInfoController.beardController.text = '';
+      _personalInfoController.aboveTheAnklesController.text = '';
+      _personalInfoController.prayController.text = '';
+      _personalInfoController.qazaController.text = '';
+      _personalInfoController.mahramController.text = '';
+      _personalInfoController.reciteQuranController.text = '';
+      _personalInfoController.selectedFiqh = null;
+      _personalInfoController.watchOrListenController.text = '';
+      _personalInfoController.diseaseController.text = '';
+      _personalInfoController.specialWorkController.text = '';
+      _personalInfoController.mazarController.text = '';
+      _personalInfoController.islamicBooksController.text = '';
+      _personalInfoController.islamicScholarsController.text = '';
+      _personalInfoController.hobbiesController.text = '';
+      _personalInfoController.mobileController.text = '';
+      _personalInfoController.imageUrl = null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +166,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           ),
           Gap(4.h),
           CustomDropdownButton(
+            value: _personalInfoController.selectedFiqh,
               validator: dropdownValidator,
               items: _fiqh,
               onChanged: (newValue) {
@@ -185,6 +232,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               isRequired: false),
           Gap(4.h),
           CustomDropdownButton(
+            value: _personalInfoController.selectedSpecial,
               items: _special,
               onChanged: (newValue) {
                 setState(() {
@@ -273,13 +321,19 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           ),
           Gap(4.h),
           Center(
-            child: controller.image == null
+            child: controller.imageFile == null && controller.imageUrl == null
                 ? const SizedBox()
-                : Image.file(
-                    controller.image!,
-                    width: 70.w,
-                    height: 70.h,
-                  ),
+                : controller.imageFile != null
+                ? Image.file(
+              controller.imageFile!,
+              width: 70.w,
+              height: 70.h,
+            )
+                : Image.network(
+              controller.imageUrl!,
+              width: 70.w,
+              height: 70.h,
+            ),
           ),
         ],
       );

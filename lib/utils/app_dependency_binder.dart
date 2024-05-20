@@ -9,6 +9,7 @@ import 'package:islamic_marriage/screens/create_bio_data_screen/controller/marri
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/occupational_info_controller.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/personal_info_controller.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/pledge_controller.dart';
+import 'package:islamic_marriage/screens/help_center_screens/controller/contact_us_controller.dart';
 import 'package:islamic_marriage/screens/help_mate_screen/controller/all_bio_data_controller.dart';
 import 'package:islamic_marriage/screens/identity_verification_screen/controller/identity_verification_controller.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/controller/otp_verification_controller.dart';
@@ -41,5 +42,6 @@ class AppDependencyBinder extends Bindings{
     Get.put(ContactController());
     Get.put(AllBioDataController());
     Get.put(MyBioDataController());
+    Get.put(ContactUsController());
   }
 }

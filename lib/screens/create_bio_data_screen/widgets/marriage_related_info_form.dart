@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/marriage_related_info_controller.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/validator.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
@@ -19,6 +20,29 @@ class _MarriageRelatedInfoFormState
     extends State<MarriageRelatedInfoForm> {
   final MarriageRelatedInfoController _marriageInfoController =
       Get.find<MarriageRelatedInfoController>();
+  final _marriageRelatedInfo = Get.find<MyBioDataController>().myBioData!.marriageInfo;
+
+  @override
+  void initState() {
+    super.initState();
+   if(_marriageRelatedInfo != null){
+     _marriageInfoController.guardiansAgreeController.text = _marriageRelatedInfo.guardiansPermission!;
+     _marriageInfoController.veilController.text = _marriageRelatedInfo.veilAfterMarriage!;
+     _marriageInfoController.afterStudyController.text = _marriageRelatedInfo.partnerEducationPermission!;
+     _marriageInfoController.afterJobController.text = _marriageRelatedInfo.partnerJobPermission!;
+     _marriageInfoController.whereLiveController.text = _marriageRelatedInfo.liveInformationAfterMarriage!;
+     _marriageInfoController.giftController.text = _marriageRelatedInfo.expectedGift!;
+     _marriageInfoController.getMarriedController.text = _marriageRelatedInfo.thoughtAboutMarriage!;
+   }else{
+     _marriageInfoController.guardiansAgreeController.text = '';
+     _marriageInfoController.veilController.text = '';
+     _marriageInfoController.afterStudyController.text = '';
+     _marriageInfoController.afterJobController.text = '';
+     _marriageInfoController.whereLiveController.text = '';
+     _marriageInfoController.giftController.text = '';
+     _marriageInfoController.getMarriedController.text = '';
+   }
+  }
 
   @override
   Widget build(BuildContext context) {

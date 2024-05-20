@@ -92,7 +92,7 @@ class ApiService {
   Future<ApiResponse<dynamic>> putMultipart({
     required String url,
     required dynamic data,
-    required File file,
+    File? file,
     Map<String, String>? headers,
   }) async {
     developer.log(url.toString());
@@ -103,8 +103,12 @@ class ApiService {
     final multipartRequest = http.MultipartRequest('PUT', Uri.parse(url));
     multipartRequest.headers.addAll(headers ?? AppUrls.requestHeader);
     data.forEach((key, value) => multipartRequest.fields[key] = value.toString());
-    String fileField = 'photo';
-    multipartRequest.files.add(await http.MultipartFile.fromPath(fileField, file.path));
+
+    if (file != null) { // Check if file is provided before adding it
+      String fileField = 'photo';
+      multipartRequest.files.add(await http.MultipartFile.fromPath(fileField, file.path));
+    }
+
     final response = await multipartRequest.send();
     final streamResponse = await http.Response.fromStream(response);
 

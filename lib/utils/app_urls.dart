@@ -5,6 +5,7 @@ class AppUrls{
   static const _vectorPath = 'assets/vectors';
 
   static const appLogoPng = '$_imgPath/app_logo.png';
+  static const companyLogoPng = '$_imgPath/company_logo.png';
   static const demoPng = '$_imgPath/demo_img.png';
   static const photoPng = '$_imgPath/photo.png';
   static const demoProductPng = '$_imgPath/p_item.png';
