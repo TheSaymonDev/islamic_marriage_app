@@ -27,9 +27,12 @@ class CustomBioDataTable extends StatelessWidget {
             children: [
               TableCell(
                 verticalAlignment: TableCellVerticalAlignment.middle,
-                child: Text(entry.key,
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.titleMedium(color: AppColors.whiteClr)),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
+                  child: Text(entry.key,
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.titleSmall(color: AppColors.whiteClr)),
+                ),
               ),
               TableCell(
                 child: Padding(

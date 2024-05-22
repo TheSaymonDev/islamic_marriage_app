@@ -58,7 +58,14 @@ class _AddressFormState extends State<AddressForm> {
       _addressController.growUpController.text = _address.growUp!;
     }
     else{
-      print('Address is null');
+      _addressController.selectedDivision = null;
+      _addressController.selectedDistrict = null;
+      _addressController.selectedSubDistrict = null;
+      _addressController.permanentAreaController.text = '';
+      _addressController.selectedDivision1 = null;
+      _addressController.selectedDistrict1 = null;
+      _addressController.selectedSubDistrict1 = null;
+      _addressController.presentAreaController.text = '';
     }
   }
 

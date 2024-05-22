@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/address_controller.dart';
+import 'package:islamic_marriage/screens/create_bio_data_screen/controller/submit_bio_data_controller.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/contact_controller.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/edu_qualifications_controller.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/expected_life_partner_controller.dart';
@@ -43,5 +44,6 @@ class AppDependencyBinder extends Bindings{
     Get.put(AllBioDataController());
     Get.put(MyBioDataController());
     Get.put(ContactUsController());
+    Get.put(SubmitBioDataController());
   }
 }

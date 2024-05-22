@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/address_controller.dart';
+import 'package:islamic_marriage/screens/create_bio_data_screen/controller/submit_bio_data_controller.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/contact_controller.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/edu_qualifications_controller.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/expected_life_partner_controller.dart';
@@ -275,9 +276,7 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>()
-                          .myBioData!
-                          .address !=
+                      if (Get.find<MyBioDataController>().myBioData!.address !=
                           null) {
                         if (controller.formKey.currentState!.validate()) {
                           final result = await controller.updateAddress();
@@ -316,11 +315,12 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   CustomElevatedButton(
                     onPressed: () async {
                       if (Get.find<MyBioDataController>()
-                          .myBioData!
-                          .education !=
+                              .myBioData!
+                              .education !=
                           null) {
                         if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.updateEduQualification();
+                          final result =
+                              await controller.updateEduQualification();
                           if (result) {
                             setState(() {
                               activeStep++;
@@ -329,7 +329,8 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                         }
                       } else {
                         if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.createEduQualification();
+                          final result =
+                              await controller.createEduQualification();
                           if (result) {
                             setState(() {
                               activeStep++;
@@ -356,8 +357,8 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   CustomElevatedButton(
                     onPressed: () async {
                       if (Get.find<MyBioDataController>()
-                          .myBioData!
-                          .familyInformation !=
+                              .myBioData!
+                              .familyInformation !=
                           null) {
                         if (controller.formKey.currentState!.validate()) {
                           final result = await controller.updateFamilyInfo();
@@ -396,8 +397,8 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                 CustomElevatedButton(
                   onPressed: () async {
                     if (Get.find<MyBioDataController>()
-                        .myBioData!
-                        .lifeStyleInformation !=
+                            .myBioData!
+                            .lifeStyleInformation !=
                         null) {
                       if (controller.formKey.currentState!.validate()) {
                         final result = await controller.updatePersonalInfo();
@@ -436,12 +437,11 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                 const Spacer(),
                 CustomElevatedButton(
                   onPressed: () async {
-                    if (Get.find<MyBioDataController>()
-                        .myBioData!
-                        .occupation !=
+                    if (Get.find<MyBioDataController>().myBioData!.occupation !=
                         null) {
                       if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.updateOccupationalInfo();
+                        final result =
+                            await controller.updateOccupationalInfo();
                         if (result) {
                           setState(() {
                             activeStep++;
@@ -450,7 +450,8 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                       }
                     } else {
                       if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.createOccupationalInfo();
+                        final result =
+                            await controller.createOccupationalInfo();
                         if (result) {
                           setState(() {
                             activeStep++;
@@ -478,8 +479,8 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   CustomElevatedButton(
                     onPressed: () async {
                       if (Get.find<MyBioDataController>()
-                          .myBioData!
-                          .marriageInfo !=
+                              .myBioData!
+                              .marriageInfo !=
                           null) {
                         if (controller.formKey.currentState!.validate()) {
                           final result = await controller.updateMarriageInfo();
@@ -517,12 +518,11 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>()
-                          .myBioData!
-                          .partner !=
+                      if (Get.find<MyBioDataController>().myBioData!.partner !=
                           null) {
                         if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.updateExpectedLifePartner();
+                          final result =
+                              await controller.updateExpectedLifePartner();
                           if (result) {
                             setState(() {
                               activeStep++;
@@ -531,7 +531,8 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                         }
                       } else {
                         if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.createExpectedLifePartner();
+                          final result =
+                              await controller.createExpectedLifePartner();
                           if (result) {
                             setState(() {
                               activeStep++;
@@ -557,9 +558,7 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>()
-                          .myBioData!
-                          .pledge !=
+                      if (Get.find<MyBioDataController>().myBioData!.pledge !=
                           null) {
                         if (controller.formKey.currentState!.validate()) {
                           final result = await controller.updatePledge();
@@ -597,30 +596,48 @@ class _CreateBioDataScreenState extends State<CreateBioDataScreen> {
                   const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>()
-                          .myBioData!
-                          .contact !=
+                      if (Get.find<MyBioDataController>().myBioData!.contact !=
                           null) {
                         if (controller.formKey.currentState!.validate()) {
                           final result = await controller.updateContact();
                           if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
+                            showAppDialogBox(
+                              title: 'Submit Alert!',
+                              middleText: 'Are you sure you want to submit this Bio-Data?',
+                              onPressedCancel: (){
+                                Get.back();
+                              },
+                              onPressedConfirm: ()async{
+                                final result = await Get.find<SubmitBioDataController>().submitBioData();
+                                if(result==true){
+                                  Navigator.pop(context);
+                                }
+                              },
+                            );
                           }
                         }
                       } else {
                         if (controller.formKey.currentState!.validate()) {
                           final result = await controller.createContact();
                           if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
+                            showAppDialogBox(
+                              title: 'Submit Alert!',
+                              middleText: 'Are you sure you want to submit this Bio-Data?',
+                              onPressedCancel: (){
+                                Get.back();
+                              },
+                              onPressedConfirm: ()async{
+                                final result = await Get.find<SubmitBioDataController>().submitBioData();
+                                if(result){
+                                  Get.back();
+                                }
+                              },
+                            );
                           }
                         }
                       }
                     },
-                    buttonName: 'Save & Next',
+                    buttonName: 'Save & Submit',
                     buttonWidth: 140.w,
                   ),
                 ],

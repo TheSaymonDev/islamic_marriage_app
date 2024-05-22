@@ -174,6 +174,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   _personalInfoController.selectedFiqh = newValue;
                 });
               }),
+          Gap(16.h),
           const InputTitleText(
               title: "Do you watch or listen to dramas/movies/serials/songs?"),
           Gap(4.h),

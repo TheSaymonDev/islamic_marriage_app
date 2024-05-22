@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/model/expected_life_partner.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/styles.dart';
@@ -24,6 +25,12 @@ class ExpectedLifePartnerController extends GetxController {
   Future<bool> createExpectedLifePartner() async {
     isLoading = true;
     update();
+    if (selectedComplexion.isEmpty || selectedMaritalStatus.isEmpty) {
+      customErrorMessage(message: 'Please select at least one complexion & marital status');
+      isLoading = false;
+      update();
+      return false;
+    }
     try {
       final expectedLifePartner = ExpectedLifePartner(
           ageRange: selectedAgeRange,
@@ -42,6 +49,7 @@ class ExpectedLifePartnerController extends GetxController {
       if (response.success) {
         customSuccessMessage(
             message: 'ExpectedLifePartner Created Successful');
+        Get.find<MyBioDataController>().readMyBioData();
         isLoading = false;
         update();
         return true;
@@ -89,6 +97,12 @@ class ExpectedLifePartnerController extends GetxController {
   Future<bool> updateExpectedLifePartner() async {
     isLoading = true;
     update();
+    if (selectedComplexion.isEmpty || selectedMaritalStatus.isEmpty) {
+      customErrorMessage(message: 'Please select at least one complexion & marital status');
+      isLoading = false;
+      update();
+      return false;
+    }
     try {
       final expectedLifePartner = ExpectedLifePartner(
           ageRange: selectedAgeRange,
@@ -107,6 +121,7 @@ class ExpectedLifePartnerController extends GetxController {
       if (response.success) {
         customSuccessMessage(
             message: 'ExpectedLifePartner Updated Successful');
+        Get.find<MyBioDataController>().readMyBioData();
         isLoading = false;
         update();
         return true;

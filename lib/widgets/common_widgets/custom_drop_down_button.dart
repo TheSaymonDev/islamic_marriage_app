@@ -52,7 +52,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
         ),
       ),
       menuItemStyleData: MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        padding: EdgeInsets.only(left: 20.w, right: 8.w),
       ),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.w),

@@ -10,6 +10,7 @@ import 'package:islamic_marriage/utils/validator.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/widgets//input_title_text.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_drop_down_button.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
+import 'package:islamic_marriage/widgets/styles.dart';
 
 class GeneralInfoForm extends StatefulWidget {
   const GeneralInfoForm({super.key});
@@ -75,7 +76,6 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       _generalInfoController.selectedNationality =
           _generalInfo.nationality;
     } else {
-      print('general Info is null');
       _generalInfoController.selectedBioDataType = null;
       _generalInfoController.selectedMaritalStatus = null;
       _generalInfoController.dateOfBirthController.text = '';
@@ -84,18 +84,6 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       _generalInfoController.selectedWeight = null;
       _generalInfoController.selectedBloodGroup = null;
       _generalInfoController.selectedNationality = null;
-    }
-  }
-
-  String formatDate(String dobString) {
-    try {
-      final date = DateTime.parse(dobString);
-      final formatter = DateFormat('yyyy-MM-dd');
-      return formatter.format(date);
-    } catch (error) {
-      // Handle parsing error (optional)
-      print("Error parsing date: $error");
-      return dobString; // Or return a default value
     }
   }
 

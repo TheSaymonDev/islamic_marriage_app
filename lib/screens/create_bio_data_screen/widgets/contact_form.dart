@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/contact_controller.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/validator.dart';
@@ -18,18 +19,22 @@ class ContactForm extends StatefulWidget {
 
 class _ContactFormState extends State<ContactForm> {
   final ContactController _contactController = Get.find<ContactController>();
-  
+  final _contact = Get.find<MyBioDataController>().myBioData!.contact;
+
   @override
   void initState() {
     super.initState();
-   if(_contactController.contact != null){
-     _contactController.emailController.text = _contactController.contact!.email!;
-     _contactController.nameController.text = _contactController.contact!.groomName!;
-     _contactController.guardiansMobileController.text = _contactController.contact!.guardianMobile!;
-     _contactController.relationshipController.text = _contactController.contact!.guardianRelationship!;
-   }else{
-     print('contact is null');
-   }
+    if (_contact != null) {
+      _contactController.nameController.text = _contact.groomName!;
+      _contactController.guardiansMobileController.text = _contact.guardianMobile!;
+      _contactController.relationshipController.text = _contact.guardianRelationship!;
+      _contactController.emailController.text = _contact.email!;
+    } else {
+      _contactController.nameController.text = '';
+      _contactController.guardiansMobileController.text = '';
+      _contactController.relationshipController.text = '';
+      _contactController.emailController.text = '';
+    }
   }
 
   @override

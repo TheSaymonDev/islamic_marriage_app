@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
+import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 PinTheme pinTheme() {
@@ -44,3 +46,46 @@ SpinKitFadingCircle customCircularProgressIndicator = SpinKitFadingCircle(
   color: AppColors.violetClr,
   size: 50.0.r,
 );
+
+Future<dynamic> showAppDialogBox({
+  required String title,
+  required String middleText,
+  required void Function()? onPressedCancel,
+  required void Function()? onPressedConfirm,
+}) {
+  return Get.defaultDialog(
+    title: title,
+    titleStyle: AppTextStyles.titleLarge(),
+    middleText: middleText,
+    middleTextStyle: AppTextStyles.bodyMedium(),
+    backgroundColor: AppColors.whiteClr,
+    barrierDismissible: false,
+    radius: 16.r,
+    actions: [
+      TextButton(
+          onPressed: onPressedCancel,
+          child: Text(
+            'No',
+            style: AppTextStyles.titleMedium(),
+          )),
+      TextButton(
+          onPressed: onPressedConfirm,
+          child: Text(
+            'Yes',
+            style: AppTextStyles.titleMedium(color: AppColors.violetClr),
+          )),
+    ],
+  );
+}
+
+String formatDate(String dobString) {
+  try {
+    final date = DateTime.parse(dobString);
+    final formatter = DateFormat('yyyy-MM-dd');
+    return formatter.format(date);
+  } catch (error) {
+    // Handle parsing error (optional)
+    print("Error parsing date: $error");
+    return dobString; // Or return a default value
+  }
+}

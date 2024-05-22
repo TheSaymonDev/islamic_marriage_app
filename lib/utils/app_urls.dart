@@ -4,7 +4,7 @@ class AppUrls{
   static const _imgPath = 'assets/images';
   static const _vectorPath = 'assets/vectors';
 
-  static const appLogoPng = '$_imgPath/app_logo.png';
+  static const appLogoPng = '$_imgPath/logo.png';
   static const companyLogoPng = '$_imgPath/company_logo.png';
   static const demoPng = '$_imgPath/demo_img.png';
   static const photoPng = '$_imgPath/photo.png';
@@ -84,4 +84,6 @@ class AppUrls{
 
   static const readUserBioDataUrl = '$_baseUrl/biodata/single';
   static const readAllBioDataUrl = '$_baseUrl/biodata/all?offset=0&limit=10';
+
+  static const submitBioDataUrl = '$_baseUrl/users/verify-biodata';
 }

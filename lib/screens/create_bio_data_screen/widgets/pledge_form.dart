@@ -54,7 +54,7 @@ class _PledgeFormState extends State<PledgeForm> {
           }),
           Gap(16.h),
 
-          const InputTitleText(title: "By Allah, testify that all the information given is true."),
+          const InputTitleText(title: "By Allah, testify that all the information given is true"),
           Gap(4.h),
           CustomDropdownButton(
             value: _pledgeController.selectedPledge2,

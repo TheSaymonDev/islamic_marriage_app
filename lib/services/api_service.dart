@@ -45,6 +45,23 @@ class ApiService {
     return _handleApiResponse(response);
   }
 
+  Future<ApiResponse<dynamic>> postWithOutData({
+    required String url,
+    Map<String, String>? headers,
+  })async {
+    developer.log(url.toString());
+    developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers ?? AppUrls.requestHeader,
+    );
+
+    developer.log('Status Code: ${response.statusCode}');
+    developer.log('Body: ${response.body}');
+    return _handleApiResponse(response);
+  }
+
   Future<ApiResponse<dynamic>> postMultipart({
     required String url,
     required dynamic data,
