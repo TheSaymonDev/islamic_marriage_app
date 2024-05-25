@@ -83,7 +83,7 @@ class AppUrls{
   static const readContactUrl = '$_baseUrl/biodata/contact/fetch/1';
 
   static const readUserBioDataUrl = '$_baseUrl/biodata/single';
-  static const readAllBioDataUrl = '$_baseUrl/biodata/all?offset=0&limit=10';
+  static const readAllBioDataUrl = '$_baseUrl/biodata/all';
 
   static const submitBioDataUrl = '$_baseUrl/users/verify-biodata';
 }

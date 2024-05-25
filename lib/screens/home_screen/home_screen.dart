@@ -35,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Get.find<AllBioDataController>().readAllBioData();
     Get.find<MyBioDataController>().readMyBioData();
   }
 
