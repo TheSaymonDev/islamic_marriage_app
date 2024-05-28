@@ -84,6 +84,7 @@ class AppUrls{
 
   static const readUserBioDataUrl = '$_baseUrl/biodata/single';
   static const readAllBioDataUrl = '$_baseUrl/biodata/all';
+  static const readAllSearchedBioDataUrl = '$_baseUrl/users/searched-biodata';
 
   static const submitBioDataUrl = '$_baseUrl/users/verify-biodata';
 }
