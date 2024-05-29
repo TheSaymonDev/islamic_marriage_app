@@ -3,6 +3,7 @@ import 'package:islamic_marriage/services/shared_preference_service.dart';
 class AppUrls{
   static const _imgPath = 'assets/images';
   static const _vectorPath = 'assets/vectors';
+  static const _lottiePath = 'assets/lotties';
 
   static const appLogoPng = '$_imgPath/logo.png';
   static const companyLogoPng = '$_imgPath/company_logo.png';
@@ -21,6 +22,8 @@ class AppUrls{
   static const kingSvg = '$_vectorPath/king.svg';
   static const likeSvg = '$_vectorPath/like.svg';
   static const celebrationSvg = '$_vectorPath/celebration.svg';
+
+  static const searchJson = '$_lottiePath/search_json.json';
 
   static const hadith =
       'এবং যারা প্রার্থনা করে, "হে আমাদের পালনকর্তা! আমাদেরকে এমন স্ত্রী ও সন্তান দান করুন যারা আমাদের চোখের প্রশান্তি হবে এবং আমাদেরকে সৎকর্মশীলদের নেতৃত্ব দেওয়ার জন্য দান করুন।" আল-ফুরকান : ৭৪';

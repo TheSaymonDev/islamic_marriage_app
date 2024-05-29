@@ -53,7 +53,7 @@ class _AddressFormState extends State<AddressForm> {
           }
         }
       }
-      _addressController.presentAreaController.text = addressParts[3];
+      //_addressController.presentAreaController.text = addressParts[3];
       _addressController.isSameAsPermanent = _address.isSameCurrentAddress!;
       _addressController.growUpController.text = _address.growUp!;
     }
@@ -61,11 +61,11 @@ class _AddressFormState extends State<AddressForm> {
       _addressController.selectedDivision = null;
       _addressController.selectedDistrict = null;
       _addressController.selectedSubDistrict = null;
-      _addressController.permanentAreaController.text = '';
+      //_addressController.permanentAreaController.text = '';
       _addressController.selectedDivision1 = null;
       _addressController.selectedDistrict1 = null;
       _addressController.selectedSubDistrict1 = null;
-      _addressController.presentAreaController.text = '';
+      //_addressController.presentAreaController.text = '';
     }
   }
 
@@ -123,14 +123,14 @@ class _AddressFormState extends State<AddressForm> {
               ),
             ],
           ),
-          Gap(8.h),
-          CustomTextFormField(
-              hintText: 'Area Name',
-              controller: _addressController.permanentAreaController),
-          Gap(4.h),
-          Text(
-              'Write the name of the village or area without entering the house number. Example- Mirpur 10, Baghmara',
-              style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
+          // Gap(8.h),
+          // CustomTextFormField(
+          //     hintText: 'Area Name',
+          //     controller: _addressController.permanentAreaController),
+          // Gap(4.h),
+          // Text(
+          //     'Write the name of the village or area without entering the house number. Example- Mirpur 10, Baghmara',
+          //     style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
           Gap(16.h),
           const InputTitleText(title: 'Present Address'),
           Row(
@@ -199,13 +199,13 @@ class _AddressFormState extends State<AddressForm> {
                     ),
                   ],
                 ),
-                Gap(8.h),
-                CustomTextFormField(
-                    hintText: 'Area Name', controller: _addressController.presentAreaController),
-                Gap(4.h),
-                Text(
-                    'Write the name of the village or area without entering the house number. Example- Mirpur 10, Baghmara',
-                    style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
+                // Gap(8.h),
+                // CustomTextFormField(
+                //     hintText: 'Area Name', controller: _addressController.presentAreaController),
+                // Gap(4.h),
+                // Text(
+                //     'Write the name of the village or area without entering the house number. Example- Mirpur 10, Baghmara',
+                //     style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
               ],
             ),
             child: const SizedBox(),

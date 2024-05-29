@@ -20,6 +20,7 @@ class AllBioDataController extends GetxController {
   District? selectedDistrict;
   SubDistrict? selectedSubDistrict;
 
+  /// Get the permanent address as a concatenated string
   String get permanentAddress {
     if (selectedDivision != null &&
         selectedDistrict != null &&
@@ -30,10 +31,9 @@ class AllBioDataController extends GetxController {
     }
   }
 
+  /// Fetch all bio data
   Future<void> readAllBioData({bool isLoadMore = false}) async {
-    if (isLoading) return;
-    isLoading = true;
-    update();
+    _setLoadingState(true);
     try {
       final response = await ApiService().get(
         url: '${AppUrls.readAllBioDataUrl}?offset=$offset&limit=$limit',
@@ -41,88 +41,41 @@ class AllBioDataController extends GetxController {
       );
 
       if (response.success) {
-        countBioData = response.data['data']['count'];
-        List<dynamic> data = response.data['data']['biodata'];
-        List<BioData> newBioData =
-            data.map((e) => BioData.fromJson(e)).toList();
-        if (isLoadMore) {
-          bioData.addAll(newBioData);
-        } else {
-          bioData = newBioData;
-        }
-        offset += limit;
-        if (countBioData == bioData.length) {
-          hasMore = false;
-        }
-        isLoading = false;
-        update();
+        _handleBioDataSuccess(response.data, isLoadMore);
       } else {
-        final errorMessage =
-            response.message['message'] ?? 'All Bio Data Read Failed';
-        customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
+        _handleError(response.message['message'] ?? 'All Bio Data Read Failed');
       }
     } catch (error) {
-      customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
+      _handleError(error.toString());
+    } finally {
+      _setLoadingState(false);
     }
   }
 
+  /// Fetch all searched bio data based on filters
   Future<void> readAllSearchedBioData({bool isLoadMore = false}) async {
-    if (isLoading) return;
-    isLoading = true;
-    update();
-    String url =
-        '${AppUrls.readAllSearchedBioDataUrl}?offset=$offset&limit=$limit';
-    if (selectedBioDataType != null) {
-      url += '&bioDataType=${selectedBioDataType}';
-    }
-
-    if (selectedMaritalStatus != null) {
-      url += '&maritalStatus=${selectedMaritalStatus}';
-    }
-
-    if (permanentAddress.isNotEmpty) {
-      url += '&permanentAddress=${permanentAddress}';
-    }
+    _setLoadingState(true);
+    String url = _buildSearchUrl();
 
     try {
       final response = await ApiService().get(
         url: url,
         headers: AppUrls.getHeaderWithToken,
       );
+
       if (response.success) {
-        countBioData = response.data['data']['count'];
-        List<dynamic> data = response.data['data']['biodata'];
-        List<BioData> newBioData =
-            data.map((e) => BioData.fromJson(e)).toList();
-        if (isLoadMore) {
-          bioData.addAll(newBioData);
-        } else {
-          bioData = newBioData;
-        }
-        offset += limit;
-        if (countBioData == bioData.length) {
-          hasMore = false;
-        }
-        isLoading = false;
-        update();
+        _handleBioDataSuccess(response.data, isLoadMore);
       } else {
-        final errorMessage =
-            response.message['message'] ?? 'All Bio Data Read Failed';
-        customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
+        _handleError(response.message['message'] ?? 'All Bio Data Read Failed');
       }
     } catch (error) {
-      customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
+      _handleError(error.toString());
+    } finally {
+      _setLoadingState(false);
     }
   }
 
+  /// Clear the bio data and reset the filters
   void clearBioData() {
     bioData.clear();
     selectedBioDataType = null;
@@ -130,8 +83,56 @@ class AllBioDataController extends GetxController {
     selectedDivision = null;
     selectedDistrict = null;
     selectedSubDistrict = null;
-    offset = 0; // Reset offset to 0 after clearing data
-    hasMore = true; // Reset hasMore flag to true for fresh data retrieval
+    offset = 0;
+    hasMore = true;
     update();
+  }
+
+  /// Set loading state and update UI
+  void _setLoadingState(bool state) {
+    isLoading = state;
+    update();
+  }
+
+  /// Handle successful bio data response
+  void _handleBioDataSuccess(Map<String, dynamic> data, bool isLoadMore) {
+    countBioData = data['data']['count'];
+    List<BioData> newBioData = (data['data']['biodata'] as List)
+        .map((e) => BioData.fromJson(e))
+        .toList();
+
+    if (isLoadMore) {
+      bioData.addAll(newBioData);
+    } else {
+      bioData = newBioData;
+    }
+
+    offset += limit;
+    if (countBioData == bioData.length) {
+      hasMore = false;
+    }
+  }
+
+  /// Handle error and show message
+  void _handleError(String errorMessage) {
+    customErrorMessage(message: errorMessage);
+    isLoading = false;
+    update();
+  }
+
+  /// Build the search URL with selected filters
+  String _buildSearchUrl() {
+    String url =
+        '${AppUrls.readAllSearchedBioDataUrl}?offset=$offset&limit=$limit';
+    if (selectedBioDataType != null) {
+      url += '&biodataType=${selectedBioDataType}';
+    }
+    if (selectedMaritalStatus != null) {
+      url += '&maritalStatus=${selectedMaritalStatus}';
+    }
+    if (permanentAddress.isNotEmpty) {
+      url += '&permanentAddress=${permanentAddress}';
+    }
+    return url;
   }
 }

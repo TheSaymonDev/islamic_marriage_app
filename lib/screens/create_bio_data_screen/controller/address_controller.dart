@@ -20,15 +20,15 @@ class AddressController extends GetxController {
   District? selectedDistrict1;
   SubDistrict? selectedSubDistrict1;
 
-  final permanentAreaController = TextEditingController();
-  final presentAreaController = TextEditingController();
+  // final permanentAreaController = TextEditingController();
+  // final presentAreaController = TextEditingController();
   final growUpController = TextEditingController();
   bool isSameAsPermanent = false;
   String get permanentAddress {
     if (selectedDivision != null &&
         selectedDistrict != null &&
         selectedSubDistrict != null) {
-      return '$selectedDivision, $selectedDistrict, $selectedSubDistrict, ${permanentAreaController.text}';
+      return '$selectedDivision, $selectedDistrict, $selectedSubDistrict';
     } else {
       return ''; // Or a default value indicating incomplete address
     }
@@ -38,7 +38,7 @@ class AddressController extends GetxController {
     if (selectedDivision1 != null &&
         selectedDistrict1 != null &&
         selectedSubDistrict1 != null) {
-      return '$selectedDivision1, $selectedDistrict1, $selectedSubDistrict1, ${presentAreaController.text}';
+      return '$selectedDivision1, $selectedDistrict1, $selectedSubDistrict1';
     } else {
       return ''; // Or a default value indicating incomplete address
     }

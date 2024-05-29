@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/model/occupational_info.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/api_service.dart';
-import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/styles.dart';
 

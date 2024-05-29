@@ -32,10 +32,6 @@ class SharedPreferencesService {
     return _prefs.getBool('showHome') ?? false;
   }
 
-  // void saveToken(String token) {
-  //   _prefs.setString('accessToken', token);
-  // }
-
   void clearUserData() {
     _prefs.remove('userId');
     _prefs.remove('name');
