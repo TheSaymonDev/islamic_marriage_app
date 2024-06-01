@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/controller/address_controller.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/test_data.dart';
+import 'package:islamic_marriage/screens/create_bio_data_screen/model/all_divisions.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
