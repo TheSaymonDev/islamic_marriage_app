@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:islamic_marriage/screens/checkout_screen/bindings/checkout_binding.dart';
+import 'package:islamic_marriage/screens/checkout_screen/checkout_screen.dart';
 import 'package:islamic_marriage/screens/product_details_screen/controller/product_des_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
@@ -14,7 +16,8 @@ import 'package:islamic_marriage/widgets/product_details_widgets/increment_decre
 class CartScreen extends StatelessWidget {
   CartScreen({super.key});
 
-  final ProductDesController productDesController = Get.put(ProductDesController());
+  final ProductDesController productDesController =
+      Get.put(ProductDesController());
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,8 @@ class CartScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'Panjabi',
@@ -76,35 +80,46 @@ class CartScreen extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                    Text('Size: M', style: AppTextStyles.bodyMedium()),
+                                    Text('Size: M',
+                                        style: AppTextStyles.bodyMedium()),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text('Price: ${AppUrls.takaSign}200', style: AppTextStyles.titleMedium()),
+                                        Text('Price: ${AppUrls.takaSign}200',
+                                            style: AppTextStyles.titleMedium()),
                                         Container(
                                           height: 45.h,
                                           width: 125.w,
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                              BorderRadius.circular(10.r),
+                                                  BorderRadius.circular(10.r),
                                               color: AppColors.filledClr),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
                                               IncrementDecrementButton(
                                                   iconData: Icons.remove,
-                                                  onTap: ()=> productDesController.decrementQuantity()),
+                                                  onTap: () =>
+                                                      productDesController
+                                                          .decrementQuantity()),
                                               GetBuilder<ProductDesController>(
                                                   builder: (controller) {
-                                                    return Text(controller.quantity.toString(),
-                                                        style:
-                                                        AppTextStyles.bodyMedium());
-                                                  }
-                                              ),
+                                                return Text(
+                                                    controller.quantity
+                                                        .toString(),
+                                                    style: AppTextStyles
+                                                        .bodyMedium());
+                                              }),
                                               IncrementDecrementButton(
                                                   iconData: Icons.add,
-                                                  onTap: ()=> productDesController.incrementQuantity(10))
+                                                  onTap: () =>
+                                                      productDesController
+                                                          .incrementQuantity(
+                                                              10))
                                             ],
                                           ),
                                         )
@@ -173,7 +188,10 @@ class CartScreen extends StatelessWidget {
                         ],
                       ),
                       CustomElevatedButton(
-                          onPressed: () {}, buttonName: 'Checkout')
+                          onPressed: () {
+                            Get.to(() => CheckOutScreen(totalAmount: 1400), binding: CheckoutBinding());
+                          },
+                          buttonName: 'Checkout')
                     ],
                   ),
                 )),

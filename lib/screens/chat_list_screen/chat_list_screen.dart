@@ -27,7 +27,7 @@ class ChatListScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: (){
-                        Get.to(()=> const MessageScreen());
+                        Get.to(()=> MessageScreen());
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),

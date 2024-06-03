@@ -12,6 +12,7 @@ class AppUrls{
   static const demoProductPng = '$_imgPath/p_item.png';
   static const demoCategoryPng = '$_imgPath/c_item.png';
   static const demoPanjabiPng = '$_imgPath/panjabi.png';
+  static const lockPng = '$_imgPath/lock.png';
 
   static const filterSvg = '$_vectorPath/filter.svg';
   static const doneSvg = '$_vectorPath/done.svg';
@@ -24,6 +25,8 @@ class AppUrls{
   static const celebrationSvg = '$_vectorPath/celebration.svg';
 
   static const searchJson = '$_lottiePath/search_json.json';
+  static const cashOnDeliveryJson = '$_lottiePath/cash_on_delivery.json';
+  static const emptyCartJson = '$_lottiePath/empty_cart.json';
 
   static const hadith =
       'এবং যারা প্রার্থনা করে, "হে আমাদের পালনকর্তা! আমাদেরকে এমন স্ত্রী ও সন্তান দান করুন যারা আমাদের চোখের প্রশান্তি হবে এবং আমাদেরকে সৎকর্মশীলদের নেতৃত্ব দেওয়ার জন্য দান করুন।" আল-ফুরকান : ৭৪';

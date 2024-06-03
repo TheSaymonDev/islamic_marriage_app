@@ -12,7 +12,7 @@ void main() async {
   await SharedPreferencesService().init();
   final token = SharedPreferencesService().getToken();
   runApp( MyApp(
-    screen: token.isNotEmpty ? const HomeScreen() : const OnboardingScreen(),
+    screen: token.isNotEmpty ? const HomeScreen() : const HomeScreen(),
   ));
 }
 

@@ -22,6 +22,7 @@ class District {
 
 class SubDistrict {
   String name;
+
   SubDistrict({required this.name});
   @override
   String toString() {
