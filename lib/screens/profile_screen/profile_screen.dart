@@ -4,11 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/about_us_screen/about_us_screen.dart';
+import 'package:islamic_marriage/screens/address_view_screen/address_view_screen.dart';
 import 'package:islamic_marriage/screens/cart_screen/cart_screen.dart';
 import 'package:islamic_marriage/screens/create_bio_data_screen/create_bio_data_screen.dart';
 import 'package:islamic_marriage/screens/help_center_screens/help_center_screen.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/my_bio_data_screen.dart';
 import 'package:islamic_marriage/screens/privacy_policy_screen/privacy_policy_screen.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/profile_update_screen.dart';
 import 'package:islamic_marriage/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:islamic_marriage/screens/subscription_screens/subscription_screen.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
@@ -34,80 +36,95 @@ class _ProfileScreenState extends State<ProfileScreen> {
         width: double.infinity.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Gap(16.h),
-              SizedBox(
-                height: 110.h,
-                width: 110.w,
-                child: CircleAvatar(
-                  foregroundImage: AssetImage(AppUrls.photoPng),
-                ),
+          child: Column(children: [
+            Gap(16.h),
+            GestureDetector(
+              onTap: () {
+                Get.to(() => ProfileUpdateScreen());
+              },
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: 110.h,
+                    width: 110.w,
+                    child: CircleAvatar(
+                      foregroundImage: AssetImage(AppUrls.placeHolderPng),
+                    ),
+                  ),
+                  Positioned(
+                      top: 4,
+                      right: 4,
+                      child: FaIcon(FontAwesomeIcons.penToSquare,
+                          size: 25.sp, color: AppColors.purpleClr))
+                ],
               ),
-              Gap(16.h),
-              CustomElevatedButton(
-                onPressed: () {
-                  Get.to(() => MyBioDataScreen());
-                },
-                buttonName: 'My Bio Data',
-                buttonWidth: 140.w,
-                buttonHeight: 45.h,
-              ),
-              Gap(16.h),
-              CustomButton(
+            ),
+            Gap(16.h),
+            CustomElevatedButton(
+              onPressed: () {
+                Get.to(() => MyBioDataScreen());
+              },
+              buttonName: 'My Bio Data',
+              buttonWidth: 140.w,
+              buttonHeight: 45.h,
+            ),
+            Gap(16.h),
+            CustomButton(
+              onTap: () {
+                Get.to(() => const CreateBioDataScreen());
+              },
+              iconData: FontAwesomeIcons.penToSquare,
+              title: 'Edit Bio Data',
+            ),
+            Gap(8.h),
+            CustomButton(
+              onTap: () {
+                Get.to(() => const SubscriptionScreen());
+              },
+              iconData: Icons.subscriptions,
+              title: 'Subscription',
+            ),
+            Gap(8.h),
+            CustomButton(
+              onTap: () {
+                Get.to(()=> AddressViewScreen());
+              },
+              iconData: FontAwesomeIcons.addressBook,
+              title: 'Address',
+            ),
+            Gap(8.h),
+            CustomButton(
+              onTap: () {
+                Get.to(() => CartScreen());
+              },
+              iconData: Icons.shopping_bag,
+              title: 'My Bag',
+            ),
+            Gap(8.h),
+            CustomButton(
+              onTap: () {
+                Get.to(() => const HelpCenterScreen());
+              },
+              iconData: Icons.help_center,
+              title: 'Help Center',
+            ),
+            Gap(8.h),
+            CustomButton(
                 onTap: () {
-                  Get.to(() => const CreateBioDataScreen());
+                  Get.to(() => PrivacyPolicyScreen());
                 },
-                iconData: FontAwesomeIcons.penToSquare,
-                title: 'Edit Bio Data',
-              ),
-              Gap(8.h),
-              CustomButton(
-                onTap: () {
-                  Get.to(() => const SubscriptionScreen());
-                },
-                iconData: Icons.subscriptions,
-                title: 'Subscription',
-              ),
-              Gap(8.h),
-              CustomButton(
-                onTap: () {},
-                iconData: Icons.notifications_active,
-                title: 'Notifications',
-              ),
-              Gap(8.h),
-              CustomButton(
-                onTap: () {
-                  Get.to(() => CartScreen());
-                },
-                iconData: Icons.shopping_bag,
-                title: 'My Bag',
-              ),
-              Gap(8.h),
-              CustomButton(
-                onTap: () {
-                  Get.to(() => const HelpCenterScreen());
-                },
-                iconData: Icons.help_center,
-                title: 'Help Center',
-              ),
-              Gap(8.h),
-              CustomButton(
-                  onTap: () {
-                    Get.to(()=> PrivacyPolicyScreen());
-                  },
-                  iconData: FontAwesomeIcons.shieldHalved,
-                  title: 'Privacy Policy'),
-              Gap(8.h),
-              CustomButton(
-                onTap: () {
-                  Get.to(() => AboutUsScreen());
-                },
-                iconData: Icons.info,
-                title: 'About Us',
-              ),
-              Gap(8.h),
-              CustomButton(
+                iconData: FontAwesomeIcons.shieldHalved,
+                title: 'Privacy Policy'),
+            Gap(8.h),
+            CustomButton(
+              onTap: () {
+                Get.to(() => AboutUsScreen());
+              },
+              iconData: Icons.info,
+              title: 'About Us',
+            ),
+            Gap(8.h),
+            CustomButton(
                 onTap: () {
                   Get.bottomSheet(CustomBottomSheet(children: [
                     Center(
@@ -127,32 +144,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Text('Are you sure want to logout?',
                             style: AppTextStyles.bodyMedium())),
                     Gap(16.h),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: CustomElevatedButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                buttonName: 'Cancel')),
-                        Gap(32.w),
-                        Expanded(
-                            child: CustomElevatedButton(
-                                onPressed: () {
-                                  SharedPreferencesService().clearUserData();
-                                  Get.offAll(() => const SignInScreen());
-                                },
-                                buttonName: 'Logout'))
-                      ],
-                    ),
+                    Row(children: [
+                      Expanded(
+                          child: CustomElevatedButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              buttonName: 'Cancel')),
+                      Gap(32.w),
+                      Expanded(
+                          child: CustomElevatedButton(
+                              onPressed: () {
+                                SharedPreferencesService().clearUserData();
+                                Get.offAll(() => const SignInScreen());
+                              },
+                              buttonName: 'Logout'))
+                    ]),
                     Gap(32.h)
                   ]));
                 },
                 iconData: FontAwesomeIcons.rightFromBracket,
-                title: 'Logout',
-              ),
-            ],
-          ),
+                title: 'Logout')
+          ]),
         ));
   }
 }

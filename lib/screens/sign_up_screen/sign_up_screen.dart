@@ -13,6 +13,7 @@ import 'package:islamic_marriage/utils/validator.dart';
 import 'package:islamic_marriage/widgets/common_widgets/app_text_logo_widget.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/common_widgets/custom_gender_selection.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
 import 'package:islamic_marriage/widgets/styles.dart';
 
@@ -53,30 +54,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const AppTextLogo(),
                 Gap(120.h),
                 GetBuilder<SignUpController>(builder: (controller) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                        controller.gender.length,
-                        (index) => GestureDetector(
-                              onTap: () => controller.selectGender(index),
-                              child: Container(
-                                height: 40.h,
-                                width: 100.w,
-                                margin: EdgeInsets.only(right: 16.w),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: AppColors.purple50Clr,
-                                    borderRadius: BorderRadius.circular(4.r),
-                                    border: Border.all(
-                                        color: controller.currentGender == index
-                                            ? AppColors.purpleClr
-                                            : AppColors.whiteClr)),
-                                child: Text(
-                                  controller.gender[index].title,
-                                  style: AppTextStyles.titleMedium(),
-                                ),
-                              ),
-                            )),
+                  return CustomGenderSelection(
+                    genders: controller.gender,
+                    currentGender: controller.currentGender,
+                    onGenderSelected: (index) => controller.selectGender(index),
                   );
                 }),
                 Gap(16.h),
@@ -216,7 +197,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ));
       if (result == true) {
         _clearData();
-        Get.offAll(() => OtpVerificationScreen(mobileNumber: controller.mobileNumber, isForgetOtp: false));
+        Get.offAll(() => OtpVerificationScreen(
+            mobileNumber: controller.mobileNumber, isForgetOtp: false));
       }
     }
   }

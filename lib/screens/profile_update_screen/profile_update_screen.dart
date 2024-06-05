@@ -2,22 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/controller/change_password_controller.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/controller/profile_update_controller.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/model/change_password.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
+import 'package:islamic_marriage/utils/validator.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_bottom_sheet.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/common_widgets/custom_gender_selection.dart';
 import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
+import 'package:islamic_marriage/widgets/styles.dart';
 
-class ProfileUpdatePage extends StatelessWidget {
-  ProfileUpdatePage({super.key});
+class ProfileUpdateScreen extends StatelessWidget {
+  ProfileUpdateScreen({super.key});
 
   final _nameController = TextEditingController();
-  final _dateOfBirthController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,64 +39,64 @@ class ProfileUpdatePage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Gap(32.h),
-              Stack(
-                children: [
-                  SizedBox(
-                    height: 110.h,
-                    width: 110.w,
-                    child: CircleAvatar(
-                      foregroundImage: AssetImage(AppUrls.photoPng),
-                    ),
-                  ),
-                  Positioned(
-                    top: 5,
-                    right: 5,
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.violetClr,
-                      radius: 15.r,
-                      child: Icon(
-                        Icons.camera_alt_outlined,
-                        color: AppColors.whiteClr,
-                        size: 15.sp,
+              Gap(64.h),
+              GetBuilder<ProfileUpdateController>(builder: (controller) {
+                return GestureDetector(
+                  onTap: () {
+                    controller.getImageFromGallery();
+                  },
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        height: 110.h,
+                        width: 110.w,
+                        child: CircleAvatar(
+                          foregroundImage: controller.imageFile == null
+                              ? AssetImage(AppUrls.placeHolderPng)
+                              : FileImage(controller.imageFile!)
+                                  as ImageProvider,
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ),
+                      Positioned(
+                        top: 5,
+                        right: 5,
+                        child: CircleAvatar(
+                          backgroundColor: AppColors.violetClr,
+                          radius: 15.r,
+                          child: Icon(
+                            Icons.camera_alt_outlined,
+                            color: AppColors.whiteClr,
+                            size: 15.sp,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }),
               Gap(32.h),
-              CustomTextFormField(hintText: 'Name', controller: _nameController),
+              GetBuilder<ProfileUpdateController>(builder: (controller) {
+                return CustomGenderSelection(
+                  genders: controller.gender,
+                  currentGender: controller.currentGender,
+                  onGenderSelected: (index) => controller.selectGender(index),
+                );
+              }),
               Gap(16.h),
               CustomTextFormField(
-                hintText: 'Date of Birth',
-                controller: _dateOfBirthController,
-                suffixIcon: IconButton(
-                    onPressed: () async{
-                      DateTime? selectedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2001),
-                        lastDate: DateTime(2024, 12, 31),
-                      );
-                      if (selectedDate != null) {
-                        // Update your controller with the selected date
-                        _dateOfBirthController.text =
-                            DateFormat('dd/MM/yyyy').format(selectedDate);
-                      }
-                    },
-                    icon: Icon(
-                      Icons.calendar_today,
-                      size: 20.sp,
-                      color: AppColors.violetClr,
-                    )),
+                  hintText: 'Name', controller: _nameController),
+              Gap(16.h),
+              CustomTextFormField(
+                hintText: 'Phone',
+                controller: _phoneController,
+                keyBoardType: TextInputType.phone,
+              ),
+              Gap(16.h),
+              CustomTextFormField(
+                hintText: 'Email',
+                controller: _emailController,
                 readOnly: true,
               ),
-              Gap(16.h),
-              CustomTextFormField(
-                  hintText: 'Phone', controller: _phoneController, keyBoardType: TextInputType.phone,),
-              Gap(16.h),
-              CustomTextFormField(
-                  hintText: 'Password', controller: _passwordController, readOnly: true,),
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -100,8 +104,9 @@ class ProfileUpdatePage extends StatelessWidget {
                     _showBottomSheet();
                   },
                   child: Text(
-                    'Change Password',
-                    style: AppTextStyles.titleMedium(color: AppColors.violetClr),
+                    'Change Password?',
+                    style:
+                        AppTextStyles.titleMedium(color: AppColors.violetClr),
                   ),
                 ),
               ),
@@ -119,22 +124,43 @@ class ProfileUpdatePage extends StatelessWidget {
   final _confirmPasswordController = TextEditingController();
   Future<dynamic> _showBottomSheet() {
     return Get.bottomSheet(CustomBottomSheet(children: [
-      Text(
-        'Change Password',
-        style: AppTextStyles.titleMedium()
-      ),
+      Text('Change Password', style: AppTextStyles.titleMedium()),
       Gap(32.h),
       CustomTextFormField(
-          hintText: 'Old Password', controller: _oldPasswordController),
+          hintText: 'Old Password',
+          controller: _oldPasswordController,
+          validator: passwordValidator),
       Gap(16.h),
       CustomTextFormField(
-          hintText: 'New Password', controller: _newPasswordController),
+          hintText: 'New Password',
+          controller: _newPasswordController,
+          validator: passwordValidator),
       Gap(16.h),
       CustomTextFormField(
-          hintText: 'Confirm Password', controller: _confirmPasswordController),
+          hintText: 'Confirm Password',
+          controller: _confirmPasswordController,
+          validator: (value) =>
+              confirmPasswordValidator(value, _newPasswordController)),
       Gap(32.h),
-      CustomElevatedButton(onPressed: () {}, buttonName: 'Confirm'),
+      GetBuilder<ChangePasswordController>(
+          builder: (controller) => controller.isLoading
+              ? customCircularProgressIndicator
+              : CustomElevatedButton(
+                  onPressed: () {
+                    _formOnSubmit(controller);
+                  },
+                  buttonName: 'Confirm')),
       Gap(32.h)
     ]));
+  }
+
+  void _formOnSubmit(ChangePasswordController controller) async {
+    final result = await controller.changingPassword(
+        changePassword: ChangePassword(
+            oldPassword: _oldPasswordController.text,
+            newPassword: _newPasswordController.text));
+    if (result) {
+      Get.back();
+    }
   }
 }

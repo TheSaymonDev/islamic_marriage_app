@@ -11,13 +11,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesService().init();
   final token = SharedPreferencesService().getToken();
-  runApp( MyApp(
+  runApp(MyApp(
     screen: token.isNotEmpty ? const HomeScreen() : const HomeScreen(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-
   final Widget? screen;
   const MyApp({super.key, this.screen});
 
@@ -31,10 +30,8 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           theme: ThemeData(
               scaffoldBackgroundColor: AppColors.whiteClr,
-              appBarTheme: const AppBarTheme(
-                  backgroundColor: AppColors.whiteClr
-              )
-          ),
+              appBarTheme:
+                  const AppBarTheme(backgroundColor: AppColors.whiteClr)),
           debugShowCheckedModeBanner: false,
           initialBinding: AppDependencyBinder(),
           home: screen,

@@ -16,6 +16,8 @@ import 'package:islamic_marriage/screens/identity_verification_screen/controller
 import 'package:islamic_marriage/screens/otp_verification_screen/controller/otp_verification_controller.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/controller/resend_otp_controller.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/controller/timer_controller.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/controller/change_password_controller.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/controller/profile_update_controller.dart';
 import 'package:islamic_marriage/screens/set_password_screen/controller/set_password_controller.dart';
 import 'package:islamic_marriage/screens/sign_in_screen/controller/sign_in_controller.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/controller/sign_up_controller.dart';
@@ -45,5 +47,7 @@ class AppDependencyBinder extends Bindings{
     Get.put(MyBioDataController());
     Get.put(ContactUsController());
     Get.put(SubmitBioDataController());
+    Get.put(ProfileUpdateController());
+    Get.put(ChangePasswordController());
   }
 }

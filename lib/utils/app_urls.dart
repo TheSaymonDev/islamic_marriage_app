@@ -13,6 +13,7 @@ class AppUrls{
   static const demoCategoryPng = '$_imgPath/c_item.png';
   static const demoPanjabiPng = '$_imgPath/panjabi.png';
   static const lockPng = '$_imgPath/lock.png';
+  static const placeHolderPng = '$_imgPath/placeholder.png';
 
   static const filterSvg = '$_vectorPath/filter.svg';
   static const doneSvg = '$_vectorPath/done.svg';
@@ -54,6 +55,7 @@ class AppUrls{
   static const otpVerificationUrl = '$_baseUrl/auth/verify-otp';
   static const setPasswordUrl = '$_baseUrl/auth/forget-password-verify-otp';
   static const resendOTPUrl = '$_baseUrl/auth/send-otp';
+  static const changePasswordUrl = '$_baseUrl/auth/change-password';
   // for create bio data
   static const createGeneralInfoUrl = '$_baseUrl/biodata/personal-info/create';
   static const createAddressUrl = '$_baseUrl/biodata/address/create';

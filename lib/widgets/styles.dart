@@ -9,17 +9,16 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 PinTheme pinTheme() {
   return PinTheme(
-    shape: PinCodeFieldShape.box,
-    borderRadius: BorderRadius.circular(4.r),
-    borderWidth: 1.w,
-    inactiveFillColor: AppColors.whiteClr,
-    selectedFillColor: AppColors.whiteClr,
-    fieldHeight: 46.h,
-    fieldWidth: 46.w,
-    activeColor: const Color(0xffDDDDDD),
-    selectedColor: AppColors.violetClr,
-    inactiveColor: const Color(0xffDDDDDD),
-  );
+      shape: PinCodeFieldShape.box,
+      borderRadius: BorderRadius.circular(4.r),
+      borderWidth: 1.w,
+      inactiveFillColor: AppColors.whiteClr,
+      selectedFillColor: AppColors.whiteClr,
+      fieldHeight: 46.h,
+      fieldWidth: 46.w,
+      activeColor: const Color(0xffDDDDDD),
+      selectedColor: AppColors.violetClr,
+      inactiveColor: const Color(0xffDDDDDD));
 }
 
 SnackbarController customErrorMessage({required dynamic message}) {
@@ -42,17 +41,14 @@ SnackbarController customSuccessMessage({required dynamic message}) {
       colorText: AppColors.blackClr);
 }
 
-SpinKitFadingCircle customCircularProgressIndicator = SpinKitFadingCircle(
-  color: AppColors.violetClr,
-  size: 50.0.r,
-);
+SpinKitFadingCircle customCircularProgressIndicator =
+    SpinKitFadingCircle(color: AppColors.violetClr, size: 50.0.r);
 
-Future<dynamic> showAppDialogBox({
-  required String title,
-  required String middleText,
-  required void Function()? onPressedCancel,
-  required void Function()? onPressedConfirm,
-}) {
+Future<dynamic> showAppDialogBox(
+    {required String title,
+    required String middleText,
+    required void Function()? onPressedCancel,
+    required void Function()? onPressedConfirm}) {
   return Get.defaultDialog(
     title: title,
     titleStyle: AppTextStyles.titleLarge(),
@@ -64,16 +60,11 @@ Future<dynamic> showAppDialogBox({
     actions: [
       TextButton(
           onPressed: onPressedCancel,
-          child: Text(
-            'No',
-            style: AppTextStyles.titleMedium(),
-          )),
+          child: Text('No', style: AppTextStyles.titleMedium())),
       TextButton(
           onPressed: onPressedConfirm,
-          child: Text(
-            'Yes',
-            style: AppTextStyles.titleMedium(color: AppColors.violetClr),
-          )),
+          child: Text('Yes',
+              style: AppTextStyles.titleMedium(color: AppColors.violetClr)))
     ],
   );
 }
