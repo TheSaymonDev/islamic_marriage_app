@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/set_password_screen/controller/set_password_controller.dart';
 import 'package:islamic_marriage/screens/set_password_screen/model/set_password.dart';
-import 'package:islamic_marriage/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/validator.dart';
@@ -14,15 +14,32 @@ import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.d
 import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
 import 'package:islamic_marriage/widgets/styles.dart';
 
-class SetPasswordScreen extends StatelessWidget {
-  final String mobileNumber;
-  final String otp;
+class SetPasswordScreen extends StatefulWidget {
 
-  SetPasswordScreen({super.key, required this.mobileNumber, required this.otp});
+
+  SetPasswordScreen({super.key});
+
+  @override
+  State<SetPasswordScreen> createState() => _SetPasswordScreenState();
+}
+
+class _SetPasswordScreenState extends State<SetPasswordScreen> {
+  String? mobileNumber;
+
+  String? otp;
 
   final _formKey = GlobalKey<FormState>();
+
   final _newPasswordController = TextEditingController();
+
   final _confirmPasswordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    mobileNumber = Get.arguments['mobileNumber'] as String;
+    otp = Get.arguments['otp'] as String;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +66,7 @@ class SetPasswordScreen extends StatelessWidget {
                 Text(
                   'Your new password must be different\nfrom previously used password.',
                   style: AppTextStyles.bodyMedium(color: AppColors.greyColor),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.center
                 ),
                 Gap(32.h),
                 GetBuilder<SetPasswordController>(builder: (controller) {
@@ -84,10 +101,10 @@ class SetPasswordScreen extends StatelessWidget {
                               ? Icons.visibility_off
                               : Icons.visibility,
                           color: AppColors.greyColor,
-                          size: 25.sp,
-                        )),
+                          size: 25.sp
+                        ))
                   );
-                }),
+                },),
                 Gap(16.h),
                 GetBuilder<SetPasswordController>(
                     builder: (controller) => controller.isLoading
@@ -117,7 +134,7 @@ class SetPasswordScreen extends StatelessWidget {
               newPassword: _newPasswordController.text.trim()));
       if (result == true) {
         _clearData();
-        Get.offAll(const SignInScreen());
+        Get.offAllNamed(AppRoutes.signInScreen);
       }
     }
   }

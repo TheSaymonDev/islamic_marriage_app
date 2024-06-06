@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/controller/otp_verification_controller.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/controller/resend_otp_controller.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/controller/timer_controller.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/model/otp_verification.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/model/resend_otp.dart';
-import 'package:islamic_marriage/screens/set_password_screen/set_password_screen.dart';
-import 'package:islamic_marriage/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/widgets/common_widgets/app_text_logo_widget.dart';
@@ -18,10 +17,7 @@ import 'package:islamic_marriage/widgets/styles.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
-  final bool isForgetOtp;
-  final String? mobileNumber;
-  const OtpVerificationScreen(
-      {super.key, required this.mobileNumber, required this.isForgetOtp});
+  const OtpVerificationScreen({super.key});
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -29,14 +25,16 @@ class OtpVerificationScreen extends StatefulWidget {
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final _otpController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
+  String? mobileNumber;
+  bool? isForgetOtp;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Get.find<TimerController>().startTimer();
+    mobileNumber = Get.arguments['mobileNumber'] as String;
+    isForgetOtp = Get.arguments['isForgetOtp'] as bool;
   }
 
   @override
@@ -96,36 +94,35 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                 onTap: () {
                                   Get.find<ResendOTPController>().resendOTP(
                                       resendOTP: ResendOTP(
-                                          mobileNumber: widget.mobileNumber));
+                                          mobileNumber: mobileNumber));
                                 },
                                 child: Text('Resend Code',
                                     style: AppTextStyles.titleMedium(
-                                        color: AppColors.purpleClr)),
-                              )
+                                        color: AppColors.purpleClr)))
                             : Text(controller.getFormattedDuration(),
                                 style: AppTextStyles.titleMedium(
                                     color: AppColors.purpleClr));
                       },
-                    ),
+                    )
                   ],
                 ),
                 Gap(16.h),
                 Visibility(
-                  visible: widget.isForgetOtp,
-                  replacement: GetBuilder<OtpVerificationController>(
-                      builder: (controller) => controller.isLoading
-                          ? customCircularProgressIndicator
-                          : CustomElevatedButton(
-                              onPressed: () =>
-                                  _formOnSubmitRegister(controller),
-                              buttonName: 'Verify and Proceed')),
-                  child: GetBuilder<OtpVerificationController>(
-                      builder: (controller) => controller.isLoading
-                          ? customCircularProgressIndicator
-                          : CustomElevatedButton(
-                              onPressed: () => _formOnSubmitSetPass(controller),
-                              buttonName: 'Verify and Proceed')),
-                )
+                    visible: isForgetOtp!,
+                    replacement: GetBuilder<OtpVerificationController>(
+                        builder: (controller) => controller.isLoading
+                            ? customCircularProgressIndicator
+                            : CustomElevatedButton(
+                                onPressed: () =>
+                                    _formOnSubmitRegister(controller),
+                                buttonName: 'Verify and Proceed')),
+                    child: GetBuilder<OtpVerificationController>(
+                        builder: (controller) => controller.isLoading
+                            ? customCircularProgressIndicator
+                            : CustomElevatedButton(
+                                onPressed: () =>
+                                    _formOnSubmitSetPass(controller),
+                                buttonName: 'Verify and Proceed')))
               ],
             ),
           ),
@@ -142,12 +139,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       final result = await controller.verifyOTP(
           otpVerification: OtpVerification(
-              mobileNumber: widget.mobileNumber,
-              otp: _otpController.text.trim()));
+              mobileNumber: mobileNumber, otp: _otpController.text.trim()));
       if (result == true) {
-        Get.off(() => SetPasswordScreen(
-            mobileNumber: widget.mobileNumber!,
-            otp: _otpController.text.trim()));
+        Get.offNamed(AppRoutes.setPasswordScreen, arguments: {
+          'mobileNumber': mobileNumber,
+          'otp': _otpController.text.trim()
+        });
       }
     }
   }
@@ -156,11 +153,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       final result = await controller.verifyOTP(
           otpVerification: OtpVerification(
-              mobileNumber: widget.mobileNumber,
-              otp: _otpController.text.trim()));
+              mobileNumber: mobileNumber, otp: _otpController.text.trim()));
       if (result == true) {
         _clearData();
-        Get.offAll(() => const SignInScreen());
+        Get.offAllNamed(AppRoutes.signInScreen);
       }
     }
   }

@@ -26,13 +26,13 @@ import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_da
 class AppDependencyBinder extends Bindings{
   @override
   void dependencies() {
-    Get.put(SignUpController());
-    Get.put(SignInController());
-    Get.put(OtpVerificationController());
-    Get.put(IdentityVerificationController());
-    Get.put(SetPasswordController());
-    Get.put(TimerController());
-    Get.put(ResendOTPController());
+    // Get.put(SignUpController());
+    // Get.put(SignInController());
+    // Get.put(OtpVerificationController());
+    // Get.put(IdentityVerificationController());
+    //Get.put(SetPasswordController());
+    //Get.put(TimerController());
+    //Get.put(ResendOTPController());
     Get.put(GeneralInfoController());
     Get.put(AddressController());
     Get.put(EduQualificationsController());

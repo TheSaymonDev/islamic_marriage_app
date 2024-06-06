@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/identity_verification_screen/controller/identity_verification_controller.dart';
 import 'package:islamic_marriage/screens/identity_verification_screen/model/identity_verification.dart';
-import 'package:islamic_marriage/screens/otp_verification_screen/otp_verification_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/validator.dart';
@@ -74,9 +74,13 @@ class IdentityVerificationScreen extends StatelessWidget {
           identityVerification: IdentityVerification(
               identity: '+88${_identifierController.text.trim()}'));
       if (result == true) {
-        Get.off(() => OtpVerificationScreen(
-            mobileNumber: '+88${_identifierController.text.trim()}',
-        isForgetOtp: true));
+        Get.offNamed(
+          AppRoutes.otpVerificationScreen,
+          arguments: {
+            'mobileNumber': '+88${_identifierController.text.trim()}',
+            'isForgetOtp': true
+          },
+        );
       }
     }
   }

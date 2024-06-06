@@ -3,8 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/otp_verification_screen/otp_verification_screen.dart';
-import 'package:islamic_marriage/screens/sign_in_screen/sign_in_screen.dart';
+import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/controller/sign_up_controller.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/model/sign_up.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
@@ -55,47 +54,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Gap(120.h),
                 GetBuilder<SignUpController>(builder: (controller) {
                   return CustomGenderSelection(
-                    genders: controller.gender,
-                    currentGender: controller.currentGender,
-                    onGenderSelected: (index) => controller.selectGender(index),
-                  );
+                      genders: controller.gender,
+                      currentGender: controller.currentGender,
+                      onGenderSelected: (index) =>
+                          controller.selectGender(index));
                 }),
                 Gap(16.h),
                 CustomTextFormField(
-                  hintText: 'Name',
-                  controller: _nameController,
-                  validator: nameValidator,
-                ),
+                    hintText: 'Name',
+                    controller: _nameController,
+                    validator: nameValidator),
                 Gap(16.h),
                 CustomTextFormField(
-                  hintText: 'Mobile',
-                  controller: _mobileController,
-                  validator: mobileValidator,
-                  keyBoardType: TextInputType.phone,
-                ),
+                    hintText: 'Mobile',
+                    controller: _mobileController,
+                    validator: mobileValidator,
+                    keyBoardType: TextInputType.phone),
                 Gap(16.h),
                 CustomTextFormField(
-                  hintText: 'Email',
-                  controller: _emailController,
-                  validator: emailValidator,
-                ),
+                    hintText: 'Email',
+                    controller: _emailController,
+                    validator: emailValidator),
                 Gap(16.h),
                 GetBuilder<SignUpController>(builder: (controller) {
                   return CustomTextFormField(
-                    hintText: 'Password',
-                    controller: _passwordController,
-                    obscureText: controller.isObscure,
-                    validator: passwordValidator,
-                    suffixIcon: IconButton(
-                        onPressed: () => controller.toggleObscure(),
-                        icon: Icon(
-                          controller.isObscure
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: AppColors.greyColor,
-                          size: 25.sp,
-                        )),
-                  );
+                      hintText: 'Password',
+                      controller: _passwordController,
+                      obscureText: controller.isObscure,
+                      validator: passwordValidator,
+                      suffixIcon: IconButton(
+                          onPressed: () => controller.toggleObscure(),
+                          icon: Icon(
+                              controller.isObscure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: AppColors.greyColor,
+                              size: 25.sp)));
                 }),
                 Row(
                   children: [
@@ -106,17 +100,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             controller.toggleIsChecked(newValue),
                       );
                     }),
-                    Text('Remember me', style: AppTextStyles.bodyMedium()),
+                    Text('Remember me', style: AppTextStyles.bodyMedium())
                   ],
                 ),
                 Gap(16.h),
                 GetBuilder<SignUpController>(
-                  builder: (controller) => controller.isLoading
-                      ? customCircularProgressIndicator
-                      : CustomElevatedButton(
-                          onPressed: () => _formOnSubmit(controller),
-                          buttonName: 'Sign Up'),
-                ),
+                    builder: (controller) => controller.isLoading
+                        ? customCircularProgressIndicator
+                        : CustomElevatedButton(
+                            onPressed: () => _formOnSubmit(controller),
+                            buttonName: 'Sign Up')),
                 Gap(120.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -125,13 +118,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: AppTextStyles.bodyMedium()),
                     Gap(8.w),
                     GestureDetector(
-                      onTap: () {
-                        Get.to(() => const SignInScreen());
-                      },
-                      child: Text("Log In",
-                          style: AppTextStyles.titleMedium(
-                              color: AppColors.purpleClr)),
-                    ),
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Text("Log In",
+                            style: AppTextStyles.titleMedium(
+                                color: AppColors.purpleClr)))
                   ],
                 ),
                 Gap(32.h),
@@ -141,32 +133,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     IconButton(
                         onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.facebook,
-                          size: 30.sp,
-                          color: AppColors.blackClr,
-                        )),
+                        icon: Icon(FontAwesomeIcons.facebook,
+                            size: 30.sp, color: AppColors.blackClr)),
                     IconButton(
                         onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.google,
-                          size: 30.sp,
-                          color: AppColors.blackClr,
-                        )),
+                        icon: Icon(FontAwesomeIcons.google,
+                            size: 30.sp, color: AppColors.blackClr)),
                     IconButton(
                         onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.instagram,
-                          size: 30.sp,
-                          color: AppColors.blackClr,
-                        )),
+                        icon: Icon(FontAwesomeIcons.instagram,
+                            size: 30.sp, color: AppColors.blackClr)),
                     IconButton(
                         onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.twitter,
-                          size: 30.sp,
-                          color: AppColors.blackClr,
-                        )),
+                        icon: Icon(FontAwesomeIcons.twitter,
+                            size: 30.sp, color: AppColors.blackClr))
                   ],
                 ),
                 Gap(32.h),
@@ -197,8 +177,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ));
       if (result == true) {
         _clearData();
-        Get.offAll(() => OtpVerificationScreen(
-            mobileNumber: controller.mobileNumber, isForgetOtp: false));
+        Get.offAllNamed(
+          AppRoutes.otpVerificationScreen,
+          arguments: {
+            'mobileNumber': controller.mobileNumber,
+            'isForgetOtp': false
+          },
+        );
       }
     }
   }
