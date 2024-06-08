@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_card.dart';
+import 'package:islamic_marriage/widgets/custom_card.dart';
 import 'package:lottie/lottie.dart';
 
 class StepPaymentMethodWidget extends StatefulWidget {

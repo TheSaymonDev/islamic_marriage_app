@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/all_divisions.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/all_divisions.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/model/bio_data.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class AllBioDataController extends GetxController {
   bool isLoading = false;

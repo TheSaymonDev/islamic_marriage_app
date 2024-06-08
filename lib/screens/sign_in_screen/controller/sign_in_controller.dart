@@ -3,7 +3,7 @@ import 'package:islamic_marriage/screens/sign_in_screen/model/sign_in.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class SignInController extends GetxController {
   bool isLoading = false;

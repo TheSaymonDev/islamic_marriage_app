@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class ProductDesController extends GetxController{
   bool isExpanded = false;

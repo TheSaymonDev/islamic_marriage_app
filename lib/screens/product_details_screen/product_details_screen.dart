@@ -6,9 +6,9 @@ import 'package:islamic_marriage/screens/product_details_screen/controller/produ
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_back_icon.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
-import 'package:islamic_marriage/widgets/product_details_widgets/increment_decrement_button.dart';
+import 'package:islamic_marriage/widgets/custom_back_icon.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/screens/product_details_screen/widgets/increment_decrement_button.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});

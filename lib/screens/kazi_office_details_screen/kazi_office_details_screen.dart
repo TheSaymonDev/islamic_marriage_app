@@ -9,8 +9,8 @@ import 'package:islamic_marriage/screens/review_screen/review_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 
 
 class KaziOfficeDetailsScreen extends StatefulWidget {

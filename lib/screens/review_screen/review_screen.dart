@@ -6,8 +6,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 
 class ReviewScreen extends StatefulWidget {
   const ReviewScreen({super.key});

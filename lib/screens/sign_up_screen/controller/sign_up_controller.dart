@@ -3,7 +3,7 @@ import 'package:islamic_marriage/screens/sign_up_screen/model/gender.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/model/sign_up.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class SignUpController extends GetxController {
   bool isObscure = true;

@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:islamic_marriage/screens/home_screen/home_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_drop_down_button.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_drop_down_button.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
 
 
 class BookingScreen extends StatefulWidget {

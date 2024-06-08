@@ -7,12 +7,12 @@ import 'package:islamic_marriage/screens/set_password_screen/controller/set_pass
 import 'package:islamic_marriage/screens/set_password_screen/model/set_password.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
-import 'package:islamic_marriage/utils/validator.dart';
-import 'package:islamic_marriage/widgets/common_widgets/app_text_logo_widget.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_validators.dart';
+import 'package:islamic_marriage/widgets/custom_text_logo.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class SetPasswordScreen extends StatefulWidget {
 
@@ -57,7 +57,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
             child: Column(
               children: [
                 Gap(32.h),
-                const AppTextLogo(),
+                const CustomTextLogo(),
                 Gap(150.h),
                 Text('Enter New Password',
                     style:

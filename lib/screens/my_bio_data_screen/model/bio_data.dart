@@ -1,13 +1,17 @@
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/address.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/contact.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/edu_qualifications.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/expected_life_partner.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/family_info.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/general_info.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/marriage_info.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/occupational_info.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/personal_life_info.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/pledge.dart';
+
+
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/address.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/contact.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/edu_qualifications.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/expected_life_partner.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/family_info.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/general_info.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/marriage_info.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/occupational_info.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/personal_life_info.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/pledge.dart';
+
+
 
 class BioData {
   String? id;

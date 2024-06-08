@@ -3,7 +3,7 @@ import 'package:islamic_marriage/screens/otp_verification_screen/controller/time
 import 'package:islamic_marriage/screens/otp_verification_screen/model/resend_otp.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class ResendOTPController extends GetxController{
   Future<void> resendOTP({required ResendOTP resendOTP}) async {

@@ -16,7 +16,7 @@ class AppRoutes {
   static const addressManagementScreen = '/address_management_screen';
   static const addressViewScreen = '/address_view_screen';
   static const authSuccessfulScreen = '/auth_successful_screen';
-  static const createBioDataScreen = '/create_bio_data_screen';
+  static const bioDataManagementScreen = '/bio_data_management_screen';
   static const myBioDataScreen = '/my_bio_data_screen';
   static const bioDataDetailsScreen = '/bio_data_details_screen';
   static const profileUpdateScreen = '/profile_update_screen';

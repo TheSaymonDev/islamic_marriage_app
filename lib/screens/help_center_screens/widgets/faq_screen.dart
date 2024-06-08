@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_expansion_tile.dart';
+import 'package:islamic_marriage/widgets/custom_expansion_tile.dart';
 
 class FaqScreen extends StatelessWidget {
   const FaqScreen({super.key});

@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/help_center_screens/controller/contact_us_controller.dart';
-import 'package:islamic_marriage/widgets/profile_widgets/custom_button.dart';
+import 'package:islamic_marriage/screens/profile_screen/widgets/custom_button.dart';
 
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});

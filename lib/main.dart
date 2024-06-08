@@ -5,7 +5,6 @@ import 'package:islamic_marriage/routes/app_pages.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_dependency_binder.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +31,6 @@ class MyApp extends StatelessWidget {
             appBarTheme: const AppBarTheme(backgroundColor: AppColors.whiteClr),
           ),
           debugShowCheckedModeBanner: false,
-          initialBinding: AppDependencyBinder(),
           getPages: AppPages.pages,
           initialRoute: initialRoute,
         );

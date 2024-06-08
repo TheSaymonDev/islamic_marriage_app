@@ -7,8 +7,8 @@ import 'package:islamic_marriage/screens/message_screen/widgets/message_bubble.d
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_back_icon.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
+import 'package:islamic_marriage/widgets/custom_back_icon.dart';
+import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
 
 class MessageScreen extends StatelessWidget {
   MessageScreen({super.key});

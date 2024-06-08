@@ -8,13 +8,13 @@ import 'package:islamic_marriage/screens/sign_up_screen/controller/sign_up_contr
 import 'package:islamic_marriage/screens/sign_up_screen/model/sign_up.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
-import 'package:islamic_marriage/utils/validator.dart';
-import 'package:islamic_marriage/widgets/common_widgets/app_text_logo_widget.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_gender_selection.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_validators.dart';
+import 'package:islamic_marriage/widgets/custom_text_logo.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_gender_selection.dart';
+import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -50,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               children: [
                 Gap(32.h),
-                const AppTextLogo(),
+                const CustomTextLogo(),
                 Gap(120.h),
                 GetBuilder<SignUpController>(builder: (controller) {
                   return CustomGenderSelection(

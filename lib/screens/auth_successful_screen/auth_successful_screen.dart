@@ -7,7 +7,7 @@ import 'package:islamic_marriage/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 
 
 class AuthSuccessfulScreen extends StatelessWidget {

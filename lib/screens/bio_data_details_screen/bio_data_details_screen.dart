@@ -4,12 +4,12 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/model/bio_data.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_expansion_tile.dart';
-import 'package:islamic_marriage/widgets/show_bio_data_widgets/custom_bio_data_table.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_expansion_tile.dart';
+import 'package:islamic_marriage/widgets/custom_bio_data_table.dart';
 
 class BioDataDetailsScreen extends StatelessWidget {
 

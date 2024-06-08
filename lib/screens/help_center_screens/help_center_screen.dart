@@ -5,7 +5,7 @@ import 'package:islamic_marriage/screens/help_center_screens/widgets/contact_us_
 import 'package:islamic_marriage/screens/help_center_screens/widgets/faq_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
 
 class HelpCenterScreen extends StatelessWidget {
   const HelpCenterScreen({super.key});

@@ -4,17 +4,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
-import 'package:islamic_marriage/screens/home_screen/home_screen.dart';
 import 'package:islamic_marriage/screens/sign_in_screen/controller/sign_in_controller.dart';
 import 'package:islamic_marriage/screens/sign_in_screen/model/sign_in.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
-import 'package:islamic_marriage/utils/validator.dart';
-import 'package:islamic_marriage/widgets/common_widgets/app_text_logo_widget.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_validators.dart';
+import 'package:islamic_marriage/widgets/custom_text_logo.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -44,30 +43,32 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Column(
               children: [
                 Gap(32.h),
-                const AppTextLogo(),
+                const CustomTextLogo(),
                 Gap(150.h),
                 CustomTextFormField(
                     hintText: 'Identity',
                     validator: identifierValidator,
                     controller: _identifierController),
                 Gap(16.h),
-                GetBuilder<SignInController>(builder: (controller) {
-                  return CustomTextFormField(
-                      hintText: 'Password',
-                      controller: _passwordController,
-                      validator: passwordValidator,
-                      obscureText: controller.isObscure,
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                            controller.toggleObscure();
-                          },
-                          icon: Icon(
-                              controller.isObscure
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: AppColors.greyColor,
-                              size: 25.sp)));
-                }),
+                GetBuilder<SignInController>(
+                  builder: (controller) {
+                    return CustomTextFormField(
+                        hintText: 'Password',
+                        controller: _passwordController,
+                        validator: passwordValidator,
+                        obscureText: controller.isObscure,
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              controller.toggleObscure();
+                            },
+                            icon: Icon(
+                                controller.isObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: AppColors.greyColor,
+                                size: 25.sp)));
+                  },
+                ),
                 Row(
                   children: [
                     GetBuilder<SignInController>(builder: (controller) {
@@ -166,7 +167,7 @@ class _SignInScreenState extends State<SignInScreen> {
       );
       if (result == true) {
         _clearData();
-        Get.offAll(() => const HomeScreen());
+        Get.offAllNamed(AppRoutes.homeScreen);
       }
     }
   }

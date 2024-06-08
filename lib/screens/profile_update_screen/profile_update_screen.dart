@@ -8,13 +8,13 @@ import 'package:islamic_marriage/screens/profile_update_screen/model/change_pass
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/utils/validator.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_bottom_sheet.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_gender_selection.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_text_form_field.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_validators.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_bottom_sheet.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_gender_selection.dart';
+import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class ProfileUpdateScreen extends StatelessWidget {
   ProfileUpdateScreen({super.key});

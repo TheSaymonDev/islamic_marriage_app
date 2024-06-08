@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/profile_update_screen/model/change_password.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class ChangePasswordController extends GetxController {
   bool isLoading = false;

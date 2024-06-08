@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/home_screen/home_screen.dart';
-import 'package:islamic_marriage/screens/subscription_screens/subscription_screen_components/choose_plan_screen.dart';
-import 'package:islamic_marriage/screens/subscription_screens/subscription_screen_components/free_plan_screen.dart';
-import 'package:islamic_marriage/screens/subscription_screens/subscription_screen_components/my_purchase_plan_screen.dart';
-import 'package:islamic_marriage/screens/subscription_screens/subscription_screen_components/payment_screen.dart';
-import 'package:islamic_marriage/screens/subscription_screens/subscription_screen_components/payment_successful_screen.dart';
-import 'package:islamic_marriage/screens/subscription_screens/subscription_screen_components/summary_screen.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/screens/subscription_screens/widgets/choose_plan_widget.dart';
+import 'package:islamic_marriage/screens/subscription_screens/widgets/free_plan_widget.dart';
+import 'package:islamic_marriage/screens/subscription_screens/widgets/my_purchase_plan_widget.dart';
+import 'package:islamic_marriage/screens/subscription_screens/widgets/payment_widget.dart';
+import 'package:islamic_marriage/screens/subscription_screens/widgets/payment_successful_widget.dart';
+import 'package:islamic_marriage/screens/subscription_screens/widgets/summary_widget.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
@@ -45,12 +45,12 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   });
                 },
                 children: const [
-                  FreePlanScreen(),
-                  ChoosePlanScreen(),
-                  SummaryScreen(),
-                  PaymentScreen(),
-                  PaymentSuccessfulScreen(),
-                  MyPurchasePlanScreen()
+                  FreePlanWidget(),
+                  ChoosePlanWidget(),
+                  SummaryWidget(),
+                  PaymentWidget(),
+                  PaymentSuccessfulWidget(),
+                  MyPurchasePlanWidget()
                 ],
               ),
             ),

@@ -6,9 +6,9 @@ import 'package:islamic_marriage/screens/address_management_screen/address_manag
 import 'package:islamic_marriage/screens/address_view_screen/widgets/address_management_button.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
-import 'package:islamic_marriage/utils/constant_functions.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 
 class AddressViewScreen extends StatefulWidget {
   const AddressViewScreen({super.key});
@@ -66,33 +66,34 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
                               ]),
                           Gap(8.h),
                           Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16.w, vertical: 8.h),
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(4.r),
-                                        color: AppColors.violetClr
-                                            .withOpacity(0.3)),
-                                    child: Text('Default Address',
-                                        style: AppTextStyles.titleSmall())),
-                                AddressManagementButton(
-                                    isEditable: false,
-                                    onTap: () {
-                                      ConstantFunctions.showDialogBox(
-                                          title: 'Remove',
-                                          middleText:
-                                              'Are you sure want to remove?',
-                                          onPressedCancel: () {
-                                            Get.back();
-                                          },
-                                          onPressedConfirm: () {
-                                            Get.back();
-                                          });
-                                    })
-                              ]),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 8.h),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4.r),
+                                      color:
+                                          AppColors.violetClr.withOpacity(0.3)),
+                                  child: Text('Default Address',
+                                      style: AppTextStyles.titleSmall())),
+                              AddressManagementButton(
+                                isEditable: false,
+                                onTap: () {
+                                  showDialogBox(
+                                    title: 'Remove',
+                                    middleText: 'Are you sure want to remove?',
+                                    onPressedCancel: () {
+                                      Get.back();
+                                    },
+                                    onPressedConfirm: () {
+                                      Get.back();
+                                    },
+                                  );
+                                },
+                              )
+                            ],
+                          ),
                           Divider(
                               color: AppColors.violetClr.withOpacity(0.3),
                               thickness: 1.h)

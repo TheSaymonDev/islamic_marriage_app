@@ -4,18 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_details_screen/bio_data_details_screen.dart';
-import 'package:islamic_marriage/screens/create_bio_data_screen/model/all_divisions.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/all_divisions.dart';
 import 'package:islamic_marriage/screens/help_mate_screen/controller/all_bio_data_controller.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/model/bio_data.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/utils/validator.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_drop_down_button.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_drop_down_button1.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
-import 'package:islamic_marriage/widgets/show_bio_data_widgets/custom_bio_data_bg.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_validators.dart';
+import 'package:islamic_marriage/widgets/custom_drop_down_button.dart';
+import 'package:islamic_marriage/widgets/custom_drop_down_button1.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_bio_data_bg.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:lottie/lottie.dart';
 
 class HelpMateScreen extends StatefulWidget {

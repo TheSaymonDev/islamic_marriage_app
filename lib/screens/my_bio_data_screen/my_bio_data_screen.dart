@@ -6,10 +6,10 @@ import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_da
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_expansion_tile.dart';
-import 'package:islamic_marriage/widgets/show_bio_data_widgets/custom_bio_data_table.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_expansion_tile.dart';
+import 'package:islamic_marriage/widgets/custom_bio_data_table.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class MyBioDataScreen extends StatefulWidget {
   const MyBioDataScreen({
@@ -21,6 +21,13 @@ class MyBioDataScreen extends StatefulWidget {
 }
 
 class _MyBioDataScreenState extends State<MyBioDataScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<MyBioDataController>().readMyBioData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

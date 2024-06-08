@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/model/otp_verification.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class OtpVerificationController extends GetxController {
   bool isLoading = false;

@@ -6,8 +6,8 @@ import 'package:islamic_marriage/screens/explore_screens/model/users_model.dart'
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_card.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/widgets/custom_card.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});

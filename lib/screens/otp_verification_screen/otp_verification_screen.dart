@@ -10,10 +10,10 @@ import 'package:islamic_marriage/screens/otp_verification_screen/model/otp_verif
 import 'package:islamic_marriage/screens/otp_verification_screen/model/resend_otp.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
-import 'package:islamic_marriage/widgets/common_widgets/app_text_logo_widget.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_elevated_button.dart';
-import 'package:islamic_marriage/widgets/styles.dart';
+import 'package:islamic_marriage/widgets/custom_text_logo.dart';
+import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -59,7 +59,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             child: Column(
               children: [
                 Gap(32.h),
-                const AppTextLogo(),
+                const CustomTextLogo(),
                 Gap(150.h),
                 Text('Get Your Code',
                     style:

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
-import 'package:islamic_marriage/widgets/common_widgets/custom_search_text_field.dart';
-import 'package:islamic_marriage/widgets/shop_screen_widgets/custom_category_card.dart';
-import 'package:islamic_marriage/widgets/shop_screen_widgets/custom_product_card.dart';
+import 'package:islamic_marriage/widgets/custom_search_text_field.dart';
+import 'package:islamic_marriage/screens/shop_screen/widgets/custom_category_card.dart';
+import 'package:islamic_marriage/screens/shop_screen/widgets/custom_product_card.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
