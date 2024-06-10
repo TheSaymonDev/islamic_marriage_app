@@ -68,7 +68,7 @@ class _UserScreenState extends State<UserScreen> {
                           height: 130.h,
                           width: 130.w,
                           child: CircleAvatar(
-                            foregroundImage: AssetImage(AppUrls.photoPng),
+                            foregroundImage: AssetImage(AppUrls.placeHolderPng),
                           ),
                         ),
                         Gap(4.w),

@@ -56,6 +56,7 @@ class AppUrls{
   static const setPasswordUrl = '$_baseUrl/auth/forget-password-verify-otp';
   static const resendOTPUrl = '$_baseUrl/auth/send-otp';
   static const changePasswordUrl = '$_baseUrl/auth/change-password';
+  static const profileUpdateUrl = '$_baseUrl/users/change-fullname';
   // for create bio data
   static const createGeneralInfoUrl = '$_baseUrl/biodata/personal-info/create';
   static const createAddressUrl = '$_baseUrl/biodata/address/create';

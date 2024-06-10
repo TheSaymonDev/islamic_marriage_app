@@ -4,7 +4,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/profile_update_screen/controller/change_password_controller.dart';
 import 'package:islamic_marriage/screens/profile_update_screen/controller/profile_update_controller.dart';
-import 'package:islamic_marriage/screens/profile_update_screen/model/change_password.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/models/change_password.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/models/profile_update.dart';
+import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -16,12 +18,27 @@ import 'package:islamic_marriage/widgets/custom_gender_selection.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
-class ProfileUpdateScreen extends StatelessWidget {
+class ProfileUpdateScreen extends StatefulWidget {
   ProfileUpdateScreen({super.key});
 
+  @override
+  State<ProfileUpdateScreen> createState() => _ProfileUpdateScreenState();
+}
+
+class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   final _nameController = TextEditingController();
+
   final _phoneController = TextEditingController();
+
   final _emailController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = SharedPreferencesService().getUserName();
+    _phoneController.text = SharedPreferencesService().getUserMobileNumber();
+    _emailController.text = SharedPreferencesService().getUserEmail();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +104,10 @@ class ProfileUpdateScreen extends StatelessWidget {
                   hintText: 'Name', controller: _nameController),
               Gap(16.h),
               CustomTextFormField(
-                hintText: 'Phone',
-                controller: _phoneController,
-                keyBoardType: TextInputType.phone,
-              ),
+                  hintText: 'Phone',
+                  controller: _phoneController,
+                  keyBoardType: TextInputType.phone,
+                  readOnly: true),
               Gap(16.h),
               CustomTextFormField(
                 hintText: 'Email',
@@ -111,7 +128,14 @@ class ProfileUpdateScreen extends StatelessWidget {
                 ),
               ),
               Gap(24.h),
-              CustomElevatedButton(onPressed: () {}, buttonName: 'Update')
+              GetBuilder<ProfileUpdateController>(
+                  builder: (controller) => controller.isLoading
+                      ? customCircularProgressIndicator
+                      : CustomElevatedButton(
+                          onPressed: () {
+                            _submitProfile(controller);
+                          },
+                          buttonName: 'Update'))
             ],
           ),
         ),
@@ -120,8 +144,11 @@ class ProfileUpdateScreen extends StatelessWidget {
   }
 
   final _oldPasswordController = TextEditingController();
+
   final _newPasswordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+
+  //final _confirmPasswordController = TextEditingController();
+
   Future<dynamic> _showBottomSheet() {
     return Get.bottomSheet(CustomBottomSheet(children: [
       Text('Change Password', style: AppTextStyles.titleMedium()),
@@ -135,32 +162,45 @@ class ProfileUpdateScreen extends StatelessWidget {
           hintText: 'New Password',
           controller: _newPasswordController,
           validator: passwordValidator),
-      Gap(16.h),
-      CustomTextFormField(
-          hintText: 'Confirm Password',
-          controller: _confirmPasswordController,
-          validator: (value) =>
-              confirmPasswordValidator(value, _newPasswordController)),
+      // Gap(16.h),
+      // CustomTextFormField(
+      //     hintText: 'Confirm Password',
+      //     controller: _confirmPasswordController,
+      //     validator: (value) =>
+      //         confirmPasswordValidator(value, _newPasswordController)),
       Gap(32.h),
       GetBuilder<ChangePasswordController>(
           builder: (controller) => controller.isLoading
               ? customCircularProgressIndicator
               : CustomElevatedButton(
                   onPressed: () {
-                    _formOnSubmit(controller);
+                    _submitChangePassword(controller);
                   },
                   buttonName: 'Confirm')),
       Gap(32.h)
     ]));
   }
 
-  void _formOnSubmit(ChangePasswordController controller) async {
+  void _clearData(){
+    _oldPasswordController.clear();
+    _newPasswordController.clear();
+  }
+  void _submitChangePassword(ChangePasswordController controller) async {
     final result = await controller.changingPassword(
         changePassword: ChangePassword(
             oldPassword: _oldPasswordController.text,
             newPassword: _newPasswordController.text));
     if (result) {
-      Get.back();
+      _clearData();
+      Navigator.pop(context);
+    }
+  }
+
+  void _submitProfile(ProfileUpdateController controller) async {
+    final result = await controller.updateProfile(
+        profileUpdate: ProfileUpdate(fullName: _nameController.text));
+    if (result) {
+      Navigator.pop(context);
     }
   }
 }

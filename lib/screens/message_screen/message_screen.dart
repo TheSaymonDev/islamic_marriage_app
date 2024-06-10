@@ -146,7 +146,7 @@ class MessageScreen extends StatelessWidget {
                 height: 50.h,
                 width: 50.w,
                 child: const CircleAvatar(
-                  foregroundImage: AssetImage(AppUrls.photoPng),
+                  foregroundImage: AssetImage(AppUrls.placeHolderPng),
                 ),
               ),
               Positioned(

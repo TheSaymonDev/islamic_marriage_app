@@ -48,7 +48,7 @@ class BioDataDetailsScreen extends StatelessWidget {
                           foregroundImage: bioData.lifeStyleInformation !=
                               null
                               ? NetworkImage(bioData.lifeStyleInformation!.photo!)
-                              : AssetImage(AppUrls.photoPng) as ImageProvider,
+                              : AssetImage(AppUrls.placeHolderPng) as ImageProvider,
                         ),
                       ),
                       Gap(8.h),
@@ -109,14 +109,14 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        'Type of Bio Data': '',
-        'Marital Status': '',
-        'Date of Birth': '',
-        'Height': '',
-        'Complexion': '',
-        'Weight': '',
-        'Blood Group': '',
-        'Nationality': '',
+        'Type of Bio Data': 'N/A',
+        'Marital Status': 'N/A',
+        'Date of Birth': 'N/A',
+        'Height': 'N/A',
+        'Complexion': 'N/A',
+        'Weight': 'N/A',
+        'Blood Group': 'N/A',
+        'Nationality': 'N/A',
       };
     }
   }
@@ -131,9 +131,9 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        'Permanent Address': '',
-        'Present Address': '',
-        'Where did you grow up?': '',
+        'Permanent Address': 'N/A',
+        'Present Address': 'N/A',
+        'Where did you grow up?': 'N/A',
       };
     }
   }
@@ -154,14 +154,14 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        'Educational Method': '',
-        'Highest Educational Qualification': '',
-        'Passing Year': '',
-        'Group': '',
-        'Result': '',
-        'Name of Educational Institution': '',
-        'Other Educational Qualification': '',
-        'Islamic Educational Title': '',
+        'Educational Method': 'N/A',
+        'Highest Educational Qualification': 'N/A',
+        'Passing Year': 'N/A',
+        'Group': 'N/A',
+        'Result': 'N/A',
+        'Name of Educational Institution': 'N/A',
+        'Other Educational Qualification': 'N/A',
+        'Islamic Educational Title': 'N/A',
       };
     }
   }
@@ -187,19 +187,19 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        "Father's Name": '',
-        'Is your father alive?': '',
-        "Description of father's profession": '',
-        "Mother's Name": '',
-        'Is your mother alive?': '',
-        "Description of mother's profession": '',
-        "How many brother's do you have?": '',
-        "Brother's Information": '',
-        "How many sister's do you have?": '',
-        "Sister's Information": '',
-        'Profession of uncles': '',
-        'Family financial status': '',
-        "How is your family's religious condition?": '',
+        "Father's Name": 'N/A',
+        'Is your father alive?': 'N/A',
+        "Description of father's profession": 'N/A',
+        "Mother's Name": 'N/A',
+        'Is your mother alive?': 'N/A',
+        "Description of mother's profession": 'N/A',
+        "How many brother's do you have?": 'N/A',
+        "Brother's Information": 'N/A',
+        "How many sister's do you have?": 'N/A',
+        "Sister's Information": 'N/A',
+        'Profession of uncles': 'N/A',
+        'Family financial status': 'N/A',
+        "How is your family's religious condition?": 'N/A',
       };
     }
   }
@@ -234,23 +234,23 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        'What kind of clothes do you usually wear outside the house?': '',
-        'Do you have beard according to sunnah? Since when?': '',
-        'Do you wear clothes above the ankles?': '',
-        'Do you pray 5 times a day? Since when?': '',
-        'Usually how many times (waqt) a week are your prayers missed (Qaza)?': '',
-        'Do you comply with mahram/non-mahram?': '',
-        'Are you able to recite the quran correctly?': '',
-        'Which Fiqh do you follow?': '',
-        'Do you watch or listen to dramas/movies/serials/songs?': '',
-        'Do you have any mental or physical disease?': '',
-        'Are you involved in any special work of deen?': '',
-        'What are your ideas or beliefs about the shrine (Mazar)?': '',
-        'Write the names of at least 3 islamic books you have read': '',
-        'Write the names of at least 3 islamic scholars of your choice': '',
-        'Select the category is applicable to you': '',
-        'Write about your hobbies, likes, and dislikes, tastes, dreams and so on': '',
-        "Groom's Mobile Number": '',
+        'What kind of clothes do you usually wear outside the house?': 'N/A',
+        'Do you have beard according to sunnah? Since when?': 'N/A',
+        'Do you wear clothes above the ankles?': 'N/A',
+        'Do you pray 5 times a day? Since when?': 'N/A',
+        'Usually how many times (waqt) a week are your prayers missed (Qaza)?': 'N/A',
+        'Do you comply with mahram/non-mahram?': 'N/A',
+        'Are you able to recite the quran correctly?': 'N/A',
+        'Which Fiqh do you follow?': 'N/A',
+        'Do you watch or listen to dramas/movies/serials/songs?': 'N/A',
+        'Do you have any mental or physical disease?': 'N/A',
+        'Are you involved in any special work of deen?': 'N/A',
+        'What are your ideas or beliefs about the shrine (Mazar)?': 'N/A',
+        'Write the names of at least 3 islamic books you have read': 'N/A',
+        'Write the names of at least 3 islamic scholars of your choice': 'N/A',
+        'Select the category is applicable to you': 'N/A',
+        'Write about your hobbies, likes, and dislikes, tastes, dreams and so on': 'N/A',
+        "Groom's Mobile Number": 'N/A',
       };
     }
   }
@@ -266,9 +266,9 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        'Occupation': '',
-        'Description of Profession': '',
-        'Monthly Income': '',
+        'Occupation': 'N/A',
+        'Description of Profession': 'N/A',
+        'Monthly Income': 'N/A',
       };
     }
   }
@@ -294,13 +294,13 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        'Do your guardians agree to your marriage?': '',
-        'Will you be able to keep your wife in the veil after marriage?': '',
-        'Would you like to allow your wife to study after marriage?': '',
-        'Would you like to allow your wife to do any job after marriage?': '',
-        'Where will you live with your wife after marriage?': '',
-        "Would you or your family expect any gift from the bride's family?": '',
-        "Why are you getting married? What are your thoughts on marriage?": '',
+        'Do your guardians agree to your marriage?': 'N/A',
+        'Will you be able to keep your wife in the veil after marriage?': 'N/A',
+        'Would you like to allow your wife to study after marriage?': 'N/A',
+        'Would you like to allow your wife to do any job after marriage?': 'N/A',
+        'Where will you live with your wife after marriage?': 'N/A',
+        "Would you or your family expect any gift from the bride's family?": 'N/A',
+        "Why are you getting married? What are your thoughts on marriage?": 'N/A',
       };
     }
   }
@@ -322,15 +322,15 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        'Age': '',
-        'Complexion': '',
-        'Height': '',
-        'Educational Qualification': '',
-        'District': '',
-        'Marital Status': '',
-        'Profession': '',
-        'Financial Condition': '',
-        'Expected qualities or attributes of life partner': '',
+        'Age': 'N/A',
+        'Complexion': 'N/A',
+        'Height': 'N/A',
+        'Educational Qualification': 'N/A',
+        'District': 'N/A',
+        'Marital Status': 'N/A',
+        'Profession': 'N/A',
+        'Financial Condition': 'N/A',
+        'Expected qualities or attributes of life partner': 'N/A',
       };
     }
   }
@@ -348,9 +348,9 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        'Do your parents know that you are submitting Bio Data to the islamicmarriage.net website?': '',
-        'By Allah, testify that all the information given is true': '',
-        'If you provide any false information, islamicmarriage.net will not take any responsibility for the conventional law and the hereafter. Do you agree?': '',
+        'Do your parents know that you are submitting Bio Data to the islamicmarriage.net website?': 'N/A',
+        'By Allah, testify that all the information given is true': 'N/A',
+        'If you provide any false information, islamicmarriage.net will not take any responsibility for the conventional law and the hereafter. Do you agree?': 'N/A',
       };
     }
   }
@@ -366,10 +366,10 @@ class BioDataDetailsScreen extends StatelessWidget {
       };
     }else{
       return {
-        "Groom's Name": '',
-        "Guardian's mobile number": '',
-        'Relationship with guardian': '',
-        'E-mail to received Bio Data': '',
+        "Groom's Name": 'N/A',
+        "Guardian's mobile number": 'N/A',
+        'Relationship with guardian': 'N/A',
+        'E-mail to received Bio Data': 'N/A',
       };
     }
   }

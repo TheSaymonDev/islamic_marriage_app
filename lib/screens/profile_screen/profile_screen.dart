@@ -128,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: FaIcon(
               FontAwesomeIcons.penToSquare,
               size: 25.sp,
-              color: AppColors.purpleClr,
+              color: AppColors.violetClr,
             ),
           ),
         ],

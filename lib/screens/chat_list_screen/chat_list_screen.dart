@@ -42,7 +42,7 @@ class ChatListScreen extends StatelessWidget {
                                             width: 55.w,
                                             child: const CircleAvatar(
                                                 foregroundImage: AssetImage(
-                                                    AppUrls.photoPng))),
+                                                    AppUrls.placeHolderPng))),
                                         Positioned(
                                             bottom: 3,
                                             right: 3,

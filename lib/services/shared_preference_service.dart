@@ -25,6 +25,18 @@ class SharedPreferencesService {
     return _prefs.getString('accessToken') ?? '';
   }
 
+  String getUserName(){
+    return _prefs.getString('name') ?? '';
+  }
+
+  String getUserEmail(){
+    return _prefs.getString('email') ?? '';
+  }
+
+  String getUserMobileNumber(){
+    return _prefs.getString('mobileNumber') ?? '';
+  }
+
   void saveScreen(bool homeScreen){
     _prefs.setBool('showHome', homeScreen);
   }

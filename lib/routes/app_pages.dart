@@ -5,6 +5,7 @@ import 'package:islamic_marriage/screens/address_view_screen/address_view_screen
 import 'package:islamic_marriage/screens/bio_data_management_screen/bindings/bio_data_management_binding.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/bio_data_management_screen.dart';
 import 'package:islamic_marriage/screens/cart_screen/cart_screen.dart';
+import 'package:islamic_marriage/screens/help_center_screens/bindings/help_center_binding.dart';
 import 'package:islamic_marriage/screens/help_center_screens/help_center_screen.dart';
 import 'package:islamic_marriage/screens/home_screen/bindings/home_binding.dart';
 import 'package:islamic_marriage/screens/home_screen/home_screen.dart';
@@ -78,6 +79,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.helpCenterScreen,
       page: () => HelpCenterScreen(),
+      binding: HelpCenterBinding()
     ),
     GetPage(
       name: AppRoutes.privacyPolicyScreen,

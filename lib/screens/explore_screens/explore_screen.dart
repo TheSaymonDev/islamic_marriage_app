@@ -32,42 +32,44 @@ class _ExploreScreenState extends State<ExploreScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: double.infinity.h,
-        width: double.infinity.w,
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(
-          children: [
-            TabBar(
+      height: double.infinity.h,
+      width: double.infinity.w,
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Column(
+        children: [
+          TabBar(
+            controller: _tabController,
+            labelStyle: AppTextStyles.titleMedium(),
+            unselectedLabelStyle:
+                AppTextStyles.titleMedium(color: AppColors.greyColor),
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: AppColors.violetClr,
+            indicatorWeight: 2.w,
+            tabs: const [
+              Tab(
+                text: 'User',
+              ),
+              Tab(
+                text: 'Kazi Office',
+              ),
+              Tab(
+                text: 'Community\nCenter',
+              ),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: _tabController,
-              labelStyle: AppTextStyles.titleMedium(),
-              unselectedLabelStyle: AppTextStyles.titleMedium(color: AppColors.greyColor),
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorColor: AppColors.violetClr,
-              indicatorWeight: 2.w,
-              tabs: const [
-                Tab(
-                  text: 'User',
-                ),
-                Tab(
-                  text: 'Kazi Office',
-                ),
-                Tab(
-                  text: 'Community\nCenter',
-                ),
+              children: const [
+                UserScreen(),
+                KaziOfficeScreen(),
+                CommunityCenterScreen()
               ],
             ),
-            Expanded(
-              child: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: const [
-                  UserScreen(),
-                  KaziOfficeScreen(),
-                  CommunityCenterScreen(),
-                ],
-              ),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

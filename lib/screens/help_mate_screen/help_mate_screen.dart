@@ -11,6 +11,7 @@ import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
+import 'package:islamic_marriage/widgets/custom_bio_data_table.dart';
 import 'package:islamic_marriage/widgets/custom_drop_down_button.dart';
 import 'package:islamic_marriage/widgets/custom_drop_down_button1.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
@@ -258,86 +259,14 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
               foregroundImage: bioData.lifeStyleInformation?.photo != null
                   ? CachedNetworkImageProvider(
                       bioData.lifeStyleInformation!.photo!)
-                  : const AssetImage(AppUrls.photoPng) as ImageProvider,
+                  : const AssetImage(AppUrls.placeHolderPng) as ImageProvider,
             ),
           ),
           Gap(8.h),
           Text('Name: ${bioData.fullName}',
               style: AppTextStyles.titleLarge(color: AppColors.whiteClr)),
           Gap(16.h),
-          Table(
-            border: TableBorder.all(color: AppColors.whiteClr, width: 2.w),
-            children: [
-              TableRow(
-                children: [
-                  TableCell(
-                    verticalAlignment: TableCellVerticalAlignment.middle,
-                    child: Text('Date of Birth',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.titleMedium(
-                            color: AppColors.whiteClr)),
-                  ),
-                  TableCell(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
-                      child: Center(
-                        child: Text(
-                            bioData.personalInformation?.dateOfBirth ?? '',
-                            style: AppTextStyles.bodyMedium(
-                                color: AppColors.whiteClr)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text('Height',
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.titleMedium(
-                              color: AppColors.whiteClr))),
-                  TableCell(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
-                      child: Center(
-                        child: Text(
-                            bioData.personalInformation?.height ?? 'N/A',
-                            style: AppTextStyles.bodyMedium(
-                                color: AppColors.whiteClr)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableCell(
-                    verticalAlignment: TableCellVerticalAlignment.middle,
-                    child: Text('Complexion',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.titleMedium(
-                            color: AppColors.whiteClr)),
-                  ),
-                  TableCell(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
-                      child: Center(
-                        child: Text(
-                            bioData.personalInformation?.complexion ?? 'N/A',
-                            style: AppTextStyles.bodyMedium(
-                                color: AppColors.whiteClr)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          CustomBioDataTable(data: generateGeneralInfo(bioData)),
           Gap(16.h),
           CustomElevatedButton(
             onPressed: () {
@@ -351,4 +280,21 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
       ),
     );
   }
+  Map<String, String?> generateGeneralInfo(BioData bioData) {
+    final data = bioData.personalInformation;
+    if(data != null){
+      return {
+        'Date of Birth': formatDate(data.dateOfBirth!),
+        'Height': data.height,
+        'Complexion': data.complexion,
+      };
+    }else{
+      return {
+        'Date of Birth': 'N/A',
+        'Height': 'N/A',
+        'Complexion': 'N/A',
+      };
+    }
+  }
+
 }

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/profile_update_screen/model/change_password.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/models/change_password.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
@@ -11,7 +11,7 @@ class ChangePasswordController extends GetxController {
     update();
     try {
       final response = await ApiService().post(
-          url: AppUrls.changePasswordUrl, data: changePassword);
+          url: AppUrls.changePasswordUrl, data: changePassword, headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Successfully Password Changed');
         isLoading = false;
