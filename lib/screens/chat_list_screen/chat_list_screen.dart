@@ -29,7 +29,8 @@ class ChatListScreen extends StatelessWidget {
                         onTap: () {
                           Get.to(() => MessageScreen());
                         },
-                        child: Padding(
+                        child: Container(
+                          color: AppColors.whiteClr,
                             padding: EdgeInsets.symmetric(horizontal: 16.w),
                             child: Column(
                               children: [

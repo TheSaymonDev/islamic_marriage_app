@@ -45,10 +45,7 @@ class BioDataDetailsScreen extends StatelessWidget {
                         height: 85.h,
                         width: 85.w,
                         child: CircleAvatar(
-                          foregroundImage: bioData.lifeStyleInformation !=
-                              null
-                              ? NetworkImage(bioData.lifeStyleInformation!.photo!)
-                              : AssetImage(AppUrls.placeHolderPng) as ImageProvider,
+                          foregroundImage: AssetImage(AppUrls.placeHolderPng),
                         ),
                       ),
                       Gap(8.h),

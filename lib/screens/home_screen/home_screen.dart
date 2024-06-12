@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:islamic_marriage/screens/chat_list_screen/chat_list_screen.dart';
+import 'package:islamic_marriage/screens/explore_screens/controller/all_user_controller.dart';
 import 'package:islamic_marriage/screens/explore_screens/explore_screen.dart';
 import 'package:islamic_marriage/screens/help_mate_screen/help_mate_screen.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
@@ -31,9 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    //Get.find<MyBioDataController>().readMyBioData();
+    Get.find<AllUserController>().readAllUser();
   }
 
   @override

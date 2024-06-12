@@ -63,7 +63,8 @@ class BioData {
         this.occupation,
         this.partner,
         this.pledge,
-        this.contact});
+        this.contact,
+      });
 
   BioData.fromJson(Map<String, dynamic> json) {
     id = json['id'] as String?;

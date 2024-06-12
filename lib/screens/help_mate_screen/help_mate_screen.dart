@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -256,10 +255,7 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
             height: 85.h,
             width: 85.w,
             child: CircleAvatar(
-              foregroundImage: bioData.lifeStyleInformation?.photo != null
-                  ? CachedNetworkImageProvider(
-                      bioData.lifeStyleInformation!.photo!)
-                  : const AssetImage(AppUrls.placeHolderPng) as ImageProvider,
+              foregroundImage: const AssetImage(AppUrls.placeHolderPng),
             ),
           ),
           Gap(8.h),
