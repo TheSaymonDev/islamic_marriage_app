@@ -7,39 +7,33 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class SignUpController extends GetxController {
   bool isObscure = true;
-  String? mobileNumber;
   bool isLoading = false;
   bool isChecked = false;
   int currentGender = 0;
   List<Gender> gender = [
-    Gender(title: 'Male', value: 'male'),
-    Gender(title: 'Female', value: 'female')
+    Gender(title: 'male', value: 'male'),
+    Gender(title: 'female', value: 'female')
   ];
 
   Future<bool> signUpUser({required SignUp signUp}) async {
-    isLoading = true;
-    update();
+    _setLoading(true);
     try {
       final response = await ApiService().post(
-          url: AppUrls.signUpUrl, data: signUp);
+        url: AppUrls.signUpUrl,
+        data: signUp,
+      );
+      _setLoading(false);
       if (response.success) {
         customSuccessMessage(message: 'Sent OTP Your Mobile');
-        mobileNumber = response.data['data'];
-        // Navigate to the desired screen
-        isLoading = false;
-        update();
         return true;
       } else {
         final errorMessage = response.message['message'] ?? 'Registration Failed';
         customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
         return false;
       }
     } catch (error) {
       customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
+      _setLoading(false);
       return false;
     }
   }
@@ -56,6 +50,11 @@ class SignUpController extends GetxController {
 
   void selectGender(int index) {
     currentGender = index;
+    update();
+  }
+
+  void _setLoading(bool value) {
+    isLoading = value;
     update();
   }
 }

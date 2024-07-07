@@ -10,7 +10,7 @@ class ChangePasswordController extends GetxController {
     isLoading = true;
     update();
     try {
-      final response = await ApiService().post(
+      final response = await ApiService().patch(
           url: AppUrls.changePasswordUrl, data: changePassword, headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Successfully Password Changed');

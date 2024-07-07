@@ -7,7 +7,6 @@ import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/controller/sign_up_controller.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/model/sign_up.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_logo.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
@@ -16,22 +15,13 @@ import 'package:islamic_marriage/widgets/custom_gender_selection.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
 
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
   final _nameController = TextEditingController();
-
-  final _mobileController = TextEditingController();
-
+  final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
-
   final _passwordController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -61,24 +51,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 }),
                 Gap(16.h),
                 CustomTextFormField(
-                    hintText: 'Name',
+                    hintText: 'signUpNameHint'.tr,
                     controller: _nameController,
                     validator: nameValidator),
                 Gap(16.h),
                 CustomTextFormField(
-                    hintText: 'Mobile',
-                    controller: _mobileController,
+                    hintText: 'signUpMobileHint'.tr,
+                    controller: _phoneController,
                     validator: mobileValidator,
                     keyBoardType: TextInputType.phone),
                 Gap(16.h),
                 CustomTextFormField(
-                    hintText: 'Email',
+                    hintText: 'signUpEmailHint'.tr,
                     controller: _emailController,
                     validator: emailValidator),
                 Gap(16.h),
                 GetBuilder<SignUpController>(builder: (controller) {
                   return CustomTextFormField(
-                      hintText: 'Password',
+                      hintText: 'signUpPasswordHint'.tr,
                       controller: _passwordController,
                       obscureText: controller.isObscure,
                       validator: passwordValidator,
@@ -88,67 +78,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               controller.isObscure
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: AppColors.greyColor,
+                              color: greyClr,
                               size: 25.sp)));
                 }),
-                Row(
-                  children: [
-                    GetBuilder<SignUpController>(builder: (controller) {
-                      return Checkbox(
-                        value: controller.isChecked,
-                        onChanged: (newValue) =>
-                            controller.toggleIsChecked(newValue),
-                      );
-                    }),
-                    Text('Remember me', style: AppTextStyles.bodyMedium())
-                  ],
-                ),
+                _buildRememberMeRow(context),
                 Gap(16.h),
                 GetBuilder<SignUpController>(
                     builder: (controller) => controller.isLoading
                         ? customCircularProgressIndicator
                         : CustomElevatedButton(
                             onPressed: () => _formOnSubmit(controller),
-                            buttonName: 'Sign Up')),
+                            buttonName: 'signUp'.tr)),
                 Gap(120.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Already have an account?",
-                        style: AppTextStyles.bodyMedium()),
-                    Gap(8.w),
-                    GestureDetector(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Text("Log In",
-                            style: AppTextStyles.titleMedium(
-                                color: AppColors.purpleClr)))
-                  ],
-                ),
+                _buildLogInRow(context),
                 Gap(32.h),
-                Text('Connect With', style: AppTextStyles.bodySmall()),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(FontAwesomeIcons.facebook,
-                            size: 30.sp, color: AppColors.blackClr)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(FontAwesomeIcons.google,
-                            size: 30.sp, color: AppColors.blackClr)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(FontAwesomeIcons.instagram,
-                            size: 30.sp, color: AppColors.blackClr)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(FontAwesomeIcons.twitter,
-                            size: 30.sp, color: AppColors.blackClr))
-                  ],
-                ),
+                Text('connectWith'.tr,
+                    style: Theme.of(context).textTheme.bodySmall),
+                _buildSocialConnect(),
                 Gap(32.h),
               ],
             ),
@@ -158,10 +104,62 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  Row _buildRememberMeRow(BuildContext context) {
+    return Row(
+      children: [
+        GetBuilder<SignUpController>(builder: (controller) {
+          return Checkbox(
+            value: controller.isChecked,
+            onChanged: (newValue) => controller.toggleIsChecked(newValue),
+          );
+        }),
+        Text('rememberMe'.tr, style: Theme.of(context).textTheme.bodyMedium)
+      ],
+    );
+  }
+
+  Row _buildLogInRow(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("alreadyAccount".tr,
+            style: Theme.of(context).textTheme.bodyMedium),
+        Gap(8.w),
+        GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Text("logIn".tr,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: purpleClr)))
+      ],
+    );
+  }
+
+  Row _buildSocialConnect() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+            onPressed: () {},
+            icon: Icon(FontAwesomeIcons.facebook, size: 30.sp)),
+        IconButton(
+            onPressed: () {}, icon: Icon(FontAwesomeIcons.google, size: 30.sp)),
+        IconButton(
+            onPressed: () {},
+            icon: Icon(FontAwesomeIcons.instagram, size: 30.sp)),
+        IconButton(
+            onPressed: () {}, icon: Icon(FontAwesomeIcons.twitter, size: 30.sp))
+      ],
+    );
+  }
+
   void _clearData() {
     _emailController.clear();
     _nameController.clear();
-    _mobileController.clear();
+    _phoneController.clear();
     _passwordController.clear();
   }
 
@@ -169,21 +167,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       final result = await controller.signUpUser(
           signUp: SignUp(
-        fullName: _nameController.text.trim(),
-        mobileNumber: '+88${_mobileController.text.trim()}',
+        name: _nameController.text,
+        phone: _phoneController.text.trim(),
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
         gender: controller.gender[controller.currentGender].value,
       ));
       if (result == true) {
-        _clearData();
         Get.offAllNamed(
           AppRoutes.otpVerificationScreen,
           arguments: {
-            'mobileNumber': controller.mobileNumber,
+            'phone': _phoneController.text.trim(),
             'isForgetOtp': false
           },
         );
+        _clearData();
       }
     }
   }

@@ -6,7 +6,6 @@ import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/identity_verification_screen/controller/identity_verification_controller.dart';
 import 'package:islamic_marriage/screens/identity_verification_screen/model/identity_verification.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_logo.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
@@ -17,13 +16,12 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 class IdentityVerificationScreen extends StatelessWidget {
   IdentityVerificationScreen({super.key});
 
-  final _identifierController = TextEditingController();
+  final _identityController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteClr,
       appBar: CustomAppbar(onPressedBack: () {
         Get.back();
       }),
@@ -39,17 +37,16 @@ class IdentityVerificationScreen extends StatelessWidget {
                 Gap(32.h),
                 const CustomTextLogo(),
                 Gap(150.h),
-                Text('Mobile Number Here',
-                    style:
-                        AppTextStyles.titleLarge(color: AppColors.purpleClr)),
+                Text('identityTitle'.tr,
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(color: purpleClr)),
                 Gap(8.h),
-                Text('Enter the mobile number associated\nwith your account',
-                    style: AppTextStyles.bodyMedium(color: AppColors.greyColor),
+                Text('identitySubTitle'.tr,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: greyClr),
                     textAlign: TextAlign.center),
                 Gap(32.h),
                 CustomTextFormField(
-                    hintText: 'Phone',
-                    controller: _identifierController,
+                    hintText: 'identityPhoneHint'.tr,
+                    controller: _identityController,
                     validator: mobileValidator,
                     keyBoardType: TextInputType.phone),
                 Gap(16.h),
@@ -58,7 +55,7 @@ class IdentityVerificationScreen extends StatelessWidget {
                       ? customCircularProgressIndicator
                       : CustomElevatedButton(
                           onPressed: () => _formOnSubmit(controller),
-                          buttonName: 'Recover Password'),
+                          buttonName: 'sendOtp'.tr),
                 )
               ],
             ),
@@ -72,12 +69,12 @@ class IdentityVerificationScreen extends StatelessWidget {
     if (_formKey.currentState?.validate() ?? false) {
       final result = await controller.identityVerify(
           identityVerification: IdentityVerification(
-              identity: '+88${_identifierController.text.trim()}'));
+              phone: _identityController.text.trim()));
       if (result == true) {
-        Get.offNamed(
+        Get.toNamed(
           AppRoutes.otpVerificationScreen,
           arguments: {
-            'mobileNumber': '+88${_identifierController.text.trim()}',
+            'phone': _identityController.text.trim(),
             'isForgetOtp': true
           },
         );

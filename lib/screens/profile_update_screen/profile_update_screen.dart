@@ -15,6 +15,7 @@ import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
 import 'package:islamic_marriage/widgets/custom_bottom_sheet.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/widgets/custom_gender_selection.dart';
+import 'package:islamic_marriage/widgets/custom_profile_avatar.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
@@ -31,6 +32,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   final _phoneController = TextEditingController();
 
   final _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -47,96 +49,80 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
         onPressedBack: () {
           Get.back();
         },
-        title: 'Profile Update',
+        title: 'profileUpdate'.tr,
       ),
       body: Container(
         height: double.infinity.h,
         width: double.infinity.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Gap(64.h),
-              GetBuilder<ProfileUpdateController>(builder: (controller) {
-                return GestureDetector(
-                  onTap: () {
-                    controller.getImageFromGallery();
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Gap(64.h),
+                GetBuilder<ProfileUpdateController>(
+                  builder: (controller) {
+                    return CustomProfileAvatar(
+                      foregroundImage: controller.imageFile == null
+                          ? AssetImage(AppUrls.placeHolderPng)
+                          : FileImage(controller.imageFile!) as ImageProvider,
+                      iconData: Icons.camera_alt_outlined,
+                      onTap: () {
+                        controller.getImageFromGallery();
+                      },
+                    );
                   },
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        height: 110.h,
-                        width: 110.w,
-                        child: CircleAvatar(
-                          foregroundImage: controller.imageFile == null
-                              ? AssetImage(AppUrls.placeHolderPng)
-                              : FileImage(controller.imageFile!)
-                                  as ImageProvider,
-                        ),
-                      ),
-                      Positioned(
-                        top: 5,
-                        right: 5,
-                        child: CircleAvatar(
-                          backgroundColor: AppColors.violetClr,
-                          radius: 15.r,
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            color: AppColors.whiteClr,
-                            size: 15.sp,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              }),
-              Gap(32.h),
-              GetBuilder<ProfileUpdateController>(builder: (controller) {
-                return CustomGenderSelection(
-                  genders: controller.gender,
-                  currentGender: controller.currentGender,
-                  onGenderSelected: (index) => controller.selectGender(index),
-                );
-              }),
-              Gap(16.h),
-              CustomTextFormField(
-                  hintText: 'Name', controller: _nameController),
-              Gap(16.h),
-              CustomTextFormField(
-                  hintText: 'Phone',
-                  controller: _phoneController,
-                  keyBoardType: TextInputType.phone,
-                  readOnly: true),
-              Gap(16.h),
-              CustomTextFormField(
-                hintText: 'Email',
-                controller: _emailController,
-                readOnly: true,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    _showBottomSheet();
-                  },
-                  child: Text(
-                    'Change Password?',
-                    style:
-                        AppTextStyles.titleMedium(color: AppColors.violetClr),
+                ),
+                Gap(32.h),
+                GetBuilder<ProfileUpdateController>(builder: (controller) {
+                  return CustomGenderSelection(
+                    genders: controller.gender,
+                    currentGender: controller.currentGender,
+                    onGenderSelected: (index) => controller.selectGender(index),
+                  );
+                }),
+                Gap(16.h),
+                CustomTextFormField(
+                    hintText: 'nameHint'.tr, controller: _nameController),
+                Gap(16.h),
+                CustomTextFormField(
+                    hintText: 'phoneHint'.tr,
+                    controller: _phoneController,
+                    keyBoardType: TextInputType.phone,
+                    readOnly: true),
+                Gap(16.h),
+                CustomTextFormField(
+                  hintText: 'emailHint'.tr,
+                  controller: _emailController,
+                  readOnly: true,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      _showBottomSheet();
+                    },
+                    child: Text(
+                      'changePassword'.tr,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(color: violetClr),
+                    ),
                   ),
                 ),
-              ),
-              Gap(24.h),
-              GetBuilder<ProfileUpdateController>(
-                  builder: (controller) => controller.isLoading
-                      ? customCircularProgressIndicator
-                      : CustomElevatedButton(
-                          onPressed: () {
-                            _submitProfile(controller);
-                          },
-                          buttonName: 'Update'))
-            ],
+                Gap(24.h),
+                GetBuilder<ProfileUpdateController>(
+                    builder: (controller) => controller.isLoading
+                        ? customCircularProgressIndicator
+                        : CustomElevatedButton(
+                            onPressed: () {
+                              _submitProfile(controller);
+                            },
+                            buttonName: 'updateProfile'.tr))
+              ],
+            ),
           ),
         ),
       ),
@@ -147,27 +133,19 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
   final _newPasswordController = TextEditingController();
 
-  //final _confirmPasswordController = TextEditingController();
-
   Future<dynamic> _showBottomSheet() {
     return Get.bottomSheet(CustomBottomSheet(children: [
       Text('Change Password', style: AppTextStyles.titleMedium()),
       Gap(32.h),
       CustomTextFormField(
-          hintText: 'Old Password',
+          hintText: 'oldPass'.tr,
           controller: _oldPasswordController,
           validator: passwordValidator),
       Gap(16.h),
       CustomTextFormField(
-          hintText: 'New Password',
+          hintText: 'setPasswordNewPassHint'.tr,
           controller: _newPasswordController,
           validator: passwordValidator),
-      // Gap(16.h),
-      // CustomTextFormField(
-      //     hintText: 'Confirm Password',
-      //     controller: _confirmPasswordController,
-      //     validator: (value) =>
-      //         confirmPasswordValidator(value, _newPasswordController)),
       Gap(32.h),
       GetBuilder<ChangePasswordController>(
           builder: (controller) => controller.isLoading
@@ -176,31 +154,36 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   onPressed: () {
                     _submitChangePassword(controller);
                   },
-                  buttonName: 'Confirm')),
+                  buttonName: 'confirm'.tr)),
       Gap(32.h)
     ]));
   }
 
-  void _clearData(){
+  void _clearData() {
     _oldPasswordController.clear();
     _newPasswordController.clear();
   }
+
   void _submitChangePassword(ChangePasswordController controller) async {
     final result = await controller.changingPassword(
         changePassword: ChangePassword(
             oldPassword: _oldPasswordController.text,
             newPassword: _newPasswordController.text));
     if (result) {
-      _clearData();
       Navigator.pop(context);
+      _clearData();
     }
   }
 
   void _submitProfile(ProfileUpdateController controller) async {
-    final result = await controller.updateProfile(
-        profileUpdate: ProfileUpdate(fullName: _nameController.text));
-    if (result) {
-      Navigator.pop(context);
+    if (_formKey.currentState?.validate() ?? false) {
+      final result = await controller.updateProfile(
+          profileUpdate: ProfileUpdate(
+              name: _nameController.text,
+              gender: controller.gender[controller.currentGender].value));
+      if (result) {
+        Navigator.pop(context);
+      }
     }
   }
 }

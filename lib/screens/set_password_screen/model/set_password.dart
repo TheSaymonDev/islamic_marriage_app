@@ -1,15 +1,13 @@
 class SetPassword {
-  String? mobileNumber;
-  String? otp;
-  String? newPassword;
+  String? phone;
+  String? password;
 
-  SetPassword({this.mobileNumber, this.otp, this.newPassword});
+  SetPassword({this.phone, this.password});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['mobileNumber'] = mobileNumber;
-    data['otp'] = otp;
-    data['newPassword'] = newPassword;
+    data['phone'] = phone;
+    data['password'] = password;
     return data;
   }
 }

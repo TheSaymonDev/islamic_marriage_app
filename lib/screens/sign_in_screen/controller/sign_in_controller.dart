@@ -10,31 +10,30 @@ class SignInController extends GetxController {
   bool isObscure = true;
   bool isChecked = false;
 
-  Future<bool> signInUser({required SignIn signIn}) async {
-    isLoading = true;
-    update();
+  Future<String> signInUser({required SignIn signIn}) async {
+    _setLoading(true);
     try {
-      final response = await ApiService().post(
-          url: AppUrls.signInUrl, data: signIn);
+      final response = await ApiService().post(url: AppUrls.signInUrl, data: signIn);
+      _setLoading(false);
+
       if (response.success) {
-        SharedPreferencesService().saveUserData(response.data['data']);
-        customSuccessMessage(message: 'Successfully Log In');
-        // Navigate to the desired screen
-        isLoading = false;
-        update();
-        return true;
+        final message = response.data['message'];
+        if (message == 'Login Successfully') {
+          SharedPreferencesService().saveUserData(response.data);
+          customSuccessMessage(message: 'Successfully Log In');
+        } else if (message == 'Please Verify Your Account To Login') {
+          customErrorMessage(message: message);
+        }
+        return message;
       } else {
         final errorMessage = response.message['message'] ?? 'Log In Failed';
         customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
-        return false;
+        return errorMessage;
       }
     } catch (error) {
+      _setLoading(false);
       customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
-      return false;
+      return error.toString();
     }
   }
 
@@ -43,8 +42,13 @@ class SignInController extends GetxController {
     update();
   }
 
-  void toggleIsChecked(newValue) {
+  void toggleIsChecked(bool newValue) {
     isChecked = newValue;
+    update();
+  }
+
+  void _setLoading(bool value) {
+    isLoading = value;
     update();
   }
 }

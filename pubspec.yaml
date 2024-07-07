@@ -112,7 +112,9 @@ flutter:
     - family: Gumela Arabic
       fonts:
         - asset: assets/fonts/GumelaArabic-Bold.otf
+          weight: 700
         - asset: assets/fonts/GumelaArabic-Regular.otf
+          weight: 400
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

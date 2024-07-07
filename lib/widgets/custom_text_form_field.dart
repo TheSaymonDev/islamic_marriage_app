@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -28,9 +27,9 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: AppTextStyles.bodyMedium(),
+      style: Theme.of(context).textTheme.bodyMedium,
       controller: controller,
-      cursorColor: AppColors.blackClr,
+      cursorColor: lightFontClr,
       readOnly: readOnly,
       obscureText: obscureText,
       validator: validator,
@@ -38,19 +37,9 @@ class CustomTextFormField extends StatelessWidget {
       maxLines: maxLines ?? 1,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: AppTextStyles.bodyMedium(color: AppColors.greyColor),
-        fillColor: AppColors.filledClr,
-        filled: true,
+        hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: greyClr),
         suffixIcon: suffixIcon,
         contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
-          borderSide: BorderSide(color: AppColors.violetClr, width: 2.w),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
-          borderSide: BorderSide(color: AppColors.violetClr, width: 2.w),
-        ),
       ),
     );
   }

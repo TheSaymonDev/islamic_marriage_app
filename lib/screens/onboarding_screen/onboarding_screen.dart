@@ -5,7 +5,6 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -18,6 +17,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+
   int _currentIndex = 0;
 
   @override
@@ -46,9 +46,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   image: AssetImage(AppUrls.appLogoPng),
                                   fit: BoxFit.fill))),
                       Gap(32.h),
-                      Text(AppUrls.hadith,
-                          style: AppTextStyles.bodyMedium(
-                              color: AppColors.purpleClr),
+                      Text('onboardingMsg'.tr,
+                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: purpleClr),
                           textAlign: TextAlign.center)
                     ],
                   );
@@ -69,8 +68,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               effect: ExpandingDotsEffect(
                   dotHeight: 8.0.h,
                   dotWidth: 16.0.w,
-                  activeDotColor: AppColors.purpleClr,
-                  dotColor: Colors.grey),
+                  activeDotColor: purpleClr,
+                  dotColor: greyClr),
               onDotClicked: (index) {
                 _currentIndex = index;
                 setState(() {});
@@ -84,7 +83,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     onPressed: () {
                       Get.toNamed(AppRoutes.signInScreen);
                     },
-                    buttonName: 'Get Start')),
+                    buttonName: 'getStart'.tr)),
             Gap(48.h)
           ],
         ),

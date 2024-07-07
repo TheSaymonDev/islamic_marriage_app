@@ -1,17 +1,12 @@
 class OtpVerification {
-  String? mobileNumber;
+  String? phone;
   String? otp;
 
-  OtpVerification({this.mobileNumber, this.otp});
-
-  OtpVerification.fromJson(Map<String, dynamic> json) {
-    mobileNumber = json['mobileNumber'];
-    otp = json['otp'];
-  }
+  OtpVerification({this.phone, this.otp});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['mobileNumber'] = mobileNumber;
+    data['phone'] = phone;
     data['otp'] = otp;
     return data;
   }

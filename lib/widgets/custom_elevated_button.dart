@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -48,12 +47,11 @@ class CustomElevatedButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 20.sp, color: AppColors.whiteClr),
+              Icon(icon, size: 20.sp, color: darkFontClr),
               Gap(4.w),
             ],
             Text(buttonName,
-                style: style ??
-                    AppTextStyles.titleMedium(color: AppColors.whiteClr))
+                style: style ?? Theme.of(context).textTheme.titleMedium!.copyWith(color: darkFontClr))
           ],
         ),
       ),

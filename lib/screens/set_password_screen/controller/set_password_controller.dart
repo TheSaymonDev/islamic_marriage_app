@@ -9,29 +9,32 @@ class SetPasswordController extends GetxController {
   bool isObscureConfirm = true;
   bool isLoading = false;
 
-  Future<bool> setNewPassword({required SetPassword setPassword}) async {
-    isLoading = true;
-    update();
+  Future<bool> setNewPassword(
+      {required SetPassword setPassword, required String token}) async {
+    _setLoading(true);
+    final headerWithToken = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    };
     try {
-      final response = await ApiService().post(
-          url: AppUrls.setPasswordUrl, data: setPassword);
+      final response = await ApiService().patch(
+          url: AppUrls.setPasswordUrl,
+          data: setPassword,
+          headers: headerWithToken);
       if (response.success) {
-        customSuccessMessage(message: 'Password Changed Successfully');
-        // Navigate to the desired screen
-        isLoading = false;
-        update();
+        customSuccessMessage(message: 'Password Successfully Changed');
+        _setLoading(false);
         return true;
       } else {
-        final errorMessage = response.message['message'] ?? 'Password Change Failed';
+        final errorMessage =
+            response.message['message'] ?? 'Password Change Failed';
         customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
+        _setLoading(false);
         return false;
       }
     } catch (error) {
       customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
+      _setLoading(false);
       return false;
     }
   }
@@ -43,6 +46,11 @@ class SetPasswordController extends GetxController {
 
   void toggleObscureC() {
     isObscureConfirm = !isObscureConfirm;
+    update();
+  }
+
+  void _setLoading(bool value) {
+    isLoading = value;
     update();
   }
 }

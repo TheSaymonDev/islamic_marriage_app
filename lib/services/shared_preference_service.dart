@@ -9,20 +9,14 @@ class SharedPreferencesService {
   }
 
   void saveUserData(Map<String, dynamic> userData) {
-    _prefs.setString('userId', userData['user']['id'] ?? '');
-    _prefs.setString('name', userData['user']['fullName'] ?? '');
-    _prefs.setString('email', userData['user']['email'] ?? '');
-    _prefs.setString('gender', userData['user']['gender'] ?? '');
-    _prefs.setString('mobileNumber', userData['user']['mobileNumber'] ?? '');
-    _prefs.setString('refreshToken', userData['user']['refreshToken'] ?? '');
-    _prefs.setString('accessToken', userData['accessToken'] ?? '');
+    _prefs.setString('token', userData['data'] ?? '');
   }
   String getUserId(){
     return _prefs.getString('userId') ?? '';
   }
 
   String getToken() {
-    return _prefs.getString('accessToken') ?? '';
+    return _prefs.getString('token') ?? '';
   }
 
   String getUserName(){
@@ -45,12 +39,24 @@ class SharedPreferencesService {
   }
 
   void clearUserData() {
-    _prefs.remove('userId');
-    _prefs.remove('name');
-    _prefs.remove('email');
-    _prefs.remove('gender');
-    _prefs.remove('mobileNumber');
-    _prefs.remove('refreshToken');
-    _prefs.remove('accessToken');
+    _prefs.remove('token');
   }
+
+  void saveTheme(String theme) {
+    _prefs.setString('themeKey', theme);
+  }
+
+  String getTheme() {
+    return _prefs.getString('themeKey') ?? '';
+  }
+
+  void saveLanguage(String language) {
+    _prefs.setString('languageKey', language);
+  }
+
+  String getLanguage() {
+    return _prefs.getString('languageKey') ?? '';
+  }
+
+
 }

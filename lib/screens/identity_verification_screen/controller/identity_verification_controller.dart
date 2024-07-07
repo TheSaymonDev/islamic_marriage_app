@@ -7,30 +7,31 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 class IdentityVerificationController extends GetxController {
   bool isLoading = false;
 
-  Future<bool> identityVerify({required IdentityVerification identityVerification}) async {
-    isLoading = true;
-    update();
+  Future<bool> identityVerify(
+      {required IdentityVerification identityVerification}) async {
+    _setLoading(true);
     try {
-      final response = await ApiService().post(
-          url: AppUrls.identityUrl, data: identityVerification);
+      final response = await ApiService()
+          .post(url: AppUrls.identityUrl, data: identityVerification);
       if (response.success) {
         customSuccessMessage(message: 'Sent OTP Your Mobile');
-        // Navigate to the desired screen
-        isLoading = false;
-        update();
+        _setLoading(false);
         return true;
       } else {
         final errorMessage = response.message['message'] ?? 'OTP Sent Failed';
         customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
+        _setLoading(false);
         return false;
       }
     } catch (error) {
       customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
+      _setLoading(false);
       return false;
     }
+  }
+
+  void _setLoading(bool value) {
+    isLoading = value;
+    update();
   }
 }

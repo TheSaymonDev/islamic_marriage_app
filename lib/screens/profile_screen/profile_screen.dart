@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/custom_bottom_sheet.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/screens/profile_screen/widgets/custom_button.dart';
+import 'package:islamic_marriage/widgets/custom_profile_avatar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -30,13 +30,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           children: [
             Gap(16.h),
-            _buildProfileAvatar(),
+            CustomProfileAvatar(
+              onTap: () {
+                Get.toNamed(AppRoutes.profileUpdateScreen);
+              },
+              iconData: FontAwesomeIcons.penToSquare,
+              foregroundImage: AssetImage(AppUrls.placeHolderPng),
+            ),
             Gap(16.h),
             CustomElevatedButton(
               onPressed: () {
                 Get.toNamed(AppRoutes.myBioDataScreen);
               },
-              buttonName: 'My Bio Data',
+              buttonName: 'myBioData'.tr,
               buttonWidth: 140.w,
               buttonHeight: 45.h,
             ),
@@ -46,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Get.toNamed(AppRoutes.bioDataManagementScreen);
               },
               iconData: FontAwesomeIcons.penToSquare,
-              title: 'Edit Bio Data',
+              title: 'editBioData'.tr,
             ),
             Gap(8.h),
             CustomButton(
@@ -54,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Get.toNamed(AppRoutes.subscriptionScreen);
               },
               iconData: Icons.subscriptions,
-              title: 'Subscription',
+              title: 'subscription'.tr,
             ),
             Gap(8.h),
             CustomButton(
@@ -62,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Get.toNamed(AppRoutes.addressViewScreen);
               },
               iconData: FontAwesomeIcons.addressBook,
-              title: 'Address',
+              title: 'address'.tr,
             ),
             Gap(8.h),
             CustomButton(
@@ -70,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Get.toNamed(AppRoutes.cartScreen);
               },
               iconData: Icons.shopping_bag,
-              title: 'My Bag',
+              title: 'myBag'.tr,
             ),
             Gap(8.h),
             CustomButton(
@@ -78,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Get.toNamed(AppRoutes.helpCenterScreen);
               },
               iconData: Icons.help_center,
-              title: 'Help Center',
+              title: 'helpCenter'.tr,
             ),
             Gap(8.h),
             CustomButton(
@@ -86,14 +92,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Get.toNamed(AppRoutes.privacyPolicyScreen);
                 },
                 iconData: FontAwesomeIcons.shieldHalved,
-                title: 'Privacy Policy'),
+                title: 'privacyPolicy'.tr),
             Gap(8.h),
             CustomButton(
               onTap: () {
                 Get.toNamed(AppRoutes.aboutUsScreen);
               },
               iconData: Icons.info,
-              title: 'About Us',
+              title: 'aboutUs'.tr,
             ),
             Gap(8.h),
             CustomButton(
@@ -101,37 +107,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _showLogoutBottomSheet();
                 },
                 iconData: FontAwesomeIcons.rightFromBracket,
-                title: 'Logout')
+                title: 'logout'.tr)
           ],
         ),
-      ),
-    );
-  }
-
-  GestureDetector _buildProfileAvatar() {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(AppRoutes.profileUpdateScreen);
-      },
-      child: Stack(
-        children: [
-          SizedBox(
-            height: 110.h,
-            width: 110.w,
-            child: CircleAvatar(
-              foregroundImage: AssetImage(AppUrls.placeHolderPng),
-            ),
-          ),
-          Positioned(
-            top: 4,
-            right: 4,
-            child: FaIcon(
-              FontAwesomeIcons.penToSquare,
-              size: 25.sp,
-              color: AppColors.violetClr,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -146,19 +124,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: 60.w,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4.r),
-                      color: AppColors.violetClr))),
+                      color: violetClr))),
           Gap(16.h),
-          Center(child: Text('Logout', style: AppTextStyles.titleLarge())),
+          Center(child: Text('logout'.tr, style: Theme.of(context).textTheme.titleLarge)),
           Gap(16.h),
           Center(
-              child: Text('Are you sure want to logout?',
-                  style: AppTextStyles.bodyMedium())),
+              child: Text('areYouSure'.tr,
+                  style: Theme.of(context).textTheme.bodyMedium)),
           Gap(16.h),
           Row(
             children: [
               Expanded(
                   child: CustomElevatedButton(
-                      onPressed: () => Get.back(), buttonName: 'Cancel')),
+                      onPressed: () => Get.back(), buttonName: 'cancelBtn'.tr)),
               Gap(32.w),
               Expanded(
                   child: CustomElevatedButton(
@@ -166,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SharedPreferencesService().clearUserData();
                         Get.offAllNamed(AppRoutes.signInScreen);
                       },
-                      buttonName: 'Logout'))
+                      buttonName: 'logout'.tr))
             ],
           ),
           Gap(32.h)

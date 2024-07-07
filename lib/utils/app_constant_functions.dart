@@ -37,12 +37,12 @@ PinTheme pinTheme() {
       shape: PinCodeFieldShape.box,
       borderRadius: BorderRadius.circular(4.r),
       borderWidth: 1.w,
-      inactiveFillColor: AppColors.whiteClr,
-      selectedFillColor: AppColors.whiteClr,
-      fieldHeight: 46.h,
+      inactiveFillColor: lightBgClr,
+      selectedFillColor: purple50Clr,
+      fieldHeight: 48.h,
       fieldWidth: 46.w,
       activeColor: const Color(0xffDDDDDD),
-      selectedColor: AppColors.violetClr,
+      selectedColor: violetClr,
       inactiveColor: const Color(0xffDDDDDD));
 }
 

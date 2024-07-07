@@ -29,10 +29,7 @@ class AppUrls{
   static const cashOnDeliveryJson = '$_lottiePath/cash_on_delivery.json';
   static const emptyCartJson = '$_lottiePath/empty_cart.json';
 
-  static const hadith =
-      'এবং যারা প্রার্থনা করে, "হে আমাদের পালনকর্তা! আমাদেরকে এমন স্ত্রী ও সন্তান দান করুন যারা আমাদের চোখের প্রশান্তি হবে এবং আমাদেরকে সৎকর্মশীলদের নেতৃত্ব দেওয়ার জন্য দান করুন।" আল-ফুরকান : ৭৪';
-
-  static const _baseUrl = "https://api.islamicmarriage.net/api/v1";
+  static const _baseUrl = "https://islamic-marriage-server.onrender.com/api/v1";
   static const Map<String, String> requestHeader = {"Content-Type": "application/json"};
 
   static Map<String, String> get getHeaderWithToken{
@@ -50,13 +47,13 @@ class AppUrls{
 
   // for auth
   static const signInUrl = '$_baseUrl/auth/login';
-  static const signUpUrl = '$_baseUrl/users/register';
-  static const identityUrl = '$_baseUrl/auth/forget-password';
-  static const otpVerificationUrl = '$_baseUrl/auth/verify-otp';
-  static const setPasswordUrl = '$_baseUrl/auth/forget-password-verify-otp';
+  static const signUpUrl = '$_baseUrl/user/register';
+  static const identityUrl = '$_baseUrl/auth/sendOtp';
+  static const otpVerificationUrl = '$_baseUrl/auth/verifyOtp';
+  static const setPasswordUrl = '$_baseUrl/auth/resetPassword';
   static const resendOTPUrl = '$_baseUrl/auth/send-otp';
-  static const changePasswordUrl = '$_baseUrl/auth/change-password';
-  static const profileUpdateUrl = '$_baseUrl/users/change-fullname';
+  static const changePasswordUrl = '$_baseUrl/auth/changePassword';
+  static const profileUpdateUrl = '$_baseUrl/user/update';
   // for create bio data
   static const createGeneralInfoUrl = '$_baseUrl/biodata/personal-info/create';
   static const createAddressUrl = '$_baseUrl/biodata/address/create';

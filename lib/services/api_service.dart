@@ -134,6 +134,26 @@ class ApiService {
     return _handleApiResponse(streamResponse);
   }
 
+  Future<ApiResponse<dynamic>> patch({
+    required String url,
+    required dynamic data,
+    Map<String, String>? headers,
+  })async {
+    developer.log(url.toString());
+    developer.log('Data: $data');
+    developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
+
+    final response = await http.patch(
+      Uri.parse(url),
+      headers: headers ?? AppUrls.requestHeader,
+      body: jsonEncode(data),
+    );
+
+    developer.log('Status Code: ${response.statusCode}');
+    developer.log('Body: ${response.body}');
+    return _handleApiResponse(response);
+  }
+
   ApiResponse<dynamic> _handleApiResponse(http.Response response) {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return ApiResponse.success(data: jsonDecode(response.body));

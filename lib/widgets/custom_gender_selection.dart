@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/model/gender.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 
 class CustomGenderSelection extends StatelessWidget {
   final List<Gender> genders;
@@ -34,9 +34,9 @@ class CustomGenderSelection extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4.r),
                         border: Border.all(
                             color: currentGender == index
-                                ? AppColors.purpleClr
-                                : AppColors.whiteClr)),
-                    child: Text(genders[index].title,
-                        style: AppTextStyles.titleMedium())))));
+                                ? purpleClr
+                                : lightBgClr)),
+                    child: Text(genders[index].title.tr,
+                        style: Theme.of(context).textTheme.titleMedium)))));
   }
 }

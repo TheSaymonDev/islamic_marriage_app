@@ -4,10 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
+import 'package:islamic_marriage/screens/identity_verification_screen/controller/identity_verification_controller.dart';
+import 'package:islamic_marriage/screens/identity_verification_screen/model/identity_verification.dart';
 import 'package:islamic_marriage/screens/sign_in_screen/controller/sign_in_controller.dart';
 import 'package:islamic_marriage/screens/sign_in_screen/model/sign_in.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_logo.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
@@ -24,7 +25,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _identifierController = TextEditingController();
+  final _identityController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
@@ -46,14 +47,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 const CustomTextLogo(),
                 Gap(150.h),
                 CustomTextFormField(
-                    hintText: 'Identity',
+                    hintText: 'logInIdentityHint'.tr,
                     validator: identifierValidator,
-                    controller: _identifierController),
+                    controller: _identityController),
                 Gap(16.h),
                 GetBuilder<SignInController>(
                   builder: (controller) {
                     return CustomTextFormField(
-                        hintText: 'Password',
+                        hintText: 'logInPasswordHint'.tr,
                         controller: _passwordController,
                         validator: passwordValidator,
                         obscureText: controller.isObscure,
@@ -65,75 +66,24 @@ class _SignInScreenState extends State<SignInScreen> {
                                 controller.isObscure
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: AppColors.greyColor,
+                                color: greyClr,
                                 size: 25.sp)));
                   },
                 ),
-                Row(
-                  children: [
-                    GetBuilder<SignInController>(builder: (controller) {
-                      return Checkbox(
-                          value: controller.isChecked,
-                          onChanged: (newValue) =>
-                              controller.toggleIsChecked(newValue));
-                    }),
-                    Text('Remember me', style: AppTextStyles.bodyMedium()),
-                    const Spacer(),
-                    GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.identityVerificationScreen);
-                        },
-                        child: Text("Forgot password?",
-                            style: AppTextStyles.titleMedium(
-                                color: AppColors.purpleClr)))
-                  ],
-                ),
+                _buildRememberMeAndForgotPasswordRow(context),
                 Gap(16.h),
                 GetBuilder<SignInController>(
                     builder: (controller) => controller.isLoading
                         ? customCircularProgressIndicator
                         : CustomElevatedButton(
                             onPressed: () => _formOnSubmit(controller),
-                            buttonName: 'Sign In')),
+                            buttonName: 'signIn'.tr)),
                 Gap(150.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Don't have an account?",
-                        style: AppTextStyles.bodyMedium()),
-                    Gap(8.w),
-                    GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.signUpScreen);
-                        },
-                        child: Text("Create Account",
-                            style: AppTextStyles.titleMedium(
-                                color: AppColors.purpleClr)))
-                  ],
-                ),
+                _buildSignUpRow(context),
                 Gap(32.h),
-                Text('Connect With', style: AppTextStyles.bodySmall()),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(FontAwesomeIcons.facebook,
-                            size: 30.sp, color: AppColors.blackClr)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(FontAwesomeIcons.google,
-                            size: 30.sp, color: AppColors.blackClr)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(FontAwesomeIcons.instagram,
-                            size: 30.sp, color: AppColors.blackClr)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(FontAwesomeIcons.twitter,
-                            size: 30.sp, color: AppColors.blackClr))
-                  ],
-                ),
+                Text('connectWith'.tr,
+                    style: Theme.of(context).textTheme.bodySmall),
+                _buildSocialConnect(),
                 Gap(32.h),
               ],
             ),
@@ -143,31 +93,97 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  Row _buildRememberMeAndForgotPasswordRow(BuildContext context) {
+    return Row(
+      children: [
+        GetBuilder<SignInController>(builder: (controller) {
+          return Checkbox(
+              value: controller.isChecked,
+              onChanged: (newValue) => controller.toggleIsChecked(newValue!));
+        }),
+        Text('rememberMe'.tr, style: Theme.of(context).textTheme.bodyMedium),
+        const Spacer(),
+        GestureDetector(
+            onTap: () {
+              Get.toNamed(AppRoutes.identityVerificationScreen);
+            },
+            child: Text("forgotPassword".tr,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: purpleClr)))
+      ],
+    );
+  }
+
+  Row _buildSignUpRow(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("haveAnAccount".tr, style: Theme.of(context).textTheme.bodyMedium),
+        Gap(8.w),
+        GestureDetector(
+            onTap: () {
+              Get.toNamed(AppRoutes.signUpScreen);
+            },
+            child: Text("createAccount".tr,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: purpleClr)))
+      ],
+    );
+  }
+
+  Row _buildSocialConnect() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+            onPressed: () {},
+            icon: Icon(FontAwesomeIcons.facebook, size: 30.sp)),
+        IconButton(
+            onPressed: () {}, icon: Icon(FontAwesomeIcons.google, size: 30.sp)),
+        IconButton(
+            onPressed: () {},
+            icon: Icon(FontAwesomeIcons.instagram, size: 30.sp)),
+        IconButton(
+            onPressed: () {}, icon: Icon(FontAwesomeIcons.twitter, size: 30.sp))
+      ],
+    );
+  }
+
   void _clearData() {
-    _identifierController.clear();
+    _identityController.clear();
     _passwordController.clear();
   }
 
   void _formOnSubmit(SignInController controller) async {
     if (_formKey.currentState?.validate() ?? false) {
-      final inputText = _identifierController.text.trim();
-      // Determine input type (email or phone number)
-      bool isEmail = RegExp(
+      final inputText = _identityController.text.trim();
+      final isEmail = RegExp(
               r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+")
           .hasMatch(inputText);
-      String identity;
-      if (isEmail) {
-        identity = inputText; // Use email directly
-      } else {
-        identity = '+88$inputText'; // Prepend +88 for phone number
-      }
+      final identity =
+          isEmail ? inputText : inputText; // Prepend for phone number if needed
       final result = await controller.signInUser(
         signIn: SignIn(
             identity: identity, password: _passwordController.text.trim()),
       );
-      if (result == true) {
+
+      if (result == 'Please Verify Your Account To Login') {
+        final identityVerification =
+            IdentityVerification(phone: _identityController.text.trim());
+        Get.find<IdentityVerificationController>()
+            .identityVerify(identityVerification: identityVerification);
+        Get.toNamed(AppRoutes.otpVerificationScreen, arguments: {
+          'phone': _identityController.text.trim(),
+          'isForgetOtp': false
+        });
         _clearData();
+      } else if (result == 'Login Successfully') {
         Get.offAllNamed(AppRoutes.homeScreen);
+        _clearData();
       }
     }
   }

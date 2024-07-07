@@ -1,24 +1,19 @@
 class SignUp {
-  String? fullName;
+  String? name;
   String? email;
-  String? mobileNumber;
-  String? password;
+  String? phone;
   String? gender;
+  String? password;
 
-  SignUp(
-      {this.fullName,
-        this.email,
-        this.mobileNumber,
-        this.password,
-        this.gender});
+  SignUp({this.name, this.email, this.phone, this.gender, this.password});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['fullName'] = fullName;
+    data['name'] = name;
     data['email'] = email;
-    data['mobileNumber'] = mobileNumber;
-    data['password'] = password;
+    data['phone'] = phone;
     data['gender'] = gender;
+    data['password'] = password;
     return data;
   }
 }

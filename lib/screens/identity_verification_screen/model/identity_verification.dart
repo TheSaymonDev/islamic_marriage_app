@@ -1,11 +1,11 @@
 class IdentityVerification {
-  String? identity;
+  String? phone;
 
-  IdentityVerification({this.identity});
+  IdentityVerification({this.phone});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['identity'] = identity;
+    data['phone'] = phone;
     return data;
   }
 }

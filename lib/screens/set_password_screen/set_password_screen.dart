@@ -6,7 +6,6 @@ import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/set_password_screen/controller/set_password_controller.dart';
 import 'package:islamic_marriage/screens/set_password_screen/model/set_password.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_logo.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
@@ -24,21 +23,18 @@ class SetPasswordScreen extends StatefulWidget {
 }
 
 class _SetPasswordScreenState extends State<SetPasswordScreen> {
-  String? mobileNumber;
 
-  String? otp;
-
+  String? phone;
+  String? token;
   final _formKey = GlobalKey<FormState>();
-
   final _newPasswordController = TextEditingController();
-
   final _confirmPasswordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    mobileNumber = Get.arguments['mobileNumber'] as String;
-    otp = Get.arguments['otp'] as String;
+    phone = Get.arguments['phone'] as String;
+    token = Get.arguments['token'] as String;
   }
 
   @override
@@ -59,19 +55,18 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                 Gap(32.h),
                 const CustomTextLogo(),
                 Gap(150.h),
-                Text('Enter New Password',
-                    style:
-                        AppTextStyles.titleLarge(color: AppColors.purpleClr)),
+                Text('setPasswordTitle'.tr,
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(color: purpleClr)),
                 Gap(8.h),
                 Text(
-                  'Your new password must be different\nfrom previously used password.',
-                  style: AppTextStyles.bodyMedium(color: AppColors.greyColor),
+                  'setPasswordSubTitle'.tr,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: greyClr),
                   textAlign: TextAlign.center
                 ),
                 Gap(32.h),
                 GetBuilder<SetPasswordController>(builder: (controller) {
                   return CustomTextFormField(
-                    hintText: 'New Password',
+                    hintText: 'setPasswordNewPassHint'.tr,
                     controller: _newPasswordController,
                     obscureText: controller.isObscureNew,
                     validator: passwordValidator,
@@ -81,15 +76,15 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                           controller.isObscureNew
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color: AppColors.greyColor,
-                          size: 25.sp,
+                          color: greyClr,
+                          size: 25.sp
                         )),
                   );
                 }),
                 Gap(16.h),
                 GetBuilder<SetPasswordController>(builder: (controller) {
                   return CustomTextFormField(
-                    hintText: 'Confirm Password',
+                    hintText: 'setPasswordConPassHint'.tr,
                     controller: _confirmPasswordController,
                     obscureText: controller.isObscureConfirm,
                     validator: (value) =>
@@ -100,7 +95,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                           controller.isObscureConfirm
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color: AppColors.greyColor,
+                          color: greyClr,
                           size: 25.sp
                         ))
                   );
@@ -111,7 +106,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                         ? customCircularProgressIndicator
                         : CustomElevatedButton(
                             onPressed: () => _formOnSubmit(controller),
-                            buttonName: 'Recover Password'))
+                            buttonName: 'recoverPass'.tr))
               ],
             ),
           ),
@@ -129,9 +124,8 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       final result = await controller.setNewPassword(
           setPassword: SetPassword(
-              mobileNumber: mobileNumber,
-              otp: otp,
-              newPassword: _newPasswordController.text.trim()));
+              phone: phone,
+              password: _newPasswordController.text.trim()), token: token!);
       if (result == true) {
         _clearData();
         Get.offAllNamed(AppRoutes.signInScreen);

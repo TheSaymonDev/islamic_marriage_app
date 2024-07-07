@@ -1,11 +1,13 @@
 class ProfileUpdate {
-  String? fullName;
+  String? name;
+  String? gender;
 
-  ProfileUpdate({this.fullName});
+  ProfileUpdate({this.name, this.gender});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['fullName'] = this.fullName;
+    data['name'] = this.name;
+    data['gender'] = this.gender;
     return data;
   }
 }

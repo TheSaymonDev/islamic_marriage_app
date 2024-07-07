@@ -6,31 +6,34 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class OtpVerificationController extends GetxController {
   bool isLoading = false;
+  String? token;
 
   Future<bool> verifyOTP({required OtpVerification otpVerification}) async {
-    isLoading = true;
-    update();
+    _setLoading(true);
     try {
-      final response = await ApiService().post(
-          url: AppUrls.otpVerificationUrl, data: otpVerification);
+      final response = await ApiService()
+          .put(url: AppUrls.otpVerificationUrl, data: otpVerification);
       if (response.success) {
         customSuccessMessage(message: 'Otp Successfully Verified');
-        // Navigate to the desired screen
-        isLoading = false;
-        update();
+        token = response.data['data'];
+        _setLoading(false);
         return true;
       } else {
-        final errorMessage = response.message['message'] ?? 'OTP Verification Failed';
+        final errorMessage =
+            response.message['message'] ?? 'OTP Verification Failed';
         customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
+        _setLoading(false);
         return false;
       }
     } catch (error) {
       customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
+      _setLoading(false);
       return false;
     }
+  }
+
+  void _setLoading(bool value) {
+    isLoading = value;
+    update();
   }
 }
