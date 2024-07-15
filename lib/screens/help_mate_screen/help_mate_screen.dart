@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/bio_data_details_screen/bio_data_details_screen.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/all_divisions.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/dropdown_item.dart';
 import 'package:islamic_marriage/screens/help_mate_screen/controller/all_bio_data_controller.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/model/bio_data.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
@@ -11,8 +11,8 @@ import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_bio_data_table.dart';
-import 'package:islamic_marriage/widgets/custom_drop_down_button.dart';
 import 'package:islamic_marriage/widgets/custom_drop_down_button1.dart';
+import 'package:islamic_marriage/widgets/custom_drop_down_button_test.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/widgets/custom_bio_data_bg.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
@@ -30,14 +30,20 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
 
   final _allBioDataController = Get.find<AllBioDataController>();
 
-  final List<String> _bioDataType = ["groom", "bride"];
+  DropdownItem? selectedBioDataType;
+  DropdownItem? selectedMaritalStatus;
 
-  final List<String> _maritalStatus = [
-    "single",
-    "married",
-    "divorced",
-    "widowed",
-    "separated"
+  final List<DropdownItem> _bioDataType = [
+    DropdownItem(title: "malesBioData".tr, value: 'maleBioData'),
+    DropdownItem(title: "femalesBioData".tr, value: 'femaleBioData')
+  ];
+
+  final List<DropdownItem> _maritalStatus = [
+    DropdownItem(title: "neverMarried".tr, value: "neverMarried"),
+    DropdownItem(title: "married".tr, value: "married"),
+    DropdownItem(title: "divorced".tr, value: "divorced"),
+    DropdownItem(title: "widow".tr, value: "widow"),
+    DropdownItem(title: "widower".tr, value: "widower"),
   ];
 
   final _scrollController = ScrollController();
@@ -129,34 +135,34 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Type of Bio Data',
-            style: AppTextStyles.bodyMedium(color: AppColors.whiteClr)),
-        CustomDropdownButton(
-          value: _allBioDataController.selectedBioDataType,
+        Text('typeOfBioData'.tr,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: darkFontClr)),
+        CustomDropdownButtonTest(
+          value: selectedBioDataType,
+          validator: dropdownValidator,
           items: _bioDataType,
           onChanged: (newValue) {
             setState(() {
-              _allBioDataController.selectedBioDataType = newValue;
+              selectedBioDataType = newValue;
             });
           },
-          hintText: 'All',
         ),
         Gap(16.h),
-        Text('Marital Status',
-            style: AppTextStyles.bodyMedium(color: AppColors.whiteClr)),
-        CustomDropdownButton(
-          value: _allBioDataController.selectedMaritalStatus,
+        Text('maritalStatus'.tr,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: darkFontClr)),
+        CustomDropdownButtonTest(
+          value: selectedMaritalStatus,
+          validator: dropdownValidator,
           items: _maritalStatus,
           onChanged: (newValue) {
             setState(() {
-              _allBioDataController.selectedMaritalStatus = newValue;
+              selectedMaritalStatus = newValue;
             });
           },
-          hintText: 'All',
         ),
         Gap(16.h),
-        Text('Permanent Address',
-            style: AppTextStyles.bodyMedium(color: AppColors.whiteClr)),
+        Text('permanentAddress'.tr,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: darkFontClr)),
         CustomDropdownButton1<Division>(
           validator: dropdownValidator,
           value: _allBioDataController.selectedDivision,
@@ -205,16 +211,16 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
         Center(
           child: CustomElevatedButton(
             onPressed: () {
-              controller.offset = 0;
-              if (controller.selectedBioDataType == null &&
-                  controller.selectedMaritalStatus == null &&
-                  controller.permanentAddress.isEmpty) {
-                controller.readAllBioData(isLoadMore: true);
-              } else {
-                controller.readAllSearchedBioData(isLoadMore: true);
-              }
+              // controller.offset = 0;
+              // if (controller.selectedBioDataType == null &&
+              //     controller.selectedMaritalStatus == null &&
+              //     controller.permanentAddress.isEmpty) {
+              //   controller.readAllBioData(isLoadMore: true);
+              // } else {
+              //   controller.readAllSearchedBioData(isLoadMore: true);
+              // }
             },
-            buttonName: 'Search',
+            buttonName: 'searchBtn'.tr,
             icon: Icons.search,
             buttonWidth: 130.w,
           ),
@@ -266,7 +272,7 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
           Gap(16.h),
           CustomElevatedButton(
             onPressed: () {
-              Get.to(() => BioDataDetailsScreen(bioData: bioData));
+             // Get.to(() => BioDataDetailsScreen(user: bioData));
             },
             buttonName: 'Full Bio Data',
             buttonWidth: 300.w,

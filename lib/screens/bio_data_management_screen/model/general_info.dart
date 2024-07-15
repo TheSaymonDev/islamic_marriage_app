@@ -1,49 +1,44 @@
 class GeneralInfo {
-  int? id;
-  String? typeOfBiodata;
-  String? maritalStatus;
-  String? dateOfBirth;
+  String? bioDataType;
+  String? maritialStatus;
   String? height;
-  String? complexion;
   String? weight;
+  String? dateOfBirth;
+  String? complexion;
   String? bloodGroup;
   String? nationality;
 
-  GeneralInfo({
-    this.id,
-    this.typeOfBiodata,
-    this.maritalStatus,
-    this.dateOfBirth,
-    this.height,
-    this.complexion,
-    this.weight,
-    this.bloodGroup,
-    this.nationality,
-  });
+  GeneralInfo(
+      {this.bioDataType,
+        this.maritialStatus,
+        this.height,
+        this.weight,
+        this.dateOfBirth,
+        this.complexion,
+        this.bloodGroup,
+        this.nationality});
 
   GeneralInfo.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    typeOfBiodata = json['typeOfBiodata'];
-    maritalStatus = json['maritalStatus'];
-    dateOfBirth = json['dateOfBirth'];
+    bioDataType = json['bioDataType'];
+    maritialStatus = json['maritialStatus'];
     height = json['height'];
-    complexion = json['complexion'];
     weight = json['weight'];
+    dateOfBirth = json['dateOfBirth'];
+    complexion = json['complexion'];
     bloodGroup = json['bloodGroup'];
     nationality = json['nationality'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['typeOfBiodata'] = typeOfBiodata;
-    data['maritalStatus'] = maritalStatus;
-    data['dateOfBirth'] = dateOfBirth;
-    data['height'] = height;
-    data['complexion'] = complexion;
-    data['weight'] = weight;
-    data['bloodGroup'] = bloodGroup;
-    data['nationality'] = nationality;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['bioDataType'] = this.bioDataType;
+    data['maritialStatus'] = this.maritialStatus;
+    data['height'] = this.height;
+    data['weight'] = this.weight;
+    data['dateOfBirth'] = this.dateOfBirth;
+    data['complexion'] = this.complexion;
+    data['bloodGroup'] = this.bloodGroup;
+    data['nationality'] = this.nationality;
     return data;
   }
 }

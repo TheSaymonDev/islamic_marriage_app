@@ -24,8 +24,7 @@ class SetPasswordScreen extends StatefulWidget {
 
 class _SetPasswordScreenState extends State<SetPasswordScreen> {
 
-  String? phone;
-  String? token;
+  String? identity;
   final _formKey = GlobalKey<FormState>();
   final _newPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -33,8 +32,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   @override
   void initState() {
     super.initState();
-    phone = Get.arguments['phone'] as String;
-    token = Get.arguments['token'] as String;
+    identity = Get.arguments['identity'] as String;
   }
 
   @override
@@ -124,8 +122,8 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       final result = await controller.setNewPassword(
           setPassword: SetPassword(
-              phone: phone,
-              password: _newPasswordController.text.trim()), token: token!);
+              identity: identity,
+              password: _newPasswordController.text.trim()));
       if (result == true) {
         _clearData();
         Get.offAllNamed(AppRoutes.signInScreen);

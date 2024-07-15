@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/explore_screens/explore_screen_components/community_center_screen.dart';
 import 'package:islamic_marriage/screens/explore_screens/explore_screen_components/kazi_office_screen.dart';
 import 'package:islamic_marriage/screens/explore_screens/explore_screen_components/user_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -39,21 +39,29 @@ class _ExploreScreenState extends State<ExploreScreen>
         children: [
           TabBar(
             controller: _tabController,
-            labelStyle: AppTextStyles.titleMedium(),
-            unselectedLabelStyle:
-                AppTextStyles.titleMedium(color: AppColors.greyColor),
+            labelStyle: Theme.of(context).textTheme.titleMedium,
+            unselectedLabelStyle: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: greyClr),
             indicatorSize: TabBarIndicatorSize.tab,
-            indicatorColor: AppColors.violetClr,
+            indicatorColor: violetClr,
             indicatorWeight: 2.w,
-            tabs: const [
+            tabs: [
               Tab(
-                text: 'User',
+                child: Center(
+                  child: Text('user'.tr, textAlign: TextAlign.center,),
+                ),
               ),
               Tab(
-                text: 'Kazi Office',
+                child: Center(
+                  child: Text('kaziOffice'.tr, textAlign: TextAlign.center,),
+                ),
               ),
               Tab(
-                text: 'Community\nCenter',
+                child: Center(
+                  child: Text('communityCenter'.tr, textAlign: TextAlign.center,),
+                ),
               ),
             ],
           ),

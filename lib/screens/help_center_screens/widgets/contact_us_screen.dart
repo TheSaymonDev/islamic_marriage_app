@@ -17,23 +17,41 @@ class ContactUsScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       child: Column(
         children: [
-          CustomButton(onTap: (){
-            Get.find<ContactUsController>().makePhoneCall('09647225782');
-          }, iconData: FontAwesomeIcons.headset, title: 'Custom Service'),
+          CustomButton(
+              onTap: () {
+                Get.find<ContactUsController>().makePhoneCall('09647225782');
+              },
+              iconData: FontAwesomeIcons.headset,
+              title: 'customService'.tr),
           Gap(8.h),
-          CustomButton(onTap: (){
-            Get.find<ContactUsController>().launchInBrowser(Uri.parse('https://islamicmarriage.net'));
-          }, iconData: FontAwesomeIcons.internetExplorer, title: 'Website'),
+          CustomButton(
+              onTap: () {
+                Get.find<ContactUsController>()
+                    .launchInBrowser(Uri.parse('https://islamicmarriage.net'));
+              },
+              iconData: FontAwesomeIcons.internetExplorer,
+              title: 'website'.tr),
           Gap(8.h),
-          CustomButton(onTap: (){
-            Get.find<ContactUsController>().launchInBrowser(Uri.parse('https://www.linkedin.com/company/islamicmarrige'));
-          }, iconData: FontAwesomeIcons.linkedin, title: 'Linkedin'),
+          CustomButton(
+              onTap: () {
+                Get.find<ContactUsController>().launchInBrowser(Uri.parse(
+                    'https://www.linkedin.com/company/islamicmarrige'));
+              },
+              iconData: FontAwesomeIcons.linkedin,
+              title: 'linkedin'.tr),
           Gap(8.h),
-          CustomButton(onTap: (){}, iconData: FontAwesomeIcons.twitter, title: 'Twitter'),
+          CustomButton(
+              onTap: () {},
+              iconData: FontAwesomeIcons.twitter,
+              title: 'twitter'.tr),
           Gap(8.h),
-          CustomButton(onTap: (){
-            Get.find<ContactUsController>().launchInBrowser(Uri.parse('https://www.facebook.com/islamicmarriage.net'));
-          }, iconData: FontAwesomeIcons.facebook, title: 'Facebook'),
+          CustomButton(
+              onTap: () {
+                Get.find<ContactUsController>().launchInBrowser(
+                    Uri.parse('https://www.facebook.com/islamicmarriage.net'));
+              },
+              iconData: FontAwesomeIcons.facebook,
+              title: 'facebook'.tr),
         ],
       ),
     );

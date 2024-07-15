@@ -1,69 +1,64 @@
 class FamilyInfo {
-  int? id;
   String? fatherName;
-  String? isFatherAlive;
+  String? fatherAlive;
   String? fatherOccupation;
   String? motherName;
-  String? isMotherAlive;
+  String? motherAlive;
   String? motherOccupation;
-  String? brothersCount;
-  String? brotherInformation;
-  String? sistersCount;
-  String? sisterInformation;
-  String? occupationOfUnclesAndAunts;
-  String? familyIncome;
-  String? familyReligionEnvironment;
+  String? brotherCount;
+  String? sisterCount;
+  String? brothersInfo;
+  String? sistersInfo;
+  String? uncleAuntOccuption;
+  String? familyStatus;
+  String? familyRelagiousEnvironment;
 
-  FamilyInfo({
-    this.id,
-    this.fatherName,
-    this.isFatherAlive,
-    this.fatherOccupation,
-    this.motherName,
-    this.isMotherAlive,
-    this.motherOccupation,
-    this.brothersCount,
-    this.brotherInformation,
-    this.sistersCount,
-    this.sisterInformation,
-    this.occupationOfUnclesAndAunts,
-    this.familyIncome,
-    this.familyReligionEnvironment,
-  });
+  FamilyInfo(
+      {this.fatherName,
+        this.fatherAlive,
+        this.fatherOccupation,
+        this.motherName,
+        this.motherAlive,
+        this.motherOccupation,
+        this.brotherCount,
+        this.sisterCount,
+        this.brothersInfo,
+        this.sistersInfo,
+        this.uncleAuntOccuption,
+        this.familyStatus,
+        this.familyRelagiousEnvironment});
 
   FamilyInfo.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     fatherName = json['fatherName'];
-    isFatherAlive = json['isFatherAlive'];
+    fatherAlive = json['fatherAlive'];
     fatherOccupation = json['fatherOccupation'];
     motherName = json['motherName'];
-    isMotherAlive = json['isMotherAlive'];
+    motherAlive = json['motherAlive'];
     motherOccupation = json['motherOccupation'];
-    brothersCount = json['brothersCount'];
-    brotherInformation = json['brotherInformation'];
-    sistersCount = json['sistersCount'];
-    sisterInformation = json['sisterInformation'];
-    occupationOfUnclesAndAunts = json['occupationOfUnclesAndAunts'];
-    familyIncome = json['familyIncome'];
-    familyReligionEnvironment = json['familyReligionEnvironment'];
+    brotherCount = json['brotherCount'];
+    sisterCount = json['sisterCount'];
+    brothersInfo = json['brothersInfo'];
+    sistersInfo = json['sistersInfo'];
+    uncleAuntOccuption = json['uncleAuntOccupation'];
+    familyStatus = json['familyStatus'];
+    familyRelagiousEnvironment = json['familyRelagiousEnvironment'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['fatherName'] = fatherName;
-    data['isFatherAlive'] = isFatherAlive;
-    data['fatherOccupation'] = fatherOccupation;
-    data['motherName'] = motherName;
-    data['isMotherAlive'] = isMotherAlive;
-    data['motherOccupation'] = motherOccupation;
-    data['brothersCount'] = brothersCount;
-    data['brotherInformation'] = brotherInformation;
-    data['sistersCount'] = sistersCount;
-    data['sisterInformation'] = sisterInformation;
-    data['occupationOfUnclesAndAunts'] = occupationOfUnclesAndAunts;
-    data['familyIncome'] = familyIncome;
-    data['familyReligionEnvironment'] = familyReligionEnvironment;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['fatherName'] = this.fatherName;
+    data['fatherAlive'] = this.fatherAlive;
+    data['fatherOccupation'] = this.fatherOccupation;
+    data['motherName'] = this.motherName;
+    data['motherAlive'] = this.motherAlive;
+    data['motherOccupation'] = this.motherOccupation;
+    data['brotherCount'] = this.brotherCount;
+    data['sisterCount'] = this.sisterCount;
+    data['brothersInfo'] = this.brothersInfo;
+    data['sistersInfo'] = this.sistersInfo;
+    data['uncleAuntOccuption'] = this.uncleAuntOccuption;
+    data['familyStatus'] = this.familyStatus;
+    data['familyRelagiousEnvironment'] = this.familyRelagiousEnvironment;
     return data;
   }
 }

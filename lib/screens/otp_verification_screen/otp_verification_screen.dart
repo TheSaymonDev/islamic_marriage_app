@@ -25,15 +25,13 @@ class OtpVerificationScreen extends StatefulWidget {
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final _otpController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String? phone;
-  bool? isForgetOtp;
+  String? identity;
 
   @override
   void initState() {
     super.initState();
     Get.find<TimerController>().startTimer();
-    phone = Get.arguments['phone'] as String;
-    isForgetOtp = Get.arguments['isForgetOtp'] as bool;
+    identity = Get.arguments['identity'] as String;
   }
 
   @override
@@ -87,22 +85,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ),
                 _buildResendOtpRow(context),
                 Gap(16.h),
-                Visibility(
-                    visible: isForgetOtp!,
-                    replacement: GetBuilder<OtpVerificationController>(
-                        builder: (controller) => controller.isLoading
-                            ? customCircularProgressIndicator
-                            : CustomElevatedButton(
-                                onPressed: () =>
-                                    _formOnSubmitRegister(controller),
-                                buttonName: 'verifyAndProceed'.tr)),
-                    child: GetBuilder<OtpVerificationController>(
-                        builder: (controller) => controller.isLoading
-                            ? customCircularProgressIndicator
-                            : CustomElevatedButton(
-                                onPressed: () =>
-                                    _formOnSubmitSetPass(controller),
-                                buttonName: 'verifyAndProceed'.tr)))
+                GetBuilder<OtpVerificationController>(
+                    builder: (controller) => controller.isLoading
+                        ? customCircularProgressIndicator
+                        : CustomElevatedButton(
+                        onPressed: () =>
+                            _formOnSubmitRegister(controller),
+                        buttonName: 'verifyAndProceed'.tr))
               ],
             ),
           ),
@@ -123,7 +112,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ? GestureDetector(
                     onTap: () {
                       Get.find<ResendOTPController>().resendOTP(
-                          resendOTP: IdentityVerification(phone: phone));
+                          resendOTP: IdentityVerification(identity: identity));
                     },
                     child: Text('resend'.tr,
                         style: Theme.of(context)
@@ -145,26 +134,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     _otpController.clear();
   }
 
-  void _formOnSubmitSetPass(OtpVerificationController controller) async {
-    if (_formKey.currentState?.validate() ?? false) {
-      final result = await controller.verifyOTP(
-          otpVerification:
-              OtpVerification(phone: phone, otp: _otpController.text.trim()));
-      if (result == true) {
-        Get.offNamed(AppRoutes.setPasswordScreen, arguments: {
-          'phone': phone,
-          'token': controller.token,
-        });
-        _clearData();
-      }
-    }
-  }
-
   void _formOnSubmitRegister(OtpVerificationController controller) async {
     if (_formKey.currentState?.validate() ?? false) {
       final result = await controller.verifyOTP(
           otpVerification:
-              OtpVerification(phone: phone, otp: _otpController.text.trim()));
+              OtpVerification(identity: identity, otp: _otpController.text.trim()));
       if (result == true) {
         Get.offAllNamed(AppRoutes.signInScreen);
         _clearData();

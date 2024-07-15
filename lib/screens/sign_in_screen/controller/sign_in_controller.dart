@@ -16,12 +16,14 @@ class SignInController extends GetxController {
       final response = await ApiService().post(url: AppUrls.signInUrl, data: signIn);
       _setLoading(false);
 
+      print('Response: $response'); // Debug print to check the response structure
+
       if (response.success) {
         final message = response.data['message'];
-        if (message == 'Login Successfully') {
-          SharedPreferencesService().saveUserData(response.data);
+        if (message == 'Login Successful') {
           customSuccessMessage(message: 'Successfully Log In');
-        } else if (message == 'Please Verify Your Account To Login') {
+          SharedPreferencesService().saveUserData(response.data);
+        } else if (message == 'User not verified') {
           customErrorMessage(message: message);
         }
         return message;

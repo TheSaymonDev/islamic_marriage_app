@@ -19,7 +19,7 @@ class HelpCenterScreen extends StatelessWidget {
             onPressedBack: () {
               Get.back();
             },
-            title: 'Help Center',
+            title: 'helpCenter'.tr,
             tabBar: TabBar(
               indicatorColor: AppColors.violetClr,
               indicatorWeight: 4.w,

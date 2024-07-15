@@ -1,12 +1,12 @@
 class OtpVerification {
-  String? phone;
+  String? identity;
   String? otp;
 
-  OtpVerification({this.phone, this.otp});
+  OtpVerification({this.identity, this.otp});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['phone'] = phone;
+    data['identity'] = identity;
     data['otp'] = otp;
     return data;
   }

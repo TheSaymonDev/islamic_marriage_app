@@ -1,5 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -54,8 +54,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
                 options: CarouselOptions(
                     onPageChanged: (index, reason) {
-                      _currentIndex = index;
-                      setState(() {});
+                      setState(() {
+                        _currentIndex = index;
+                      });
                     },
                     initialPage: 0,
                     height: 550.h,
@@ -71,8 +72,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   activeDotColor: purpleClr,
                   dotColor: greyClr),
               onDotClicked: (index) {
-                _currentIndex = index;
-                setState(() {});
+                setState(() {
+                  _currentIndex = index;
+                });
               },
             ),
             const Spacer(),

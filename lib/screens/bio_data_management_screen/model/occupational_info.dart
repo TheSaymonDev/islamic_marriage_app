@@ -1,29 +1,22 @@
 class OccupationalInfo {
-  int? id;
   String? occupation;
-  String? description;
+  String? descriptionOfProfession;
   String? monthlyIncome;
 
-  OccupationalInfo({
-    this.id,
-    this.occupation,
-    this.description,
-    this.monthlyIncome,
-  });
+  OccupationalInfo(
+      {this.occupation, this.descriptionOfProfession, this.monthlyIncome});
 
   OccupationalInfo.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     occupation = json['occupation'];
-    description = json['description'];
+    descriptionOfProfession = json['descriptionOfProfession'];
     monthlyIncome = json['monthlyIncome'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['occupation'] = occupation;
-    data['description'] = description;
-    data['monthlyIncome'] = monthlyIncome;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['occupation'] = this.occupation;
+    data['descriptionOfProfession'] = this.descriptionOfProfession;
+    data['monthlyIncome'] = this.monthlyIncome;
     return data;
   }
 }

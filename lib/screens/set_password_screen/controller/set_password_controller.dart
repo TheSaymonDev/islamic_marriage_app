@@ -9,18 +9,13 @@ class SetPasswordController extends GetxController {
   bool isObscureConfirm = true;
   bool isLoading = false;
 
-  Future<bool> setNewPassword(
-      {required SetPassword setPassword, required String token}) async {
+  Future<bool> setNewPassword({required SetPassword setPassword}) async {
     _setLoading(true);
-    final headerWithToken = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    };
     try {
-      final response = await ApiService().patch(
-          url: AppUrls.setPasswordUrl,
-          data: setPassword,
-          headers: headerWithToken);
+      final response = await ApiService().post(
+        url: AppUrls.setPasswordUrl,
+        data: setPassword,
+      );
       if (response.success) {
         customSuccessMessage(message: 'Password Successfully Changed');
         _setLoading(false);

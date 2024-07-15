@@ -12,7 +12,11 @@ class AboutUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(onPressedBack: (){Get.back();}, title: 'About Us',),
+      appBar: CustomAppbar(
+          onPressedBack: () {
+            Get.back();
+          },
+          title: 'aboutUs'.tr),
       body: Container(
         height: double.infinity.h,
         width: double.infinity.w,
@@ -26,14 +30,18 @@ class AboutUsScreen extends StatelessWidget {
               width: 120.w,
             ),
             Gap(40.h),
-            Text(
-              "Islamic Marriage is a premier Islamic matrimonial site in Bangladesh, known for connecting Muslim singles seeking compatible life partners. With its focus on Islamic values and comprehensive profiles, it has become a trusted platform for finding meaningful relationships.",
-              style: Get.textTheme.bodyMedium!.copyWith(color: AppColors.greyColor),
-              textAlign: TextAlign.center,
-            ),
+            Text("aboutUsDes".tr,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: greyClr),
+                textAlign: TextAlign.center),
             Gap(24.h),
-            Text('Technology Solution Provider', style: Get.textTheme.bodyMedium),
-            Text('Softronixs System Limited', style: Get.textTheme.titleMedium),
+            Text('technologySolutionProvider'.tr,
+                style: Theme.of(context).textTheme.bodyMedium),
+            Gap(4.h),
+            Text('companyName'.tr,
+                style: Theme.of(context).textTheme.titleMedium),
             Gap(24.h),
             Image.asset(
               AppUrls.companyLogoPng,

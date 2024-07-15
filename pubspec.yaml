@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.9.0
   get: ^4.6.6
-  carousel_slider: ^4.2.1
+  carousel_slider_plus: ^6.0.0
   smooth_page_indicator: ^1.1.0
   gap: ^3.0.1
   flutter_svg: ^2.0.9

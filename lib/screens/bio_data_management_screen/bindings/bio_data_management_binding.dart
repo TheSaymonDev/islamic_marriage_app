@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/controller/address_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controller/address_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/contact_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/edu_qualifications_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/expected_life_partner_controller.dart';
@@ -17,7 +17,7 @@ class BioDataManagementBinding implements Bindings{
   void dependencies() {
    Get.lazyPut(() => MyBioDataController());
    Get.lazyPut(() => GeneralInfoController());
-   Get.lazyPut(() => AddressController());
+   Get.lazyPut(() => AddressInfoController());
    Get.lazyPut(() => EduQualificationsController());
    Get.lazyPut(() => FamilyInfoController());
    Get.lazyPut(() => PersonalInfoController());
@@ -26,6 +26,6 @@ class BioDataManagementBinding implements Bindings{
    Get.lazyPut(() => ExpectedLifePartnerController());
    Get.lazyPut(() => PledgeController());
    Get.lazyPut(() => ContactController());
-   Get.lazyPut(() => SubmitBioDataController());
+  // Get.lazyPut(() => SubmitBioDataController());
   }
 }

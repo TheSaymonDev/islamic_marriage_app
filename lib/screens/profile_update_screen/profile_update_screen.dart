@@ -135,7 +135,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
   Future<dynamic> _showBottomSheet() {
     return Get.bottomSheet(CustomBottomSheet(children: [
-      Text('Change Password', style: AppTextStyles.titleMedium()),
+      Text('changePass'.tr, style: AppTextStyles.titleMedium()),
       Gap(32.h),
       CustomTextFormField(
           hintText: 'oldPass'.tr,

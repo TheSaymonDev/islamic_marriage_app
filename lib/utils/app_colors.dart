@@ -13,9 +13,11 @@ class AppColors{
 
 const Color lightBgClr = Color(0xFFFFFFFF);
 const Color lightFontClr = Color(0xFF000000);
+const lightCardClr= Color(0xFFF2F2F2);
 
 const Color darkBgClr = Color(0xFF000000);
 const Color darkFontClr = Color(0xFFFFFFFF);
+const darkCardClr= Color(0xFF1E1E1E);
 
 const Color purpleClr = Color(0xFF9A236F);
 const Color violetClr = Color(0xFF522B79);

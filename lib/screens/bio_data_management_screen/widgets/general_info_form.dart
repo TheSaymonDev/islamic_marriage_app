@@ -4,13 +4,13 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/general_info_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
-import 'package:islamic_marriage/widgets/custom_drop_down_button.dart';
+import 'package:islamic_marriage/widgets/custom_drop_down_button_test.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
-import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class GeneralInfoForm extends StatefulWidget {
   const GeneralInfoForm({super.key});
@@ -20,72 +20,102 @@ class GeneralInfoForm extends StatefulWidget {
 }
 
 class _GeneralInfoFormState extends State<GeneralInfoForm> {
-  final List<String> _bioDataType = ["groom", "bride"];
-  final List<String> _maritalStatus = [
-    "single",
-    "married",
-    "divorced",
-    "widowed",
-    "separated"
+  final List<DropdownItem> _bioDataType = [
+    DropdownItem(title: "malesBioData".tr, value: 'maleBioData'),
+    DropdownItem(title: "femalesBioData".tr, value: 'femaleBioData')
   ];
-  late List<String> _height;
-  final List<String> _complexion = [
-    "black",
-    "brown",
-    "lightBrown",
-    "fair",
-    "veryFair"
+  final List<DropdownItem> _maritalStatus = [
+    DropdownItem(title: "neverMarried".tr, value: "neverMarried"),
+    DropdownItem(title: "married".tr, value: "married"),
+    DropdownItem(title: "divorced".tr, value: "divorced"),
+    DropdownItem(title: "widow".tr, value: "widow"),
+    DropdownItem(title: "widower".tr, value: "widower"),
   ];
-  late List<String> _weight;
-  final List<String> _bloodGroup = [
-    "A+",
-    "A-",
-    "B+",
-    "B-",
-    "O+",
-    "O-",
-    "AB+",
-    "AB-"
+  final List<DropdownItem> _complexion = [
+    DropdownItem(title: "black".tr, value: "black"),
+    DropdownItem(title: "brown".tr, value: "brown"),
+    DropdownItem(title: "lightBrown".tr, value: "lightBrown"),
+    DropdownItem(title: "fair".tr, value: "fair"),
+    DropdownItem(title: "veryFair".tr, value: "veryFair"),
   ];
-  final List<String> _nationality = ["American", "Bangladeshi"];
+  final List<DropdownItem> _bloodGroup = [
+    DropdownItem(title: "aPositive".tr, value: "a+"),
+    DropdownItem(title: "aNegative".tr, value: "a-"),
+    DropdownItem(title: "bPositive".tr, value: "b+"),
+    DropdownItem(title: "bNegative".tr, value: "b-"),
+    DropdownItem(title: "oPositive".tr, value: "o+"),
+    DropdownItem(title: "oNegative".tr, value: "o-"),
+    DropdownItem(title: "abPositive".tr, value: "ab+"),
+    DropdownItem(title: "abNegative".tr, value: "ab-"),
+  ];
+  final List<DropdownItem> _nationality = [
+    DropdownItem(title: "bangladeshi".tr, value: "bangladeshi"),
+    DropdownItem(title: "american".tr, value: "american"),
+  ];
 
-  final GeneralInfoController _generalInfoController =
-      Get.find<GeneralInfoController>();
-  final  _generalInfo = Get.find<MyBioDataController>().myBioData!.personalInformation;
+  late List<DropdownItem> _height;
+  late List<DropdownItem> _weight;
+
+  List<DropdownItem> _createHeightList() {
+    List<DropdownItem> heights = [];
+    for (int feet = 4; feet <= 7; feet++) {
+      for (int inches = 0; inches <= 11; inches++) {
+        if (feet == 7 && inches > 0) {
+          heights.add(DropdownItem(title: 'More than 7 feet', value: 'moreThan7Feet'));
+          break; // Maximum height reached
+        }
+        String heightTitle = inches == 0 ? '$feet\'' : '$feet\' $inches"';
+        String heightValue = '$feet\'$inches"';
+        heights.add(DropdownItem(title: heightTitle, value: heightValue));
+      }
+    }
+    heights.insert(0, DropdownItem(title: 'Less than 4 feet', value: 'lessThan4Feet'));
+    return heights;
+  }
+
+
+  List<DropdownItem> _createWeightList() {
+    List<DropdownItem> weights = [];
+    for (int i = 30; i < 120; i++) {
+      String weightTitle = '$i kg';
+      String weightValue = '${i}kg';
+      weights.add(DropdownItem(title: weightTitle, value: weightValue));
+    }
+    weights.insert(0, DropdownItem(title: 'Less than 30 kg', value: 'lessThan30kg'));
+    weights.add(DropdownItem(title: 'More than 120 kg', value: 'moreThan120kg'));
+    return weights;
+  }
+
 
   @override
   void initState() {
     super.initState();
     _height = _createHeightList();
     _weight = _createWeightList();
-    if (_generalInfo != null) {
-      _generalInfoController.selectedBioDataType =
-          _generalInfo.typeOfBiodata;
-      _generalInfoController.selectedMaritalStatus =
-          _generalInfo.maritalStatus;
-      _generalInfoController.dateOfBirthController.text =
-          formatDate(_generalInfo.dateOfBirth!);
-      _generalInfoController.selectedHeight =
-          _generalInfo.height;
-      _generalInfoController.selectedComplexion =
-          _generalInfo.complexion;
-      _generalInfoController.selectedWeight =
-          _generalInfo.weight;
-      _generalInfoController.selectedBloodGroup =
-          _generalInfo.bloodGroup;
-      _generalInfoController.selectedNationality =
-          _generalInfo.nationality;
+
+    final _generalInfoData = Get.find<MyBioDataController>().currentUser!.data!.biodata!.generalInfo;
+    if (_generalInfoData != null) {
+      _generalInfoController.selectedBioDataType = _bioDataType.firstWhereOrNull((item) => item.value == _generalInfoData.bioDataType);
+      _generalInfoController.selectedMaritalStatus = _maritalStatus.firstWhereOrNull((item) => item.value == _generalInfoData.maritialStatus);
+      _generalInfoController.selectedComplexion = _complexion.firstWhereOrNull((item) => item.value == _generalInfoData.complexion);
+      _generalInfoController.selectedHeight = _height.firstWhereOrNull((item) => item.value == _generalInfoData.height);
+      _generalInfoController.selectedWeight = _weight.firstWhereOrNull((item) => item.value == _generalInfoData.weight);
+      _generalInfoController.selectedBloodGroup = _bloodGroup.firstWhereOrNull((item) => item.value == _generalInfoData.bloodGroup);
+      _generalInfoController.selectedNationality = _nationality.firstWhereOrNull((item) => item.value == _generalInfoData.nationality);
+      _generalInfoController.dateOfBirthController.text = _generalInfoData.dateOfBirth ?? '';
     } else {
       _generalInfoController.selectedBioDataType = null;
       _generalInfoController.selectedMaritalStatus = null;
-      _generalInfoController.dateOfBirthController.text = '';
-      _generalInfoController.selectedHeight = null;
       _generalInfoController.selectedComplexion = null;
+      _generalInfoController.selectedHeight = null;
       _generalInfoController.selectedWeight = null;
       _generalInfoController.selectedBloodGroup = null;
       _generalInfoController.selectedNationality = null;
+      _generalInfoController.dateOfBirthController.text = '';
     }
   }
+
+  final _generalInfoController = Get.find<GeneralInfoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -94,109 +124,118 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const InputTitleText(title: 'Bio Data Type'),
+          InputTitleText(title: 'bioDataTypeTitle'.tr),
           Gap(4.h),
-          CustomDropdownButton(
-              value: _generalInfoController.selectedBioDataType,
-              validator: dropdownValidator,
-              items: _bioDataType,
-              onChanged: (newValue) {
-                setState(() {
-                  _generalInfoController.selectedBioDataType =
-                  newValue!;
-                });
-              }),
+          CustomDropdownButtonTest(
+            value: _generalInfoController.selectedBioDataType,
+            validator: dropdownValidator,
+            items: _bioDataType,
+            onChanged: (newValue) {
+              setState(() {
+                _generalInfoController.selectedBioDataType = newValue;
+              });
+            },
+          ),
           Gap(16.h),
-          const InputTitleText(title: 'Marital Status'),
+
+          InputTitleText(title: 'maritalStatusTitle'.tr),
           Gap(4.h),
-          CustomDropdownButton(
-              value: _generalInfoController.selectedMaritalStatus,
-              validator: dropdownValidator,
-              items: _maritalStatus,
-              onChanged: (newValue) {
-                setState(() {
-                  _generalInfoController.selectedMaritalStatus =
-                  newValue!;
-                });
-              }),
+          CustomDropdownButtonTest(
+            value: _generalInfoController.selectedMaritalStatus,
+            validator: dropdownValidator,
+            items: _maritalStatus,
+            onChanged: (newValue) {
+              setState(() {
+                _generalInfoController.selectedMaritalStatus = newValue;
+              });
+            },
+          ),
           Gap(16.h),
-          const InputTitleText(title: 'Date of Birth'),
+
+          InputTitleText(title: 'dateOfBirthTitle'.tr),
           Gap(4.h),
           CustomTextFormField(
             validator: dobValidator,
-            hintText: 'Date of Birth',
+            hintText: 'dateOfBirthHint'.tr,
             controller: _generalInfoController.dateOfBirthController,
             suffixIcon: IconButton(
-                onPressed: () async {
-                  dateSelection();
-                },
-                icon: Icon(Icons.calendar_today,
-                    size: 20.sp, color: AppColors.violetClr)),
+              onPressed: () async {
+                dateSelection();
+              },
+              icon: Icon(Icons.calendar_today, size: 20.sp, color: violetClr),
+            ),
             readOnly: true,
           ),
           Gap(16.h),
-          const InputTitleText(title: 'Height'),
+
+          InputTitleText(title: 'heightTitle'.tr),
           Gap(4.h),
-          CustomDropdownButton(
-              value: _generalInfoController.selectedHeight,
-              validator: dropdownValidator,
-              items: _height,
-              onChanged: (newValue) {
-                setState(() {
-                  _generalInfoController.selectedHeight = newValue!;
-                });
-              }),
+          CustomDropdownButtonTest(
+            value: _generalInfoController.selectedHeight,
+            validator: dropdownValidator,
+            items: _height,
+            onChanged: (newValue) {
+              setState(() {
+                _generalInfoController.selectedHeight = newValue;
+              });
+            },
+          ),
           Gap(16.h),
-          const InputTitleText(title: 'Complexion'),
+
+          InputTitleText(title: 'complexionTitle'.tr),
           Gap(4.h),
-          CustomDropdownButton(
-              value: _generalInfoController.selectedComplexion,
-              validator: dropdownValidator,
-              items: _complexion,
-              onChanged: (newValue) {
-                setState(() {
-                  _generalInfoController.selectedComplexion =
-                  newValue!;
-                });
-              }),
+          CustomDropdownButtonTest(
+            value: _generalInfoController.selectedComplexion,
+            validator: dropdownValidator,
+            items: _complexion,
+            onChanged: (newValue) {
+              setState(() {
+                _generalInfoController.selectedComplexion = newValue;
+              });
+            },
+          ),
           Gap(16.h),
-          const InputTitleText(title: 'Weight'),
+
+          InputTitleText(title: 'weightTitle'.tr),
           Gap(4.h),
-          CustomDropdownButton(
-              value: _generalInfoController.selectedWeight,
-              validator: dropdownValidator,
-              items: _weight,
-              onChanged: (newValue) {
-                setState(() {
-                  _generalInfoController.selectedWeight = newValue!;
-                });
-              }),
+          CustomDropdownButtonTest(
+            value: _generalInfoController.selectedWeight,
+            validator: dropdownValidator,
+            items: _weight,
+            onChanged: (newValue) {
+              setState(() {
+                _generalInfoController.selectedWeight = newValue;
+              });
+            },
+          ),
           Gap(16.h),
-          const InputTitleText(title: 'Blood Group'),
+
+          InputTitleText(title: 'bloodGroupTitle'.tr),
           Gap(4.h),
-          CustomDropdownButton(
-              value: _generalInfoController.selectedBloodGroup,
-              validator: dropdownValidator,
-              items: _bloodGroup,
-              onChanged: (newValue) {
-                setState(() {
-                  _generalInfoController.selectedBloodGroup =
-                  newValue!;
-                });
-              }),
+          CustomDropdownButtonTest(
+            value: _generalInfoController.selectedBloodGroup,
+            validator: dropdownValidator,
+            items: _bloodGroup,
+            onChanged: (newValue) {
+              setState(() {
+                _generalInfoController.selectedBloodGroup = newValue;
+              });
+            },
+          ),
           Gap(16.h),
-          const InputTitleText(title: 'Nationality'),
+
+          InputTitleText(title: 'nationalityTitle'.tr),
           Gap(4.h),
-          CustomDropdownButton(
-              value: _generalInfoController.selectedNationality,
-              validator: dropdownValidator,
-              items: _nationality,
-              onChanged: (newValue) {
-                setState(() {
-                  _generalInfoController.selectedNationality =
-                  newValue!;
-                });
-              }),
+          CustomDropdownButtonTest(
+            value: _generalInfoController.selectedNationality,
+            validator: dropdownValidator,
+            items: _nationality,
+            onChanged: (newValue) {
+              setState(() {
+                _generalInfoController.selectedNationality = newValue;
+              });
+            },
+          ),
           Gap(16.h),
         ],
       ),
@@ -211,38 +250,7 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       lastDate: DateTime.now(),
     );
     if (selectedDate != null) {
-      // Update your controller with the selected date
-      _generalInfoController.dateOfBirthController.text =
-          DateFormat('yyyy-MM-dd').format(selectedDate);
+      _generalInfoController.dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(selectedDate);
     }
-  }
-
-  List<String> _createHeightList() {
-    List<String> heights = [];
-    for (int feet = 4; feet <= 7; feet++) {
-      for (int inches = 0; inches <= 11; inches++) {
-        if (feet == 7 && inches > 0) {
-          heights.add('more than 7 feet');
-          break; // Maximum height reached
-        }
-        String heightStr = inches == 0 ? '$feet\'' : '$feet\' $inches"';
-        heights.add(heightStr);
-      }
-    }
-    heights.insert(0, 'less than 4 feet');
-    return heights;
-  }
-
-  List<String> _createWeightList() {
-    List<String> weights = [];
-
-    for (int i = 30; i < 120; i++) {
-      String weightStr = '$i kg';
-      weights.add(weightStr);
-    }
-    weights.insert(0, 'less than 30 kg');
-    weights.add('more than 120 kg');
-
-    return weights;
   }
 }

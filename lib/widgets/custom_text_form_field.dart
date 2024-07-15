@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
-    required this.hintText,
+     this.hintText,
     required this.controller,
     this.suffixIcon,
     this.obscureText = false,
@@ -15,7 +16,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
   });
 
-  final String hintText;
+  final String? hintText;
   final TextEditingController controller;
   final Widget? suffixIcon;
   final bool obscureText;
@@ -36,7 +37,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyBoardType,
       maxLines: maxLines ?? 1,
       decoration: InputDecoration(
-        hintText: hintText,
+        hintText: hintText ?? 'writeHere'.tr,
         hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: greyClr),
         suffixIcon: suffixIcon,
         contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),

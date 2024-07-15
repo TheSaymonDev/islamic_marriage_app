@@ -4,7 +4,6 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
 import 'package:islamic_marriage/widgets/custom_expansion_tile.dart';
@@ -25,7 +24,7 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<MyBioDataController>().readMyBioData();
+    Get.find<MyBioDataController>().getCurrentUser();
   }
 
   @override
@@ -66,18 +65,13 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
                   height: 85.h,
                   width: 85.w,
                   child: CircleAvatar(
-                    foregroundImage: controller
-                                .myBioData!.lifeStyleInformation !=
-                            null
-                        ? NetworkImage(
-                            controller.myBioData!.lifeStyleInformation!.photo!)
-                        : AssetImage(AppUrls.placeHolderPng) as ImageProvider,
+                    foregroundImage: AssetImage(AppUrls.placeHolderPng),
                   ),
                 ),
                 Gap(8.h),
                 Text(
-                  'Biodata No: 01',
-                  style: AppTextStyles.titleLarge(color: AppColors.whiteClr),
+                  'Bio Data No: 01',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(color: darkFontClr)
                 ),
                 Gap(8.h),
                 CustomBioDataTable(data: generateGeneralInfo(controller)),
@@ -117,19 +111,19 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
   }
 
   Map<String, String?> generateGeneralInfo(MyBioDataController controller) {
-    final data = controller.myBioData!.personalInformation;
-    if(data != null){
+    final data = controller.currentUser?.data?.biodata?.generalInfo;
+    if (data != null) {
       return {
-        'Type of Bio Data': data.typeOfBiodata,
-        'Marital Status': data.maritalStatus,
-        'Date of Birth': formatDate(data.dateOfBirth!),
-        'Height': data.height,
-        'Complexion': data.complexion,
-        'Weight': data.weight,
-        'Blood Group': data.bloodGroup,
-        'Nationality': data.nationality,
+        'Type of Bio Data': data.bioDataType ?? 'N/A',
+        'Marital Status': data.maritialStatus ?? 'N/A',
+        'Date of Birth': data.dateOfBirth != null ? formatDate(data.dateOfBirth!) : 'N/A',
+        'Height': data.height ?? 'N/A',
+        'Complexion': data.complexion ?? 'N/A',
+        'Weight': data.weight ?? 'N/A',
+        'Blood Group': data.bloodGroup ?? 'N/A',
+        'Nationality': data.nationality ?? 'N/A',
       };
-    }else{
+    } else {
       return {
         'Type of Bio Data': 'N/A',
         'Marital Status': 'N/A',
@@ -144,256 +138,130 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
   }
 
   Map<String, String?> generateAddress(MyBioDataController controller) {
-    final data = controller.myBioData!.address;
-    if(data != null){
-      return {
-        'Permanent Address': data.permanentAddress,
-        'Present Address': data.currentAddress,
-        'Where did you grow up?': data.growUp,
-      };
-    }else{
-      return {
-        'Permanent Address': 'N/A',
-        'Present Address': 'N/A',
-        'Where did you grow up?': 'N/A',
-      };
-    }
+    final permanentAdd = controller.currentUser?.data?.biodata?.permanentAddress;
+    final currentAdd = controller.currentUser?.data?.biodata?.currentAddress;
+    final grewUp = controller.currentUser?.data?.biodata?.grewUp;
+
+    return {
+      'Permanent Address': permanentAdd != null
+          ? '${permanentAdd.division ?? 'N/A'}, ${permanentAdd.district ?? 'N/A'}, ${permanentAdd.subDistrict ?? 'N/A'}'
+          : 'N/A',
+      'Present Address': currentAdd != null
+          ? '${currentAdd.division ?? 'N/A'}, ${currentAdd.district ?? 'N/A'}, ${currentAdd.subDistrict ?? 'N/A'}'
+          : 'N/A',
+      'Where did you grow up?': grewUp ?? 'N/A',
+    };
   }
 
-  Map<String, String?> generateEduQualificationInfo(
-      MyBioDataController controller) {
-    final data = controller.myBioData!.education;
-    if(data != null){
-      return {
-        'Educational Method': data.medium,
-        'Highest Educational Qualification': data.qualification,
-        'Passing Year': data.passingYear,
-        'Group': data.category,
-        'Result': data.result,
-        'Name of Educational Institution': data.institution,
-        'Other Educational Qualification': data.otherQualifications,
-        'Islamic Educational Title': data.religiousEducation,
-      };
-    }else{
-      return {
-        'Educational Method': 'N/A',
-        'Highest Educational Qualification': 'N/A',
-        'Passing Year': 'N/A',
-        'Group': 'N/A',
-        'Result': 'N/A',
-        'Name of Educational Institution': 'N/A',
-        'Other Educational Qualification': 'N/A',
-        'Islamic Educational Title': 'N/A',
-      };
-    }
+  Map<String, String?> generateEduQualificationInfo(MyBioDataController controller) {
+    final data = controller.currentUser?.data?.biodata?.educationInfo;
+    return {
+      'Educational Method': data?.educationMethod ?? 'N/A',
+      'Highest Educational Qualification': data?.highestEducation ?? 'N/A',
+      'Passing Year': data?.passingYear ?? 'N/A',
+      'Result': data?.result ?? 'N/A',
+      'Name of Educational Institution': data?.institutionName ?? 'N/A',
+      'Other Educational Qualification': data?.otherEducation ?? 'N/A',
+      'Islamic Educational Title': data?.religiousEducation ?? 'N/A',
+    };
   }
 
   Map<String, String?> generateFamilyInfo(MyBioDataController controller) {
-    final data = controller.myBioData!.familyInformation;
-   if(data != null){
-     return {
-       "Father's Name": data.fatherName,
-       'Is your father alive?': data.isFatherAlive,
-       "Description of father's profession": data.fatherOccupation,
-       "Mother's Name": data.motherName,
-       'Is your mother alive?': data.isMotherAlive,
-       "Description of mother's profession": data.motherOccupation,
-       "How many brother's do you have?": data.brothersCount,
-       "Brother's Information": data.brotherInformation,
-       "How many sister's do you have?": data.sistersCount,
-       "Sister's Information": data.sisterInformation,
-       'Profession of uncles': data.occupationOfUnclesAndAunts,
-       'Family financial status': data.familyIncome,
-       "How is your family's religious condition?":
-       data.familyReligionEnvironment,
-     };
-   }else{
-     return {
-       "Father's Name": 'N/A',
-       'Is your father alive?': 'N/A',
-       "Description of father's profession": 'N/A',
-       "Mother's Name": 'N/A',
-       'Is your mother alive?': 'N/A',
-       "Description of mother's profession": 'N/A',
-       "How many brother's do you have?": 'N/A',
-       "Brother's Information": 'N/A',
-       "How many sister's do you have?": 'N/A',
-       "Sister's Information": 'N/A',
-       'Profession of uncles': 'N/A',
-       'Family financial status': 'N/A',
-       "How is your family's religious condition?": 'N/A',
-     };
-   }
+    final data = controller.currentUser?.data?.biodata?.familyInfo;
+    return {
+      "Father's Name": data?.fatherName ?? 'N/A',
+      'Is your father alive?': data?.fatherAlive ?? 'N/A',
+      "Description of father's profession": data?.fatherOccupation ?? 'N/A',
+      "Mother's Name": data?.motherName ?? 'N/A',
+      'Is your mother alive?': data?.motherAlive ?? 'N/A',
+      "Description of mother's profession": data?.motherOccupation ?? 'N/A',
+      "How many brother's do you have?": data?.brotherCount?.toString() ?? 'N/A',
+      "Brother's Information": data?.brothersInfo?.toString() ?? 'N/A',
+      "How many sister's do you have?": data?.sisterCount?.toString() ?? 'N/A',
+      "Sister's Information": data?.sistersInfo?.toString() ?? 'N/A',
+      'Profession of uncles': data?.uncleAuntOccuption ?? 'N/A',
+      'Family financial status': data?.familyStatus ?? 'N/A',
+      "How is your family's religious condition?": data?.familyRelagiousEnvironment ?? 'N/A',
+    };
   }
 
   Map<String, String?> generatePersonalInfo(MyBioDataController controller) {
-    final data = controller.myBioData!.lifeStyleInformation;
-   if(data != null){
-     return {
-       'What kind of clothes do you usually wear outside the house?':
-       data.clothesInfo,
-       'Do you have beard according to sunnah? Since when?': data.breadInfo,
-       'Do you wear clothes above the ankles?': data.clothesAnkles,
-       'Do you pray 5 times a day? Since when?': data.prayInfo,
-       'Usually how many times (waqt) a week are your prayers missed (Qaza)?':
-       data.qazaInfo,
-       'Do you comply with mahram/non-mahram?': data.marhamInfo,
-       'Are you able to recite the quran correctly?': data.reciteTheQuran,
-       'Which Fiqh do you follow?': data.fiqh,
-       'Do you watch or listen to dramas/movies/serials/songs?':
-       data.moviesOrSongs,
-       'Do you have any mental or physical disease?': data.physicalDiseases,
-       'Are you involved in any special work of deen?': data.workOfDeen,
-       'What are your ideas or beliefs about the shrine (Mazar)?':
-       data.mazarInfo,
-       'Write the names of at least 3 islamic books you have read': data.books,
-       'Write the names of at least 3 islamic scholars of your choice':
-       data.islamicScholars,
-       'Select the category is applicable to you': data.applicable,
-       'Write about your hobbies, likes, and dislikes, tastes, dreams and so on':
-       data.hobbies,
-       "Groom's Mobile Number": data.groomMobileNumber,
-     };
-   }else{
-     return {
-       'What kind of clothes do you usually wear outside the house?': 'N/A',
-       'Do you have beard according to sunnah? Since when?': 'N/A',
-       'Do you wear clothes above the ankles?': 'N/A',
-       'Do you pray 5 times a day? Since when?': 'N/A',
-       'Usually how many times (waqt) a week are your prayers missed (Qaza)?': 'N/A',
-       'Do you comply with mahram/non-mahram?': 'N/A',
-       'Are you able to recite the quran correctly?': 'N/A',
-       'Which Fiqh do you follow?': 'N/A',
-       'Do you watch or listen to dramas/movies/serials/songs?': 'N/A',
-       'Do you have any mental or physical disease?': 'N/A',
-       'Are you involved in any special work of deen?': 'N/A',
-       'What are your ideas or beliefs about the shrine (Mazar)?': 'N/A',
-       'Write the names of at least 3 islamic books you have read': 'N/A',
-       'Write the names of at least 3 islamic scholars of your choice': 'N/A',
-       'Select the category is applicable to you': 'N/A',
-       'Write about your hobbies, likes, and dislikes, tastes, dreams and so on': 'N/A',
-       "Groom's Mobile Number": 'N/A',
-     };
-   }
+    final data = controller.currentUser?.data?.biodata?.personalInfo;
+    return {
+      'What kind of clothes do you usually wear outside the house?': data?.clothingOutside ?? 'N/A',
+      'Do you have beard according to sunnah? Since when?': data?.sunnahBeardSince ?? 'N/A',
+      'Do you wear clothes above the ankles?': data?.clothesAboveAnkles?.toString() ?? 'N/A',
+      'Do you pray 5 times a day? Since when?': data?.fiveTimesPrayerSince ?? 'N/A',
+      'Usually how many times (waqt) a week are your prayers missed (Qaza)?': data?.prayerMissDaily ?? 'N/A',
+      'Do you comply with mahram/non-mahram?': data?.complyNonMahram ?? 'N/A',
+      'Are you able to recite the quran correctly?': data?.reciteQuranCorrectly ?? 'N/A',
+      'Which Fiqh do you follow?': data?.followedFiqah ?? 'N/A',
+      'Do you watch or listen to dramas/movies/serials/songs?': data?.watchIslamicDramaSong ?? 'N/A',
+      'Do you have any mental or physical disease?': data?.mentalPhysicalDiseases ?? 'N/A',
+      'Are you involved in any special work of deen?': data?.involvedSpecialDeenWork ?? 'N/A',
+      'What are your ideas or beliefs about the shrine (Mazar)?': data?.believeAboutMazar ?? 'N/A',
+      'Write the names of at least 3 islamic books you have read': data?.islamicReadedBookName ?? 'N/A',
+      'Write the names of at least 3 islamic scholars of your choice': data?.islamicFollowedScholarName ?? 'N/A',
+      'Write about your hobbies, likes, and dislikes, tastes, dreams and so on': data?.hobbiesLikeDislike ?? 'N/A',
+      "Groom's Mobile Number": data?.groomPhone ?? 'N/A',
+    };
   }
 
-  Map<String, String?> generateOccupationalInfo(
-      MyBioDataController controller) {
-    final data = controller.myBioData!.occupation;
-    if(data != null){
-      return {
-        'Occupation': data.occupation,
-        'Description of Profession': data.description,
-        'Monthly Income': data.monthlyIncome,
-      };
-    }else{
-      return {
-        'Occupation': 'N/A',
-        'Description of Profession': 'N/A',
-        'Monthly Income': 'N/A',
-      };
-    }
+  Map<String, String?> generateOccupationalInfo(MyBioDataController controller) {
+    final data = controller.currentUser?.data?.biodata?.occupationInfo;
+    return {
+      'Occupation': data?.occupation ?? 'N/A',
+      'Description of Profession': data?.descriptionOfProfession ?? 'N/A',
+      'Monthly Income': data?.monthlyIncome ?? 'N/A',
+    };
   }
 
-  Map<String, String?> generateMarriageRelatedInfo(
-      MyBioDataController controller) {
-    final data = controller.myBioData!.marriageInfo;
-   if(data != null){
-     return {
-       'Do your guardians agree to your marriage?': data.guardiansPermission,
-       'Will you be able to keep your wife in the veil after marriage?':
-       data.veilAfterMarriage,
-       'Would you like to allow your wife to study after marriage?':
-       data.partnerEducationPermission,
-       'Would you like to allow your wife to do any job after marriage?':
-       data.partnerJobPermission,
-       'Where will you live with your wife after marriage?':
-       data.liveInformationAfterMarriage,
-       "Would you or your family expect any gift from the bride's family?":
-       data.expectedGift,
-       "Why are you getting married? What are your thoughts on marriage?":
-       data.thoughtAboutMarriage,
-     };
-   }else{
-     return {
-       'Do your guardians agree to your marriage?': 'N/A',
-       'Will you be able to keep your wife in the veil after marriage?': 'N/A',
-       'Would you like to allow your wife to study after marriage?': 'N/A',
-       'Would you like to allow your wife to do any job after marriage?': 'N/A',
-       'Where will you live with your wife after marriage?': 'N/A',
-       "Would you or your family expect any gift from the bride's family?": 'N/A',
-       "Why are you getting married? What are your thoughts on marriage?": 'N/A',
-     };
-   }
+  Map<String, String?> generateMarriageRelatedInfo(MyBioDataController controller) {
+    final data = controller.currentUser?.data?.biodata?.marriageInfo;
+    return {
+      'Do your guardians agree to your marriage?': data?.guardianAgree ?? 'N/A',
+      'Will you be able to keep your wife in the veil after marriage?': data?.wifeInVeil ?? 'N/A',
+      'Would you like to allow your wife to study after marriage?': data?.studyAfterMarriage ?? 'N/A',
+      'Would you like to allow your wife to do any job after marriage?': data?.jobAfterMarriage ?? 'N/A',
+      'Where will you live with your wife after marriage?': data?.livingPlaceAfterMarriage ?? 'N/A',
+      "Would you or your family expect any gift from the bride's family?": data?.expectGiftFromBrideFamily ?? 'N/A',
+      "Why are you getting married? What are your thoughts on marriage?": data?.thoughtAboutMarriage ?? 'N/A',
+    };
   }
 
-  Map<String, String?> generateExpectedLifePartner(
-      MyBioDataController controller) {
-    final data = controller.myBioData!.partner;
-   if(data != null){
-     return {
-       'Age': data.ageRange.toString(),
-       'Complexion': data.complexion.toString(),
-       'Height': data.height,
-       'Educational Qualification': data.educationalQualification,
-       'District': data.district,
-       'Marital Status': data.maritalStatus.toString(),
-       'Profession': data.profession,
-       'Financial Condition': data.financialCondition,
-       'Expected qualities or attributes of life partner': data.expectedQuality,
-     };
-   }else{
-     return {
-       'Age': 'N/A',
-       'Complexion': 'N/A',
-       'Height': 'N/A',
-       'Educational Qualification': 'N/A',
-       'District': 'N/A',
-       'Marital Status': 'N/A',
-       'Profession': 'N/A',
-       'Financial Condition': 'N/A',
-       'Expected qualities or attributes of life partner': 'N/A',
-     };
-   }
+  Map<String, String?> generateExpectedLifePartner(MyBioDataController controller) {
+    final data = controller.currentUser?.data?.biodata?.expectedLifePartnerInfo;
+    return {
+      //'Age': data != null ? '${data.expectedMinAge ?? 'N/A'}-${data.expectedMaxAge ?? 'N/A'}' : 'N/A',
+      'Complexion': data?.expectedComplexion ?? 'N/A',
+      'Height': data?.expectedHeight ?? 'N/A',
+      'Educational Qualification': data?.exptectedEducation ?? 'N/A',
+      'District': data?.exptectedDistrict ?? 'N/A',
+      'Marital Status': data?.expectedMaritialStatus ?? 'N/A',
+      'Profession': data?.expectedProfession ?? 'N/A',
+      'Financial Condition': data?.expectedFinancialCondition ?? 'N/A',
+      'Expected qualities or attributes of life partner': data?.expectedAttributes ?? 'N/A',
+    };
   }
 
   Map<String, String?> generatePledge(MyBioDataController controller) {
-    final data = controller.myBioData!.pledge;
-   if(data != null){
-     return {
-       'Do your parents know that you are submitting Bio Data to the islamicmarriage.net website?':
-       data.parentKnowSubmission,
-       'By Allah, testify that all the information given is true':
-       data.isAllInfoTrue,
-       'If you provide any false information, islamicmarriage.net will not take any responsibility for the conventional law and the hereafter. Do you agree?':
-       data.falseInfoProven,
-     };
-   }else{
-     return {
-       'Do your parents know that you are submitting Bio Data to the islamicmarriage.net website?': 'N/A',
-       'By Allah, testify that all the information given is true': 'N/A',
-       'If you provide any false information, islamicmarriage.net will not take any responsibility for the conventional law and the hereafter. Do you agree?': 'N/A',
-     };
-   }
+    final data = controller.currentUser?.data?.biodata?.pledgeInfo;
+    return {
+      'Do your parents know that you are submitting Bio Data to the islamicmarriage.net website?': data?.parentalAwareness ?? 'N/A',
+      'By Allah, testify that all the information given is true': data?.informationTruth ?? 'N/A',
+      'If you provide any false information, islamicmarriage.net will not take any responsibility for the conventional law and the hereafter. Do you agree?': data?.agreement ?? 'N/A',
+    };
   }
 
   Map<String, String?> generateContact(MyBioDataController controller) {
-    final data = controller.myBioData!.contact;
-    if(data != null){
-      return {
-        "Groom's Name": data.groomName,
-        "Guardian's mobile number": data.guardianMobile,
-        'Relationship with guardian': data.guardianRelationship,
-        'E-mail to received Bio Data': data.email,
-      };
-    }else{
-      return {
-        "Groom's Name": 'N/A',
-        "Guardian's mobile number": 'N/A',
-        'Relationship with guardian': 'N/A',
-        'E-mail to received Bio Data': 'N/A',
-      };
-    }
+    final data = controller.currentUser?.data?.biodata?.contactInfo;
+    return {
+      "Groom's Name": data?.groomName ?? 'N/A',
+      "Guardian's mobile number": data?.guardianMobile ?? 'N/A',
+      'Relationship with guardian': data?.relationShipWithGuardian ?? 'N/A',
+      'E-mail to received Bio Data': data?.email ?? 'N/A',
+    };
   }
+
 
 }

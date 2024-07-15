@@ -6,6 +6,7 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class IdentityVerificationController extends GetxController {
   bool isLoading = false;
+  int? userId;
 
   Future<bool> identityVerify(
       {required IdentityVerification identityVerification}) async {
@@ -15,6 +16,7 @@ class IdentityVerificationController extends GetxController {
           .post(url: AppUrls.identityUrl, data: identityVerification);
       if (response.success) {
         customSuccessMessage(message: 'Sent OTP Your Mobile');
+        userId =  response.data['data']['user_id'];
         _setLoading(false);
         return true;
       } else {

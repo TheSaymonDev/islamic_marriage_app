@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:im_stepper/stepper.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/controller/address_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controller/address_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/contact_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/edu_qualifications_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/expected_life_partner_controller.dart';
@@ -14,18 +14,18 @@ import 'package:islamic_marriage/screens/bio_data_management_screen/controller/m
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/occupational_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/personal_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/pledge_controller.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/controller/submit_bio_data_controller.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/address_form.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/address_info_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/contact_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/edu_qualifications_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/expected_life_partner_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/family_info_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/general_info_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/marriage_related_info_form.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/occapational_info_form.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/occupational_info_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/personal_info_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/pledge_form.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
+import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
@@ -49,7 +49,7 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<MyBioDataController>().readMyBioData();
+    Get.find<MyBioDataController>().getCurrentUser();
   }
 
   @override
@@ -59,129 +59,194 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
         onPressedBack: () {
           Get.back();
         },
-        title: 'Bio Data',
+        title: 'appbarTitle'.tr,
       ),
       body: Container(
         height: double.infinity.h,
         width: double.infinity.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: GetBuilder<MyBioDataController>(
-          builder: (controller) => controller.isLoading
-              ? customCircularProgressIndicator
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    IconStepper(
-                      activeStepColor: Colors.transparent,
-                      activeStepBorderColor: Colors.transparent,
-                      lineColor: AppColors.violetClr,
-                      stepColor: Colors.transparent,
-                      enableNextPreviousButtons: false,
-                      stepRadius: 20.sp,
-                      icons: [
-                        Icon(FontAwesomeIcons.circleInfo,
-                            color: activeStep == 0
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                        Icon(FontAwesomeIcons.locationDot,
-                            color: activeStep == 1
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                        Icon(FontAwesomeIcons.graduationCap,
-                            color: activeStep == 2
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                        Icon(FontAwesomeIcons.peopleRoof,
-                            color: activeStep == 3
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                        Icon(FontAwesomeIcons.idCard,
-                            color: activeStep == 4
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                        Icon(FontAwesomeIcons.briefcase,
-                            color: activeStep == 5
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                        Icon(FontAwesomeIcons.handshakeAngle,
-                            color: activeStep == 6
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                        Icon(FontAwesomeIcons.handHoldingHeart,
-                            color: activeStep == 7
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                        Icon(FontAwesomeIcons.productHunt,
-                            color: activeStep == 8
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                        Icon(FontAwesomeIcons.phoneVolume,
-                            color: activeStep == 9
-                                ? AppColors.purpleClr
-                                : AppColors.violetClr),
-                      ],
+          builder: (controller) => controller.isLoading? customCircularProgressIndicator: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IconStepper(
+                activeStepColor: Colors.transparent,
+                activeStepBorderColor: Colors.transparent,
+                lineColor: violetClr,
+                stepColor: Colors.transparent,
+                enableNextPreviousButtons: false,
+                stepRadius: 20.sp,
+                icons: [
+                  Icon(FontAwesomeIcons.circleInfo,
+                      color: activeStep == 0 ? purpleClr : violetClr),
+                  Icon(FontAwesomeIcons.locationDot,
+                      color: activeStep == 1 ? purpleClr : violetClr),
+                  Icon(FontAwesomeIcons.graduationCap,
+                      color: activeStep == 2 ? purpleClr : violetClr),
+                  Icon(FontAwesomeIcons.peopleRoof,
+                      color: activeStep == 3 ? purpleClr : violetClr),
+                  Icon(FontAwesomeIcons.idCard,
+                      color: activeStep == 4 ? purpleClr : violetClr),
+                  Icon(FontAwesomeIcons.briefcase,
+                      color: activeStep == 5 ? purpleClr : violetClr),
+                  Icon(FontAwesomeIcons.handshakeAngle,
+                      color: activeStep == 6 ? purpleClr : violetClr),
+                  Icon(FontAwesomeIcons.handHoldingHeart,
+                      color: activeStep == 7 ? purpleClr : violetClr),
+                  Icon(FontAwesomeIcons.productHunt,
+                      color: activeStep == 8 ? purpleClr : violetClr),
+                  Icon(FontAwesomeIcons.phoneVolume,
+                      color: activeStep == 9 ? purpleClr : violetClr),
+                ],
 
-                      // activeStep property set to activeStep variable defined above.
-                      activeStep: activeStep,
+                // activeStep property set to activeStep variable defined above.
+                activeStep: activeStep,
 
-                      // This ensures step-tapping updates the activeStep.
-                      onStepReached: (index) {
-                        setState(() {
-                          activeStep = index;
-                        });
-                      },
-                    ),
-                    Text(headerText(), style: AppTextStyles.titleLarge()),
-                    Divider(
-                      color: AppColors.greyColor,
-                      height: 0.h,
-                      thickness: 2.w,
-                    ),
-                    Gap(16.h),
-                    Expanded(
-                      child: SingleChildScrollView(child: bodyComponents()),
-                    ),
-                    Gap(8.h),
-                    Container(child: button()),
-                    Gap(16.h)
-                  ],
-                ),
+                // This ensures step-tapping updates the activeStep.
+                onStepReached: (index) {
+                  setState(() {
+                    activeStep = index;
+                  });
+                },
+              ),
+              Text(headerText(), style: AppTextStyles.titleLarge()),
+              Divider(
+                color: greyClr,
+                height: 0.h,
+                thickness: 2.w,
+              ),
+              Gap(16.h),
+              Expanded(
+                child: SingleChildScrollView(child: bodyComponents()),
+              ),
+              Gap(8.h),
+              Container(child: button()),
+              Gap(16.h)
+            ],
+          )
         ),
       ),
+      // body: Container(
+      //   height: double.infinity.h,
+      //   width: double.infinity.w,
+      //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+      //   child: GetBuilder<MyBioDataController>(
+      //     builder: (controller) => controller.isLoading
+      //         ? customCircularProgressIndicator
+      //         : Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
+      //         IconStepper(
+      //           activeStepColor: Colors.transparent,
+      //           activeStepBorderColor: Colors.transparent,
+      //           lineColor: violetClr,
+      //           stepColor: Colors.transparent,
+      //           enableNextPreviousButtons: false,
+      //           stepRadius: 20.sp,
+      //           icons: [
+      //             Icon(FontAwesomeIcons.circleInfo,
+      //                 color: activeStep == 0
+      //                     ? purpleClr
+      //                     : violetClr),
+      //             Icon(FontAwesomeIcons.locationDot,
+      //                 color: activeStep == 1
+      //                     ? purpleClr
+      //                     : violetClr),
+      //             Icon(FontAwesomeIcons.graduationCap,
+      //                 color: activeStep == 2
+      //                     ? purpleClr
+      //                     : violetClr),
+      //             Icon(FontAwesomeIcons.peopleRoof,
+      //                 color: activeStep == 3
+      //                     ? purpleClr
+      //                     : violetClr),
+      //             Icon(FontAwesomeIcons.idCard,
+      //                 color: activeStep == 4
+      //                     ? purpleClr
+      //                     : violetClr),
+      //             Icon(FontAwesomeIcons.briefcase,
+      //                 color: activeStep == 5
+      //                     ? purpleClr
+      //                     : violetClr),
+      //             Icon(FontAwesomeIcons.handshakeAngle,
+      //                 color: activeStep == 6
+      //                     ? purpleClr
+      //                     : violetClr),
+      //             Icon(FontAwesomeIcons.handHoldingHeart,
+      //                 color: activeStep == 7
+      //                     ? purpleClr
+      //                     : violetClr),
+      //             Icon(FontAwesomeIcons.productHunt,
+      //                 color: activeStep == 8
+      //                     ? purpleClr
+      //                     : violetClr),
+      //             Icon(FontAwesomeIcons.phoneVolume,
+      //                 color: activeStep == 9
+      //                     ? purpleClr
+      //                     : violetClr),
+      //           ],
+      //
+      //           // activeStep property set to activeStep variable defined above.
+      //           activeStep: activeStep,
+      //
+      //           // This ensures step-tapping updates the activeStep.
+      //           onStepReached: (index) {
+      //             setState(() {
+      //               activeStep = index;
+      //             });
+      //           },
+      //         ),
+      //         Text(headerText(), style: AppTextStyles.titleLarge()),
+      //         Divider(
+      //           color: greyClr,
+      //           height: 0.h,
+      //           thickness: 2.w,
+      //         ),
+      //         Gap(16.h),
+      //         Expanded(
+      //           child: SingleChildScrollView(child: bodyComponents()),
+      //         ),
+      //         Gap(8.h),
+      //         Container(child: button()),
+      //         Gap(16.h)
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 
   String headerText() {
     switch (activeStep) {
       case 1:
-        return 'Address';
+        return 'step2'.tr;
 
       case 2:
-        return 'Educational Qualifications';
+        return 'step3'.tr;
 
       case 3:
-        return 'Family Information';
+        return 'step4'.tr;
 
       case 4:
-        return 'Personal Information';
+        return 'step5'.tr;
 
       case 5:
-        return 'Occupational Information';
+        return 'step6'.tr;
 
       case 6:
-        return 'Marriage Related Information';
+        return 'step7'.tr;
 
       case 7:
-        return 'Expected Life Partner';
+        return 'step8'.tr;
 
       case 8:
-        return 'Pledge';
+        return 'step9'.tr;
 
       case 9:
-        return 'Contact';
+        return 'step10'.tr;
 
       default:
-        return 'General Information';
+        return 'step1'.tr;
     }
   }
 
@@ -243,67 +308,41 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
                 alignment: Alignment.centerRight,
                 child: CustomElevatedButton(
                   onPressed: () async {
-                    if (Get.find<MyBioDataController>()
-                            .myBioData!
-                            .personalInformation !=
-                        null) {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.updateGeneralInfo();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
-                        }
-                      }
-                    } else {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.createGeneralInfo();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
-                        }
+                    if (controller.formKey.currentState!.validate()) {
+                      final result = await controller.upsertGeneralInfo();
+                      if (result) {
+                        setState(() {
+                          activeStep++;
+                        });
                       }
                     }
                   },
-                  buttonName: 'Save & Next',
+                  buttonName: 'saveBtn'.tr,
                   buttonWidth: 140.w,
                 ),
               ));
   }
 
   Widget _addressButton() {
-    return GetBuilder<AddressController>(
+    return GetBuilder<AddressInfoController>(
         builder: (controller) => controller.isLoading
             ? customCircularProgressIndicator
             : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _previousButton(),
-                  const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>().myBioData!.address !=
-                          null) {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.updateAddress();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
-                        }
-                      } else {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.createAddress();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
+                      if (controller.formKey.currentState!.validate()) {
+                        final result = await controller.upsertAddress();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
                         }
                       }
                     },
-                    buttonName: 'Save & Next',
+                    buttonName: 'saveBtn'.tr,
                     buttonWidth: 140.w,
                   ),
                 ],
@@ -315,37 +354,22 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
         builder: (controller) => controller.isLoading
             ? customCircularProgressIndicator
             : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _previousButton(),
-                  const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>()
-                              .myBioData!
-                              .education !=
-                          null) {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result =
-                              await controller.updateEduQualification();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
-                        }
-                      } else {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result =
-                              await controller.createEduQualification();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
+                      if (controller.formKey.currentState!.validate()) {
+                        final result =
+                            await controller.upsertEduQualificationsInfo();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
                         }
                       }
                     },
-                    buttonName: 'Save & Next',
+                    buttonName: 'saveBtn'.tr,
                     buttonWidth: 140.w,
                   ),
                 ],
@@ -357,35 +381,21 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
         builder: (controller) => controller.isLoading
             ? customCircularProgressIndicator
             : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _previousButton(),
-                  const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>()
-                              .myBioData!
-                              .familyInformation !=
-                          null) {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.updateFamilyInfo();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
-                        }
-                      } else {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.createFamilyInfo();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
+                      if (controller.formKey.currentState!.validate()) {
+                        final result = await controller.upsertFamilyInfo();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
                         }
                       }
                     },
-                    buttonName: 'Save & Next',
+                    buttonName: 'saveBtn'.tr,
                     buttonWidth: 140.w,
                   ),
                 ],
@@ -394,84 +404,55 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
 
   Widget _personalInfoButton() {
     return GetBuilder<PersonalInfoController>(
-      builder: (controller) => controller.isLoading
-          ? customCircularProgressIndicator
-          : Row(
-              children: [
-                _previousButton(),
-                const Spacer(),
-                CustomElevatedButton(
-                  onPressed: () async {
-                    if (Get.find<MyBioDataController>()
-                            .myBioData!
-                            .lifeStyleInformation !=
-                        null) {
+        builder: (controller) => controller.isLoading
+            ? customCircularProgressIndicator
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _previousButton(),
+                  CustomElevatedButton(
+                    onPressed: () async {
                       if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.updatePersonalInfo();
+                        final result = await controller.upsertPersonalInfo();
                         if (result) {
                           setState(() {
                             activeStep++;
                           });
                         }
                       }
-                    } else {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result = await controller.createPersonalInfo();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
-                        }
-                      }
-                    }
-                  },
-                  buttonName: 'Save & Next',
-                  buttonWidth: 140.w,
-                ),
-              ],
-            ),
-    );
+                    },
+                    buttonName: 'saveBtn'.tr,
+                    buttonWidth: 140.w,
+                  ),
+                ],
+              ));
   }
 
   Widget _occupationalInfoButton() {
     return GetBuilder<OccupationalInfoController>(
-      builder: (controller) => controller.isLoading
-          ? customCircularProgressIndicator
-          : Row(
-              children: [
-                _previousButton(),
-                const Spacer(),
-                CustomElevatedButton(
-                  onPressed: () async {
-                    if (Get.find<MyBioDataController>().myBioData!.occupation !=
-                        null) {
+        builder: (controller) => controller.isLoading
+            ? customCircularProgressIndicator
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _previousButton(),
+                  CustomElevatedButton(
+                    onPressed: () async {
                       if (controller.formKey.currentState!.validate()) {
                         final result =
-                            await controller.updateOccupationalInfo();
+                            await controller.upsertOccupationalInfo();
                         if (result) {
                           setState(() {
                             activeStep++;
                           });
                         }
                       }
-                    } else {
-                      if (controller.formKey.currentState!.validate()) {
-                        final result =
-                            await controller.createOccupationalInfo();
-                        if (result) {
-                          setState(() {
-                            activeStep++;
-                          });
-                        }
-                      }
-                    }
-                  },
-                  buttonName: 'Save & Next',
-                  buttonWidth: 140.w,
-                ),
-              ],
-            ),
-    );
+                    },
+                    buttonName: 'saveBtn'.tr,
+                    buttonWidth: 140.w,
+                  ),
+                ],
+              ));
   }
 
   Widget _marriageInfoButton() {
@@ -479,35 +460,21 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
         builder: (controller) => controller.isLoading
             ? customCircularProgressIndicator
             : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _previousButton(),
-                  const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>()
-                              .myBioData!
-                              .marriageInfo !=
-                          null) {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.updateMarriageInfo();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
-                        }
-                      } else {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.createMarriageInfo();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
+                      if (controller.formKey.currentState!.validate()) {
+                        final result = await controller.upsertMarriageInfo();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
                         }
                       }
                     },
-                    buttonName: 'Save & Next',
+                    buttonName: 'saveBtn'.tr,
                     buttonWidth: 140.w,
                   ),
                 ],
@@ -519,35 +486,22 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
         builder: (controller) => controller.isLoading
             ? customCircularProgressIndicator
             : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _previousButton(),
-                  const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>().myBioData!.partner !=
-                          null) {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result =
-                              await controller.updateExpectedLifePartner();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
-                        }
-                      } else {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result =
-                              await controller.createExpectedLifePartner();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
+                      if (controller.formKey.currentState!.validate()) {
+                        final result =
+                            await controller.upsertExpectedLifePartner();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
                         }
                       }
                     },
-                    buttonName: 'Save & Next',
+                    buttonName: 'saveBtn'.tr,
                     buttonWidth: 140.w,
                   ),
                 ],
@@ -559,33 +513,21 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
         builder: (controller) => controller.isLoading
             ? customCircularProgressIndicator
             : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _previousButton(),
-                  const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>().myBioData!.pledge !=
-                          null) {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.updatePledge();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
-                        }
-                      } else {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.createPledge();
-                          if (result) {
-                            setState(() {
-                              activeStep++;
-                            });
-                          }
+                      if (controller.formKey.currentState!.validate()) {
+                        final result = await controller.upsertPledge();
+                        if (result) {
+                          setState(() {
+                            activeStep++;
+                          });
                         }
                       }
                     },
-                    buttonName: 'Save & Next',
+                    buttonName: 'saveBtn'.tr,
                     buttonWidth: 140.w,
                   ),
                 ],
@@ -597,64 +539,447 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
         builder: (controller) => controller.isLoading
             ? customCircularProgressIndicator
             : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _previousButton(),
-                  const Spacer(),
                   CustomElevatedButton(
                     onPressed: () async {
-                      if (Get.find<MyBioDataController>().myBioData!.contact !=
-                          null) {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.updateContact();
-                          if (result) {
-                            showAppDialogBox(
-                              title: 'Submit Alert!',
-                              middleText:
-                                  'Are you sure you want to submit this Bio-Data?',
-                              onPressedCancel: () {
-                                Get.back();
-                              },
-                              onPressedConfirm: () async {
-                                final result =
-                                    await Get.find<SubmitBioDataController>()
-                                        .submitBioData();
-                                if (result == true) {
-                                  Navigator.pop(context);
-                                }
-                              },
-                            );
-                          }
-                        }
-                      } else {
-                        if (controller.formKey.currentState!.validate()) {
-                          final result = await controller.createContact();
-                          if (result) {
-                            showAppDialogBox(
-                              title: 'Submit Alert!',
-                              middleText:
-                                  'Are you sure you want to submit this Bio-Data?',
-                              onPressedCancel: () {
-                                Get.back();
-                              },
-                              onPressedConfirm: () async {
-                                final result =
-                                    await Get.find<SubmitBioDataController>()
-                                        .submitBioData();
-                                if (result) {
-                                  Get.back();
-                                }
-                              },
-                            );
-                          }
+                      if (controller.formKey.currentState!.validate()) {
+                        final result = await controller.upsertContact();
+                        if (result) {
+                          setState(() {
+                           Navigator.pop(context);
+                          });
                         }
                       }
                     },
-                    buttonName: 'Save & Submit',
+                    buttonName: 'saveBtn'.tr,
                     buttonWidth: 140.w,
                   ),
                 ],
               ));
   }
+
+  // Widget _generalInfoButton() {
+  //   return GetBuilder<GeneralInfoController>(
+  //       builder: (controller) => controller.isLoading
+  //           ? customCircularProgressIndicator
+  //           : Align(
+  //               alignment: Alignment.centerRight,
+  //               child: CustomElevatedButton(
+  //                 onPressed: () async {
+  //                   if (Get.find<MyBioDataController>()
+  //                           .myBioData!
+  //                           .personalInformation !=
+  //                       null) {
+  //                     if (controller.formKey.currentState!.validate()) {
+  //                       final result = await controller.updateGeneralInfo();
+  //                       if (result) {
+  //                         setState(() {
+  //                           activeStep++;
+  //                         });
+  //                       }
+  //                     }
+  //                   } else {
+  //                     if (controller.formKey.currentState!.validate()) {
+  //                       final result = await controller.createGeneralInfo();
+  //                       if (result) {
+  //                         setState(() {
+  //                           activeStep++;
+  //                         });
+  //                       }
+  //                     }
+  //                   }
+  //                 },
+  //                 buttonName: 'Save & Next',
+  //                 buttonWidth: 140.w,
+  //               ),
+  //             ));
+  // }
+  //
+  // Widget _addressButton() {
+  //   return GetBuilder<AddressController>(
+  //       builder: (controller) => controller.isLoading
+  //           ? customCircularProgressIndicator
+  //           : Row(
+  //               children: [
+  //                 _previousButton(),
+  //                 const Spacer(),
+  //                 CustomElevatedButton(
+  //                   onPressed: () async {
+  //                     if (Get.find<MyBioDataController>().myBioData!.address !=
+  //                         null) {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.updateAddress();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     } else {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.createAddress();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     }
+  //                   },
+  //                   buttonName: 'Save & Next',
+  //                   buttonWidth: 140.w,
+  //                 ),
+  //               ],
+  //             ));
+  // }
+  //
+  // Widget _eduQualificationButton() {
+  //   return GetBuilder<EduQualificationsController>(
+  //       builder: (controller) => controller.isLoading
+  //           ? customCircularProgressIndicator
+  //           : Row(
+  //               children: [
+  //                 _previousButton(),
+  //                 const Spacer(),
+  //                 CustomElevatedButton(
+  //                   onPressed: () async {
+  //                     if (Get.find<MyBioDataController>()
+  //                             .myBioData!
+  //                             .education !=
+  //                         null) {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result =
+  //                             await controller.updateEduQualification();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     } else {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result =
+  //                             await controller.createEduQualification();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     }
+  //                   },
+  //                   buttonName: 'Save & Next',
+  //                   buttonWidth: 140.w,
+  //                 ),
+  //               ],
+  //             ));
+  // }
+  //
+  // Widget _familyInfoButton() {
+  //   return GetBuilder<FamilyInfoController>(
+  //       builder: (controller) => controller.isLoading
+  //           ? customCircularProgressIndicator
+  //           : Row(
+  //               children: [
+  //                 _previousButton(),
+  //                 const Spacer(),
+  //                 CustomElevatedButton(
+  //                   onPressed: () async {
+  //                     if (Get.find<MyBioDataController>()
+  //                             .myBioData!
+  //                             .familyInformation !=
+  //                         null) {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.updateFamilyInfo();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     } else {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.createFamilyInfo();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     }
+  //                   },
+  //                   buttonName: 'Save & Next',
+  //                   buttonWidth: 140.w,
+  //                 ),
+  //               ],
+  //             ));
+  // }
+  //
+  // Widget _personalInfoButton() {
+  //   return GetBuilder<PersonalInfoController>(
+  //     builder: (controller) => controller.isLoading
+  //         ? customCircularProgressIndicator
+  //         : Row(
+  //             children: [
+  //               _previousButton(),
+  //               const Spacer(),
+  //               CustomElevatedButton(
+  //                 onPressed: () async {
+  //                   if (Get.find<MyBioDataController>()
+  //                           .myBioData!
+  //                           .lifeStyleInformation !=
+  //                       null) {
+  //                     if (controller.formKey.currentState!.validate()) {
+  //                       final result = await controller.updatePersonalInfo();
+  //                       if (result) {
+  //                         setState(() {
+  //                           activeStep++;
+  //                         });
+  //                       }
+  //                     }
+  //                   } else {
+  //                     if (controller.formKey.currentState!.validate()) {
+  //                       final result = await controller.createPersonalInfo();
+  //                       if (result) {
+  //                         setState(() {
+  //                           activeStep++;
+  //                         });
+  //                       }
+  //                     }
+  //                   }
+  //                 },
+  //                 buttonName: 'Save & Next',
+  //                 buttonWidth: 140.w,
+  //               ),
+  //             ],
+  //           ),
+  //   );
+  // }
+  //
+  // Widget _occupationalInfoButton() {
+  //   return GetBuilder<OccupationalInfoController>(
+  //     builder: (controller) => controller.isLoading
+  //         ? customCircularProgressIndicator
+  //         : Row(
+  //             children: [
+  //               _previousButton(),
+  //               const Spacer(),
+  //               CustomElevatedButton(
+  //                 onPressed: () async {
+  //                   if (Get.find<MyBioDataController>().myBioData!.occupation !=
+  //                       null) {
+  //                     if (controller.formKey.currentState!.validate()) {
+  //                       final result =
+  //                           await controller.updateOccupationalInfo();
+  //                       if (result) {
+  //                         setState(() {
+  //                           activeStep++;
+  //                         });
+  //                       }
+  //                     }
+  //                   } else {
+  //                     if (controller.formKey.currentState!.validate()) {
+  //                       final result =
+  //                           await controller.createOccupationalInfo();
+  //                       if (result) {
+  //                         setState(() {
+  //                           activeStep++;
+  //                         });
+  //                       }
+  //                     }
+  //                   }
+  //                 },
+  //                 buttonName: 'Save & Next',
+  //                 buttonWidth: 140.w,
+  //               ),
+  //             ],
+  //           ),
+  //   );
+  // }
+  //
+  // Widget _marriageInfoButton() {
+  //   return GetBuilder<MarriageRelatedInfoController>(
+  //       builder: (controller) => controller.isLoading
+  //           ? customCircularProgressIndicator
+  //           : Row(
+  //               children: [
+  //                 _previousButton(),
+  //                 const Spacer(),
+  //                 CustomElevatedButton(
+  //                   onPressed: () async {
+  //                     if (Get.find<MyBioDataController>()
+  //                             .myBioData!
+  //                             .marriageInfo !=
+  //                         null) {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.updateMarriageInfo();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     } else {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.createMarriageInfo();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     }
+  //                   },
+  //                   buttonName: 'Save & Next',
+  //                   buttonWidth: 140.w,
+  //                 ),
+  //               ],
+  //             ));
+  // }
+  //
+  // Widget _expectedLifePartnerButton() {
+  //   return GetBuilder<ExpectedLifePartnerController>(
+  //       builder: (controller) => controller.isLoading
+  //           ? customCircularProgressIndicator
+  //           : Row(
+  //               children: [
+  //                 _previousButton(),
+  //                 const Spacer(),
+  //                 CustomElevatedButton(
+  //                   onPressed: () async {
+  //                     if (Get.find<MyBioDataController>().myBioData!.partner !=
+  //                         null) {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result =
+  //                             await controller.updateExpectedLifePartner();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     } else {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result =
+  //                             await controller.createExpectedLifePartner();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     }
+  //                   },
+  //                   buttonName: 'Save & Next',
+  //                   buttonWidth: 140.w,
+  //                 ),
+  //               ],
+  //             ));
+  // }
+  //
+  // Widget _pledgeButton() {
+  //   return GetBuilder<PledgeController>(
+  //       builder: (controller) => controller.isLoading
+  //           ? customCircularProgressIndicator
+  //           : Row(
+  //               children: [
+  //                 _previousButton(),
+  //                 const Spacer(),
+  //                 CustomElevatedButton(
+  //                   onPressed: () async {
+  //                     if (Get.find<MyBioDataController>().myBioData!.pledge !=
+  //                         null) {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.updatePledge();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     } else {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.createPledge();
+  //                         if (result) {
+  //                           setState(() {
+  //                             activeStep++;
+  //                           });
+  //                         }
+  //                       }
+  //                     }
+  //                   },
+  //                   buttonName: 'Save & Next',
+  //                   buttonWidth: 140.w,
+  //                 ),
+  //               ],
+  //             ));
+  // }
+  //
+  // Widget _contactButton() {
+  //   return GetBuilder<ContactController>(
+  //       builder: (controller) => controller.isLoading
+  //           ? customCircularProgressIndicator
+  //           : Row(
+  //               children: [
+  //                 _previousButton(),
+  //                 const Spacer(),
+  //                 CustomElevatedButton(
+  //                   onPressed: () async {
+  //                     if (Get.find<MyBioDataController>().myBioData!.contact !=
+  //                         null) {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.updateContact();
+  //                         if (result) {
+  //                           showAppDialogBox(
+  //                             title: 'Submit Alert!',
+  //                             middleText:
+  //                                 'Are you sure you want to submit this Bio-Data?',
+  //                             onPressedCancel: () {
+  //                               Get.back();
+  //                             },
+  //                             onPressedConfirm: () async {
+  //                               final result =
+  //                                   await Get.find<SubmitBioDataController>()
+  //                                       .submitBioData();
+  //                               if (result == true) {
+  //                                 Navigator.pop(context);
+  //                               }
+  //                             },
+  //                           );
+  //                         }
+  //                       }
+  //                     } else {
+  //                       if (controller.formKey.currentState!.validate()) {
+  //                         final result = await controller.createContact();
+  //                         if (result) {
+  //                           showAppDialogBox(
+  //                             title: 'Submit Alert!',
+  //                             middleText:
+  //                                 'Are you sure you want to submit this Bio-Data?',
+  //                             onPressedCancel: () {
+  //                               Get.back();
+  //                             },
+  //                             onPressedConfirm: () async {
+  //                               final result =
+  //                                   await Get.find<SubmitBioDataController>()
+  //                                       .submitBioData();
+  //                               if (result) {
+  //                                 Get.back();
+  //                               }
+  //                             },
+  //                           );
+  //                         }
+  //                       }
+  //                     }
+  //                   },
+  //                   buttonName: 'Save & Submit',
+  //                   buttonWidth: 140.w,
+  //                 ),
+  //               ],
+  //             ));
+  // }
 
   Widget _previousButton() {
     return CustomElevatedButton(
@@ -663,7 +988,7 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
           activeStep--;
         });
       },
-      buttonName: 'Previous',
+      buttonName: 'previousBtn'.tr,
       buttonWidth: 140.w,
     );
   }

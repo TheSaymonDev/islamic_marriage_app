@@ -69,13 +69,12 @@ class IdentityVerificationScreen extends StatelessWidget {
     if (_formKey.currentState?.validate() ?? false) {
       final result = await controller.identityVerify(
           identityVerification: IdentityVerification(
-              phone: _identityController.text.trim()));
+              identity: _identityController.text.trim()));
       if (result == true) {
         Get.toNamed(
-          AppRoutes.otpVerificationScreen,
+          AppRoutes.forgetOtpVerificationScreen,
           arguments: {
-            'phone': _identityController.text.trim(),
-            'isForgetOtp': true
+            'identity': _identityController.text.trim()
           },
         );
       }

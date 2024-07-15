@@ -5,6 +5,8 @@ import 'package:islamic_marriage/screens/address_view_screen/address_view_screen
 import 'package:islamic_marriage/screens/bio_data_management_screen/bindings/bio_data_management_binding.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/bio_data_management_screen.dart';
 import 'package:islamic_marriage/screens/cart_screen/cart_screen.dart';
+import 'package:islamic_marriage/screens/forget_otp_verification_screen/bindings/forget_otp_verification_binding.dart';
+import 'package:islamic_marriage/screens/forget_otp_verification_screen/forget_otp_verification_screen.dart';
 import 'package:islamic_marriage/screens/help_center_screens/bindings/help_center_binding.dart';
 import 'package:islamic_marriage/screens/help_center_screens/help_center_screen.dart';
 import 'package:islamic_marriage/screens/home_screen/bindings/home_binding.dart';
@@ -47,6 +49,10 @@ class AppPages {
         page: () => OtpVerificationScreen(),
         binding: OtpVerificationBinding()),
     GetPage(
+        name: AppRoutes.forgetOtpVerificationScreen,
+        page: () => ForgetOtpVerificationScreen(),
+        binding: ForgetOtpVerificationBinding()),
+    GetPage(
         name: AppRoutes.setPasswordScreen,
         page: () => SetPasswordScreen(),
         binding: SetPasswordBinding()),
@@ -77,10 +83,9 @@ class AppPages {
       page: () => CartScreen(),
     ),
     GetPage(
-      name: AppRoutes.helpCenterScreen,
-      page: () => HelpCenterScreen(),
-      binding: HelpCenterBinding()
-    ),
+        name: AppRoutes.helpCenterScreen,
+        page: () => HelpCenterScreen(),
+        binding: HelpCenterBinding()),
     GetPage(
       name: AppRoutes.privacyPolicyScreen,
       page: () => PrivacyPolicyScreen(),

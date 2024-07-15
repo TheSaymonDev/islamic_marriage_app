@@ -3,13 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controller/expected_life_partner_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
+import 'package:islamic_marriage/widgets/custom_drop_down_button_test.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
-import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class ExpectedLifePartnerForm extends StatefulWidget {
   const ExpectedLifePartnerForm({super.key});
@@ -20,287 +20,229 @@ class ExpectedLifePartnerForm extends StatefulWidget {
 }
 
 class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
-  final ExpectedLifePartnerController _expectedLifePartnerController =
-      Get.find<ExpectedLifePartnerController>();
-  final _expectedLifePartner =
-      Get.find<MyBioDataController>().myBioData!.partner;
+  RangeValues? _ageRange = RangeValues(18, 30);
 
-  RangeValues? _ageRange;
+  String? minAge;
+  String? maxAge;
+
+  final List<DropdownItem> _maritalStatus = [
+    DropdownItem(title: "neverMarried".tr, value: "neverMarried"),
+    DropdownItem(title: "married".tr, value: "married"),
+    DropdownItem(title: "divorced".tr, value: "divorced"),
+    DropdownItem(title: "widow".tr, value: "widow"),
+    DropdownItem(title: "widower".tr, value: "widower"),
+  ];
+  final List<DropdownItem> _complexion = [
+    DropdownItem(title: "black".tr, value: "black"),
+    DropdownItem(title: "brown".tr, value: "brown"),
+    DropdownItem(title: "lightBrown".tr, value: "lightBrown"),
+    DropdownItem(title: "fair".tr, value: "fair"),
+    DropdownItem(title: "veryFair".tr, value: "veryFair"),
+  ];
+
+
+  final _expectedPartnerController = Get.find<ExpectedLifePartnerController>();
 
   @override
   void initState() {
     super.initState();
-    if (_expectedLifePartner != null) {
-      _ageRange = RangeValues(_expectedLifePartner.ageRange![0].toDouble(),
-          _expectedLifePartner.ageRange![1].toDouble());
-      _expectedLifePartnerController.selectedAgeRange =
-          _expectedLifePartner.ageRange;
-      _expectedLifePartnerController.selectedComplexion =
-          _expectedLifePartner.complexion!;
-      _expectedLifePartnerController.heightController.text =
-          _expectedLifePartner.height!;
-      _expectedLifePartnerController.educationalQualificationController.text =
-          _expectedLifePartner.educationalQualification!;
-      _expectedLifePartnerController.districtController.text =
-          _expectedLifePartner.district!;
-      _expectedLifePartnerController.selectedMaritalStatus =
-          _expectedLifePartner.maritalStatus!;
-      _expectedLifePartnerController.professionController.text =
-          _expectedLifePartner.profession!;
-      _expectedLifePartnerController.financialConditionController.text =
-          _expectedLifePartner.financialCondition!;
-      _expectedLifePartnerController.expectedQualityController.text =
-          _expectedLifePartner.expectedQuality!;
+    final _expectedLifePartnerData = Get.find<MyBioDataController>().currentUser!.data!.biodata!.expectedLifePartnerInfo;
+
+    if (_expectedLifePartnerData != null) {
+      _expectedPartnerController.expectedComplexion = _complexion.firstWhereOrNull((item) => item.value == _expectedLifePartnerData.expectedComplexion);
+      _expectedPartnerController.expectedHeight.text = _expectedLifePartnerData.expectedHeight ?? '';
+      _expectedPartnerController.expectedEducation.text = _expectedLifePartnerData.exptectedEducation ?? '';
+      _expectedPartnerController.expectedDistrict.text = _expectedLifePartnerData.exptectedDistrict ?? '';
+      _expectedPartnerController.expectedMaritalStatus = _maritalStatus.firstWhereOrNull((item) => item.value == _expectedLifePartnerData.expectedMaritialStatus);
+      _expectedPartnerController.expectedProfession.text = _expectedLifePartnerData.expectedProfession ?? '';
+      _expectedPartnerController.expectedFinancialCondition.text = _expectedLifePartnerData.expectedFinancialCondition ?? '';
+      _expectedPartnerController.expectedQualityAttributes.text = _expectedLifePartnerData.expectedAttributes ?? '';
     } else {
-      _ageRange = const RangeValues(18, 30);
-      _expectedLifePartnerController.selectedAgeRange = [
-        _ageRange!.start.toInt(),
-        _ageRange!.end.toInt()
-      ];
-      _expectedLifePartnerController.selectedComplexion = [];
-      _expectedLifePartnerController.heightController.text = '';
-      _expectedLifePartnerController.educationalQualificationController.text =
-          '';
-      _expectedLifePartnerController.districtController.text = '';
-      _expectedLifePartnerController.selectedMaritalStatus = [];
-      _expectedLifePartnerController.professionController.text = '';
-      _expectedLifePartnerController.financialConditionController.text = '';
-      _expectedLifePartnerController.expectedQualityController.text = '';
+      _expectedPartnerController.expectedComplexion = null;
+      _expectedPartnerController.expectedHeight.text = '';
+      _expectedPartnerController.expectedEducation.text = '';
+      _expectedPartnerController.expectedDistrict.text = '';
+      _expectedPartnerController.expectedMaritalStatus = null;
+      _expectedPartnerController.expectedProfession.text = '';
+      _expectedPartnerController.expectedFinancialCondition.text = '';
+      _expectedPartnerController.expectedQualityAttributes.text = '';
     }
   }
-
-  final List<String> _complexions = [
-    'black',
-    'brown',
-    'lightBrown',
-    'fair',
-    'veryFair'
-  ];
-
-  final List<String> _maritalStatus = [
-    'single',
-    'married',
-    'divorced',
-    'widowed',
-    'separated'
-  ];
-
-  final MultiSelectController<String> _complexionC = MultiSelectController();
-  final MultiSelectController<String> _maritalStatusC = MultiSelectController();
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _expectedLifePartnerController.formKey,
+      key: _expectedPartnerController.formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const InputTitleText(title: "Age"),
-          Row(
-            children: [
-              Text('18',
-                  style: AppTextStyles.bodySmall(color: AppColors.greyColor)),
-              Expanded(
-                child: SliderTheme(
-                  data: SliderThemeData(
-                      trackHeight: 2.h,
-                      valueIndicatorColor: AppColors.violetClr,
-                      valueIndicatorTextStyle:
-                          AppTextStyles.titleSmall(color: AppColors.whiteClr)),
-                  child: RangeSlider(
-                    values: _ageRange!,
-                    min: 18,
-                    max: 70, // Adjust based on your price range
-                    divisions: 70,
-                    activeColor: AppColors.violetClr,
-                    inactiveColor: AppColors.violetClr.withOpacity(0.3),
-                    labels: RangeLabels(
-                      _ageRange!.start.toStringAsFixed(0),
-                      _ageRange!.end.toStringAsFixed(0),
-                    ),
-                    onChanged: (newRange) {
-                      setState(() {
-                        _ageRange = newRange;
-                        _expectedLifePartnerController.selectedAgeRange = [
-                          _ageRange!.start.toInt(),
-                          _ageRange!.end.toInt()
-                        ];
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Text('70',
-                  style: AppTextStyles.bodySmall(color: AppColors.greyColor)),
-            ],
-          ),
-          const InputTitleText(title: "Complexion"),
+          // InputTitleText(title: "expectedAgeTitle".tr),
+          // Row(
+          //   children: [
+          //     Text('18',
+          //         style: Theme.of(context)
+          //             .textTheme
+          //             .bodySmall!
+          //             .copyWith(color: greyClr)),
+          //     Expanded(
+          //       child: SliderTheme(
+          //         data: SliderThemeData(
+          //             trackHeight: 2.h,
+          //             valueIndicatorColor: violetClr,
+          //             valueIndicatorTextStyle: Theme.of(context)
+          //                 .textTheme
+          //                 .titleSmall!
+          //                 .copyWith(color: lightBgClr)),
+          //         child: RangeSlider(
+          //           values: _ageRange!,
+          //           min: 18,
+          //           max: 70, // Adjust based on your price range
+          //           divisions: 70,
+          //           activeColor: violetClr,
+          //           inactiveColor: violetClr.withOpacity(0.3),
+          //           labels: RangeLabels(
+          //             _ageRange!.start.toStringAsFixed(0),
+          //             _ageRange!.end.toStringAsFixed(0),
+          //           ),
+          //           onChanged: (newRange) {
+          //             setState(() {
+          //               _ageRange = newRange;
+          //               _expectedPartnerController.expectedMinAge =
+          //                   newRange.start.toInt();
+          //               _expectedPartnerController.expectedMaxAge =
+          //                   newRange.end.toInt();
+          //             });
+          //           },
+          //         ),
+          //       ),
+          //     ),
+          //     Text('70',
+          //         style: Theme.of(context)
+          //             .textTheme
+          //             .bodySmall!
+          //             .copyWith(color: greyClr)),
+          //   ],
+          // ),
+          InputTitleText(title: "expectedComplexionTitle".tr),
           Gap(4.h),
-          MultiSelectDropDown<String>(
-            controller: _complexionC, // Assuming your controller instance
-            clearIcon: null,
-            options: _complexions
-                .map<ValueItem<String>>((complexion) => ValueItem(
-                      label: complexion,
-                      value: complexion,
-                    ))
-                .toList(),
-            onOptionSelected: (options) {
+          // Wrap(
+          //   crossAxisAlignment: WrapCrossAlignment.center,
+          //   spacing: 8.w,
+          //   runSpacing: 8.h,
+          //   children: List.generate(_complexion.length, (index) => GestureDetector(
+          //     onTap: (){},
+          //     child: Container(
+          //       height: 50.h,
+          //       width: 100.w,
+          //       alignment: Alignment.center,
+          //       decoration: BoxDecoration(
+          //         border: Border.all(color: violetClr, width: 2.w),
+          //         borderRadius: BorderRadius.circular(8.r),
+          //       ),
+          //       child: Text(_complexion[index].title, style: Theme.of(context).textTheme.titleSmall),
+          //     ),
+          //   ),),
+          // ),
+          CustomDropdownButtonTest(
+            value: _expectedPartnerController.expectedComplexion,
+            validator: dropdownValidator,
+            items: _complexion,
+            onChanged: (newValue) {
               setState(() {
-                final selectedComplexionStrings = options
-                    .where((option) =>
-                        option.value != null) // Filter out null values
-                    .map((option) =>
-                        option.value!) // Use null-assertion operator
-                    .toList();
-                _expectedLifePartnerController.selectedComplexion =
-                    selectedComplexionStrings;
+                _expectedPartnerController.expectedComplexion = newValue;
               });
             },
-            onOptionRemoved: (index, option) {
+          ),
+          Gap(16.h),
+
+          InputTitleText(title: "expectedHeightTitle".tr),
+          Gap(4.h),
+          CustomTextFormField(
+              validator: requiredValidator,
+              controller: _expectedPartnerController.expectedHeight),
+          Gap(4.h),
+          Text("expectedHeightNB".tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: violetClr)),
+          Gap(16.h),
+
+          InputTitleText(title: "expectedEducationTitle".tr),
+          Gap(4.h),
+          CustomTextFormField(
+              validator: requiredValidator,
+              controller: _expectedPartnerController.expectedEducation),
+          Gap(16.h),
+
+          InputTitleText(title: "expectedDistrictTitle".tr),
+          Gap(4.h),
+          CustomTextFormField(
+            validator: requiredValidator,
+            controller: _expectedPartnerController.expectedDistrict
+          ),
+          Gap(4.h),
+          Text("expectedDistrictNB".tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: violetClr)),
+          Gap(16.h),
+
+          InputTitleText(title: "expectedMaritalStatusTitle".tr),
+          Gap(4.h),
+          CustomDropdownButtonTest(
+            value: _expectedPartnerController.expectedMaritalStatus,
+            validator: dropdownValidator,
+            items: _maritalStatus,
+            onChanged: (newValue) {
               setState(() {
-                _expectedLifePartnerController.selectedComplexion
-                    .remove(option);
+                _expectedPartnerController.expectedMaritalStatus = newValue;
               });
             },
-            maxItems: 4,
-            chipConfig: ChipConfig(
-                wrapType: WrapType.wrap, backgroundColor: AppColors.violetClr),
-            optionBuilder: (context, valueItem, isSelected) {
-              return ListTile(
-                title: Text(valueItem.label),
-                trailing: isSelected
-                    ? const Icon(Icons.check_circle)
-                    : const Icon(Icons.radio_button_unchecked),
-              );
-            },
-            inputDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.r),
-              border: Border.all(color: AppColors.violetClr, width: 2.w),
-            ),
           ),
           Gap(16.h),
-          const InputTitleText(title: "Height"),
+
+          InputTitleText(title: "expectedProfessionTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-              validator: (value) =>
-                  notEmptyValidator(value, 'Please enter expected height'),
-              hintText: "Height",
-              controller: _expectedLifePartnerController.heightController),
+            validator: requiredValidator,
+            controller: _expectedPartnerController.expectedProfession
+          ),
           Gap(4.h),
-          Text("Don't write 'Any' or 'Adjustable'",
-              style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
+          Text("expectedProfessionNB".tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: violetClr)),
           Gap(16.h),
-          const InputTitleText(title: "Educational Qualification"),
+
+          InputTitleText(title: "expectedFinancialConditionTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-            validator: (value) => notEmptyValidator(
-                value, 'Please enter expected edu qualification'),
-            hintText: "Education",
-            controller: _expectedLifePartnerController
-                .educationalQualificationController,
+            validator:requiredValidator,
+            controller: _expectedPartnerController.expectedFinancialCondition
           ),
+          Gap(4.h),
+          Text("expectedFinancialConditionNB".tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: violetClr)),
           Gap(16.h),
-          const InputTitleText(title: "District"),
+
+          InputTitleText(title: "expectedAttributesTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-            validator: (value) =>
-                notEmptyValidator(value, 'Please enter expected district'),
-            hintText: "District",
-            controller: _expectedLifePartnerController.districtController,
+            validator: requiredValidator,
+            controller: _expectedPartnerController.expectedQualityAttributes
           ),
           Gap(4.h),
-          Text(
-              "Don't write 'Any District'. Mention specific districts in consultation with family",
-              style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
-          Gap(16.h),
-          const InputTitleText(title: "Marital Status"),
-          Gap(4.h),
-          MultiSelectDropDown<String>(
-            controller: _maritalStatusC, // Assuming your controller instance
-            clearIcon: null,
-            options: _maritalStatus
-                .map<ValueItem<String>>((maritalStatus) => ValueItem(
-                      label: maritalStatus,
-                      value: maritalStatus,
-                    ))
-                .toList(),
-            onOptionSelected: (options) {
-              setState(() {
-                final selectedMaritalStatusStrings = options
-                    .where((option) =>
-                        option.value != null) // Filter out null values
-                    .map((option) =>
-                        option.value!) // Use null-assertion operator
-                    .toList();
-                _expectedLifePartnerController.selectedMaritalStatus =
-                    selectedMaritalStatusStrings;
-              });
-            },
-            onOptionRemoved: (index, option) {
-              setState(() {
-                _expectedLifePartnerController.selectedMaritalStatus
-                    .remove(option);
-              });
-            },
-            maxItems: 4,
-            chipConfig: ChipConfig(
-                wrapType: WrapType.wrap, backgroundColor: AppColors.violetClr),
-            optionBuilder: (context, valueItem, isSelected) {
-              return ListTile(
-                title: Text(valueItem.label),
-                trailing: isSelected
-                    ? const Icon(Icons.check_circle)
-                    : const Icon(Icons.radio_button_unchecked),
-              );
-            },
-            inputDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.r),
-              border: Border.all(color: AppColors.violetClr, width: 2.w),
-            ),
-          ),
-          Gap(16.h),
-          const InputTitleText(title: "Profession"),
-          Gap(4.h),
-          CustomTextFormField(
-            validator: (value) =>
-                notEmptyValidator(value, 'Please enter expected profession'),
-            hintText: "Profession",
-            controller: _expectedLifePartnerController.professionController,
-          ),
-          Gap(4.h),
-          Text("Don't write 'Any' or 'Adjustable' or 'Any Halal Occupation'",
-              style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
-          Gap(16.h),
-          const InputTitleText(title: "Financial Condition"),
-          Gap(4.h),
-          CustomTextFormField(
-            validator: (value) => notEmptyValidator(
-                value, 'Please enter expected finance condition'),
-            hintText: "Condition",
-            controller:
-                _expectedLifePartnerController.financialConditionController,
-          ),
-          Gap(4.h),
-          Text(
-            "Be specific rather than 'Any'",
-            style: AppTextStyles.bodySmall(color: AppColors.violetClr),
-          ),
-          Gap(16.h),
-          const InputTitleText(
-              title: "Expected qualities or attributes of life partner."),
-          Gap(4.h),
-          CustomTextFormField(
-            validator: (value) =>
-                notEmptyValidator(value, 'Please enter expected quality'),
-            hintText: "Quality",
-            controller:
-                _expectedLifePartnerController.expectedQualityController,
-          ),
-          Gap(4.h),
-          Text(
-              "You may right your expectation in detail. Also, you may mention if there is any special condition",
-              style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
+          Text("expectedAttributesNB".tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: violetClr)),
           Gap(16.h),
         ],
       ),

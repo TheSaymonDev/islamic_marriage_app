@@ -18,6 +18,7 @@ class LanguageController extends GetxController {
     final locale = languageString == 'english' ? english : bengali;
     Get.updateLocale(locale); // Update GetX locale based on saved language
     isEnglish = languageString == 'english';
+    print('Language loaded from preferences: ${languageString == 'english' ? 'English' : 'Bengali'}');
     update();
   }
 

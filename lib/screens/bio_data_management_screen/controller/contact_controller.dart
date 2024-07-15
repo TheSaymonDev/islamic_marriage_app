@@ -9,7 +9,7 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 class ContactController extends GetxController {
   bool isLoading = false;
 
-  Contact? contact;
+  //Contact? contact;
 
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
@@ -17,22 +17,22 @@ class ContactController extends GetxController {
   final relationshipController = TextEditingController();
   final emailController = TextEditingController();
 
-  Future<bool> createContact() async {
+  Future<bool> upsertContact() async {
     isLoading = true;
     update();
     try {
       final contact = Contact(
           groomName: nameController.text,
           guardianMobile: guardiansMobileController.text,
-          guardianRelationship: relationshipController.text,
+          relationShipWithGuardian: relationshipController.text,
           email: emailController.text);
-      final response = await ApiService().post(
-          url: AppUrls.createContactUrl,
+      final response = await ApiService().patch(
+          url: AppUrls.upsertBioDataUrl,
           data: contact,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Contact Created Successful');
-        Get.find<MyBioDataController>().readMyBioData();
+        Get.find<MyBioDataController>().getCurrentUser();
         isLoading = false;
         update();
         return true;
@@ -52,62 +52,62 @@ class ContactController extends GetxController {
     }
   }
 
-  Future<void> readContact() async {
-    isLoading = true;
-    update();
-    try {
-      final response = await ApiService().get(
-          url: AppUrls.readContactUrl, headers: AppUrls.getHeaderWithToken);
-      if (response.success) {
-        contact = Contact.fromJson(response.data['data']);
-        isLoading = false;
-        update();
-      } else {
-        final errorMessage =
-            response.message['message'] ?? 'Contact Read Failed';
-        customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
-      }
-    } catch (error) {
-      customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
-    }
-  }
-
-  Future<bool> updateContact() async {
-    isLoading = true;
-    update();
-    try {
-      final contact = Contact(
-          groomName: nameController.text,
-          guardianMobile: guardiansMobileController.text,
-          guardianRelationship: guardiansMobileController.text,
-          email: emailController.text);
-      final response = await ApiService().put(
-          url: AppUrls.updateContactUrl,
-          data: contact,
-          headers: AppUrls.getHeaderWithToken);
-      if (response.success) {
-        customSuccessMessage(message: 'Contact Updated Successful');
-        Get.find<MyBioDataController>().readMyBioData();
-        isLoading = false;
-        update();
-        return true;
-      } else {
-        final errorMessage =
-            response.message['message'] ?? 'Contact Update Failed';
-        customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
-        return false;
-      }
-    } catch (error) {
-      customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
-      return false;
-    }
-  }
+  // Future<void> readContact() async {
+  //   isLoading = true;
+  //   update();
+  //   try {
+  //     final response = await ApiService().get(
+  //         url: AppUrls.readContactUrl, headers: AppUrls.getHeaderWithToken);
+  //     if (response.success) {
+  //       contact = Contact.fromJson(response.data['data']);
+  //       isLoading = false;
+  //       update();
+  //     } else {
+  //       final errorMessage =
+  //           response.message['message'] ?? 'Contact Read Failed';
+  //       customErrorMessage(message: errorMessage);
+  //       isLoading = false;
+  //       update();
+  //     }
+  //   } catch (error) {
+  //     customErrorMessage(message: error.toString());
+  //     isLoading = false;
+  //     update();
+  //   }
+  // }
+  //
+  // Future<bool> updateContact() async {
+  //   isLoading = true;
+  //   update();
+  //   try {
+  //     final contact = Contact(
+  //         groomName: nameController.text,
+  //         guardianMobile: guardiansMobileController.text,
+  //         guardianRelationship: guardiansMobileController.text,
+  //         email: emailController.text);
+  //     final response = await ApiService().put(
+  //         url: AppUrls.updateContactUrl,
+  //         data: contact,
+  //         headers: AppUrls.getHeaderWithToken);
+  //     if (response.success) {
+  //       customSuccessMessage(message: 'Contact Updated Successful');
+  //       Get.find<MyBioDataController>().readMyBioData();
+  //       isLoading = false;
+  //       update();
+  //       return true;
+  //     } else {
+  //       final errorMessage =
+  //           response.message['message'] ?? 'Contact Update Failed';
+  //       customErrorMessage(message: errorMessage);
+  //       isLoading = false;
+  //       update();
+  //       return false;
+  //     }
+  //   } catch (error) {
+  //     customErrorMessage(message: error.toString());
+  //     isLoading = false;
+  //     update();
+  //     return false;
+  //   }
+  // }
 }

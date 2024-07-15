@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 
 class InputTitleText extends StatelessWidget {
   final String title;
@@ -13,11 +12,11 @@ class InputTitleText extends StatelessWidget {
     return RichText(
       text: TextSpan(
           text: title,
-          style: AppTextStyles.bodyMedium(color: AppColors.greyColor),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: greyClr),
           children: [
             TextSpan(
                 text: isRequired == true? ' *': '',
-                style: AppTextStyles.titleSmall(color: Colors.red))
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.red))
           ]),
     );
   }

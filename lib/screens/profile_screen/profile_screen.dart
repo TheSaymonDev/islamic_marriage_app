@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Get.toNamed(AppRoutes.myBioDataScreen);
               },
               buttonName: 'myBioData'.tr,
-              buttonWidth: 140.w,
+              buttonWidth: 170.w,
               buttonHeight: 45.h,
             ),
             Gap(16.h),

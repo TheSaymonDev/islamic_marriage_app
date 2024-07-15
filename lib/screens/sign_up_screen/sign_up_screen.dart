@@ -177,8 +177,7 @@ class SignUpScreen extends StatelessWidget {
         Get.offAllNamed(
           AppRoutes.otpVerificationScreen,
           arguments: {
-            'phone': _phoneController.text.trim(),
-            'isForgetOtp': false
+            'identity': controller.identity,
           },
         );
         _clearData();

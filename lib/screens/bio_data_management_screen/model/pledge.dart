@@ -1,29 +1,21 @@
 class Pledge {
-  int? id;
-  String? parentKnowSubmission;
-  String? isAllInfoTrue;
-  String? falseInfoProven;
+  String? parentalAwareness;
+  String? informationTruth;
+  String? agreement;
 
-  Pledge({
-    this.id,
-    this.parentKnowSubmission,
-    this.isAllInfoTrue,
-    this.falseInfoProven,
-  });
+  Pledge({this.parentalAwareness, this.informationTruth, this.agreement});
 
   Pledge.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    parentKnowSubmission = json['parentKnowSubmission'];
-    isAllInfoTrue = json['isAllInfoTrue'];
-    falseInfoProven = json['falseInfoProven'];
+    parentalAwareness = json['parentalAwareness'];
+    informationTruth = json['informationTruth'];
+    agreement = json['agreement'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['parentKnowSubmission'] = parentKnowSubmission;
-    data['isAllInfoTrue'] = isAllInfoTrue;
-    data['falseInfoProven'] = falseInfoProven;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['parentalAwareness'] = this.parentalAwareness;
+    data['informationTruth'] = this.informationTruth;
+    data['agreement'] = this.agreement;
     return data;
   }
 }

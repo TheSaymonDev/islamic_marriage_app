@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 
@@ -8,7 +9,7 @@ class CustomDropdownButton1<T> extends StatelessWidget {
   final T? value;
   final List<T> items;
   final ValueChanged<T?> onChanged;
-  final String hintText;
+  final String? hintText;
   final FormFieldValidator<T>? validator;
 
   const CustomDropdownButton1({
@@ -16,7 +17,7 @@ class CustomDropdownButton1<T> extends StatelessWidget {
     required this.value,
     required this.items,
     required this.onChanged,
-    this.hintText = 'Select',
+    this.hintText,
     this.validator,
   });
 
@@ -33,7 +34,7 @@ class CustomDropdownButton1<T> extends StatelessWidget {
       }).toList(),
       onChanged: onChanged,
       hint: Text(
-        hintText,
+        hintText ?? 'select'.tr,
         style: AppTextStyles.bodyMedium(),
       ),
       style: AppTextStyles.bodySmall(),

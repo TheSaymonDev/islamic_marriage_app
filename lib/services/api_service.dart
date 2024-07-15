@@ -64,7 +64,7 @@ class ApiService {
 
   Future<ApiResponse<dynamic>> postMultipart({
     required String url,
-    required dynamic data,
+    required Map<String, dynamic> data,
     required File file,
     Map<String, String>? headers,
   }) async {
@@ -75,9 +75,14 @@ class ApiService {
 
     final multipartRequest = http.MultipartRequest('POST', Uri.parse(url));
     multipartRequest.headers.addAll(headers ?? AppUrls.requestHeader);
-    data.forEach((key, value) => multipartRequest.fields[key] = value.toString());
-    String fileField = 'photo';
+
+    // Add data as a single field
+    multipartRequest.fields['data'] = jsonEncode(data);
+
+    // Add file
+    String fileField = 'groomSelfieUrl'; // Ensure this matches the backend expectation
     multipartRequest.files.add(await http.MultipartFile.fromPath(fileField, file.path));
+
     final response = await multipartRequest.send();
     final streamResponse = await http.Response.fromStream(response);
 

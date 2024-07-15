@@ -9,7 +9,8 @@ class SharedPreferencesService {
   }
 
   void saveUserData(Map<String, dynamic> userData) {
-    _prefs.setString('token', userData['data'] ?? '');
+    _prefs.setString('token', userData['accessToken'] ?? '');
+    _prefs.setString('name', userData['user']['name'] ?? '');
   }
   String getUserId(){
     return _prefs.getString('userId') ?? '';

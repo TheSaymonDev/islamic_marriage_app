@@ -29,7 +29,7 @@ class AppUrls{
   static const cashOnDeliveryJson = '$_lottiePath/cash_on_delivery.json';
   static const emptyCartJson = '$_lottiePath/empty_cart.json';
 
-  static const _baseUrl = "https://islamic-marriage-server.onrender.com/api/v1";
+  static const _baseUrl = "https://server.api.islamicmarriage.net/api/v1";
   static const Map<String, String> requestHeader = {"Content-Type": "application/json"};
 
   static Map<String, String> get getHeaderWithToken{
@@ -46,36 +46,30 @@ class AppUrls{
   static const shortDes = "Lorem ipsum dolor sit amet consectetur";
 
   // for auth
-  static const signInUrl = '$_baseUrl/auth/login';
-  static const signUpUrl = '$_baseUrl/user/register';
-  static const identityUrl = '$_baseUrl/auth/sendOtp';
-  static const otpVerificationUrl = '$_baseUrl/auth/verifyOtp';
-  static const setPasswordUrl = '$_baseUrl/auth/resetPassword';
-  static const resendOTPUrl = '$_baseUrl/auth/send-otp';
+  static const signInUrl = '$_baseUrl/users/login';
+  static const signUpUrl = '$_baseUrl/users/signup';
+  static const identityUrl = '$_baseUrl/users/forget-password';
+  static const otpVerificationUrl = '$_baseUrl/users/verify-otp';
+  static const forgetOtpVerificationUrl = '$_baseUrl/users/forget-password/otp-verify';
+  static const setPasswordUrl = '$_baseUrl/users/reset-password';
+  static const resendOTPUrl = '$_baseUrl/users/resend-otp';
   static const changePasswordUrl = '$_baseUrl/auth/changePassword';
   static const profileUpdateUrl = '$_baseUrl/user/update';
   // for create bio data
-  static const createGeneralInfoUrl = '$_baseUrl/biodata/personal-info/create';
-  static const createAddressUrl = '$_baseUrl/biodata/address/create';
-  static const createEduQualificationUrl = '$_baseUrl/biodata/education/create';
-  static const createFamilyInfoUrl = '$_baseUrl/biodata/family-info/create';
-  static const createPersonalInfoUrl = '$_baseUrl/biodata/lifestyle/create';
-  static const createOccupationalInfoUrl = '$_baseUrl/biodata/occupation/create';
-  static const createMarriageInfoUrl = '$_baseUrl/biodata/marriage-info/create';
-  static const createExpectedLifePartnerInfoUrl = '$_baseUrl/biodata/expected-partner/create';
-  static const createPledgeUrl = '$_baseUrl/biodata/pledge/create';
-  static const createContactUrl = '$_baseUrl/biodata/contact/create';
-  // for update bio data
-  static const updateGeneralInfoUrl = '$_baseUrl/biodata/personal-info/update';
-  static const updateAddressUrl = '$_baseUrl/biodata/address/update';
-  static const updateEduQualificationUrl = '$_baseUrl/biodata/education/update';
-  static const updateFamilyInfoUrl = '$_baseUrl/biodata/family-info/update';
-  static const updatePersonalInfoUrl = '$_baseUrl/biodata/lifestyle/update';
-  static const updateOccupationalInfoUrl = '$_baseUrl/biodata/occupation/update';
-  static const updateMarriageInfoUrl = '$_baseUrl/biodata/marriage-info/update';
-  static const updateExpectedLifePartnerUrl = '$_baseUrl/biodata/expected-partner/update';
-  static const updatePledgeUrl = '$_baseUrl/biodata/pledge/update';
-  static const updateContactUrl = '$_baseUrl/biodata/contact/update';
+  static const upsertBioDataUrl = '$_baseUrl/biodata';
+  static const upsertAddressInfoUrl = '$_baseUrl/addressInfo/upsertAddressInfo';
+  static const upsertEduQualificationsUrl = '$_baseUrl/educationInfo/upsertEducationInfo';
+  static const upsertFamilyInfoUrl = '$_baseUrl/familyInfo/upsertFamilyInfo';
+  static const upsertPersonalInfoUrl = '$_baseUrl/personalInfo/upsertPersonalInfo';
+  static const upsertOccupationalInfoUrl = '$_baseUrl/occupationInfo/upsertOccupationInfo';
+  static const upsertMarriageInfoUrl = '$_baseUrl/marriageInfo/upsertMarriageInfo';
+  static const upsertExpectedLifePartnerInfoUrl = '$_baseUrl/expectedPartnerInfo/upsertExpectedPartnerInfo';
+  static const upsertPledgeUrl = '$_baseUrl/pledgeInfo/upsertPledgeInfo';
+  static const upsertContactUrl = '$_baseUrl/contactInfo/upsertContactInfo';
+
+  static const getAllUser = '$_baseUrl/biodata';
+  static const getCurrentUser = '$_baseUrl/users/me';
+
   // for read bio data
   static const readGeneralInfoUrl = '$_baseUrl/biodata/personal-info/fetch/1';
   static const readAddressUrl = '$_baseUrl/biodata/address/fetch/1';

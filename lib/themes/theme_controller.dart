@@ -16,6 +16,7 @@ class ThemeController extends GetxController {
     final theme = themeModeString == 'dark' ? ThemeMode.dark : ThemeMode.light;
     Get.changeThemeMode(theme);
     isDark = themeModeString == 'dark';
+    print('Theme loaded from preferences: ${themeModeString == 'dark' ? 'Dark' : 'Light'}');
     update();
   }
 

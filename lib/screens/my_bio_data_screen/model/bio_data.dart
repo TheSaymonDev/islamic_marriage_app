@@ -1,12 +1,12 @@
 
 
-import 'package:islamic_marriage/screens/bio_data_management_screen/model/address.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/address_info.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/contact.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/model/edu_qualifications.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/edu_qualifications_info.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/expected_life_partner.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/family_info.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/general_info.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/model/marriage_info.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/model/marriage_related_info.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/occupational_info.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/personal_life_info.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/pledge.dart';
@@ -29,8 +29,7 @@ class BioData {
   int? connection;
   bool? isSubmitToVerify;
   GeneralInfo? personalInformation;
-  Address? address;
-  EduQualifications? education;
+  EduQualificationsInfo? education;
   FamilyInfo? familyInformation;
   PersonalLifeInfo? lifeStyleInformation;
   OccupationalInfo? occupation;
@@ -54,7 +53,6 @@ class BioData {
         this.purchased,
         this.connection,
         this.isSubmitToVerify,
-        this.address,
         this.personalInformation,
         this.education,
         this.familyInformation,
@@ -85,11 +83,10 @@ class BioData {
     connection = json['connection'] as int?;
     isSubmitToVerify = json['isSubmitToVerify'] as bool?;
 
-    address = json['Address'] != null ? Address.fromJson(json['Address']) : null;
     personalInformation = json['PersonalInformation'] != null
         ? GeneralInfo.fromJson(json['PersonalInformation'])
         : null;
-    education = json['Education'] != null ? EduQualifications.fromJson(json['Education']) : null;
+    education = json['Education'] != null ? EduQualificationsInfo.fromJson(json['Education']) : null;
     familyInformation = json['FamilyInformation'] != null
         ? FamilyInfo.fromJson(json['FamilyInformation'])
         : null;

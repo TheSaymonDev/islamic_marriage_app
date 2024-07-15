@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 String? passwordValidator(value) {
   if (value!.isEmpty) {
@@ -85,14 +86,14 @@ String? confirmPasswordValidator(
 
 String? dropdownValidator(value) {
   if (value == null) {
-    return 'Please select an item.';
+    return 'dropDownValidationMsg'.tr;
   }
   return null;
 }
 
 String? dobValidator(value) {
   if (value == null || value.isEmpty) {
-    return 'Please select a date';
+    return 'dobValidationMsg'.tr;
   }
   return null;
 }
@@ -106,7 +107,7 @@ String? notEmptyValidator(value, message) {
 
 String? requiredValidator(value) {
   if (value!.isEmpty) {
-    return 'Field is required';
+    return 'fieldRequiredMsg'.tr;
   }
   return null;
 }

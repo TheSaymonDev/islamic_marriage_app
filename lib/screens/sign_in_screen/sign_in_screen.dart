@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
-import 'package:islamic_marriage/screens/identity_verification_screen/controller/identity_verification_controller.dart';
 import 'package:islamic_marriage/screens/identity_verification_screen/model/identity_verification.dart';
+import 'package:islamic_marriage/screens/otp_verification_screen/controller/resend_otp_controller.dart';
 import 'package:islamic_marriage/screens/sign_in_screen/controller/sign_in_controller.dart';
 import 'package:islamic_marriage/screens/sign_in_screen/model/sign_in.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
@@ -120,7 +120,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("haveAnAccount".tr, style: Theme.of(context).textTheme.bodyMedium),
+        Text("haveAnAccount".tr, style: Theme.of(context).textTheme.bodySmall),
         Gap(8.w),
         GestureDetector(
             onTap: () {
@@ -129,7 +129,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Text("createAccount".tr,
                 style: Theme.of(context)
                     .textTheme
-                    .titleMedium!
+                    .titleSmall!
                     .copyWith(color: purpleClr)))
       ],
     );
@@ -162,29 +162,31 @@ class _SignInScreenState extends State<SignInScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       final inputText = _identityController.text.trim();
       final isEmail = RegExp(
-              r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+")
+          r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+")
           .hasMatch(inputText);
       final identity =
-          isEmail ? inputText : inputText; // Prepend for phone number if needed
+      isEmail ? inputText : inputText; // Prepend for phone number if needed
       final result = await controller.signInUser(
         signIn: SignIn(
             identity: identity, password: _passwordController.text.trim()),
       );
-
-      if (result == 'Please Verify Your Account To Login') {
+      print(result);
+      if (result == 'User not verified') {
         final identityVerification =
-            IdentityVerification(phone: _identityController.text.trim());
-        Get.find<IdentityVerificationController>()
-            .identityVerify(identityVerification: identityVerification);
+        IdentityVerification(identity: _identityController.text.trim());
+        Get.find<ResendOTPController>()
+            .resendOTP(resendOTP: identityVerification);
         Get.toNamed(AppRoutes.otpVerificationScreen, arguments: {
-          'phone': _identityController.text.trim(),
-          'isForgetOtp': false
+          'identity': _identityController.text.trim(),
         });
         _clearData();
-      } else if (result == 'Login Successfully') {
+      } else if (result == 'Login Successful') {
         Get.offAllNamed(AppRoutes.homeScreen);
         _clearData();
+      } else {
+       customErrorMessage(message: result);
       }
     }
   }
+
 }

@@ -8,7 +8,6 @@ import 'package:islamic_marriage/screens/explore_screens/controller/all_user_con
 import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/custom_card.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
@@ -39,11 +38,15 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AllUserController>(builder: (controller) {
-      if (_isFavoriteList.length != controller.bioData.length) {
-        _isFavoriteList = List.filled(controller.bioData.length, false);
+      // Ensure allUser and its data are not null before accessing them
+      final users = controller.allUser?.data ?? [];
+
+      if (_isFavoriteList.length != users.length) {
+        _isFavoriteList = List.filled(users.length, false);
       }
+
       return controller.isLoading
-          ? customCircularProgressIndicator
+          ? Center(child: customCircularProgressIndicator) // Show loader
           : SizedBox(
               height: double.infinity.h,
               width: double.infinity.w,
@@ -59,11 +62,12 @@ class _UserScreenState extends State<UserScreen> {
                         RichText(
                             text: TextSpan(
                                 text: 'Welcome! ',
-                                style: AppTextStyles.bodyMedium(),
+                                style: Theme.of(context).textTheme.bodyMedium,
                                 children: [
                               TextSpan(
-                                  text: _name,
-                                  style: AppTextStyles.titleMedium())
+                                  text: _name.toUpperCase(),
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium)
                             ])),
                         GestureDetector(
                           onTap: () {},
@@ -74,14 +78,14 @@ class _UserScreenState extends State<UserScreen> {
                     ),
                     Gap(4.h),
                     Text("Let's find your soulmate",
-                        style: AppTextStyles.bodySmall()),
+                        style: Theme.of(context).textTheme.bodySmall),
                     Gap(8.h),
                     Flexible(
                       child: ListView.separated(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          final user = controller.bioData[index];
+                          final user = users[index];
                           return CustomCard(
                             height: 220.h,
                             border: Border.all(
@@ -91,8 +95,7 @@ class _UserScreenState extends State<UserScreen> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Get.to(() =>
-                                        BioDataDetailsScreen(bioData: user));
+                                     Get.to(() => BioDataDetailsScreen(user: user));
                                   },
                                   child: SizedBox(
                                     height: 130.h,
@@ -119,15 +122,13 @@ class _UserScreenState extends State<UserScreen> {
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
-                                                  Get.to(() =>
-                                                      BioDataDetailsScreen(
-                                                          bioData: user));
+                                                  Get.to(() => BioDataDetailsScreen(user: user));
                                                 },
                                                 child: Text(
-                                                    user.fullName!
-                                                        .toUpperCase(),
-                                                    style: AppTextStyles
-                                                        .titleMedium()),
+                                                    (user.contactInfo?.groomName ?? 'N/A').toUpperCase(),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium),
                                               ),
                                               Gap(4.w),
                                               Icon(Icons.verified_outlined,
@@ -142,52 +143,57 @@ class _UserScreenState extends State<UserScreen> {
                                               onTap: () =>
                                                   _toggleFavorite(index),
                                               child: Icon(
-                                                _isFavoriteList[index]
-                                                    ? Icons.favorite
-                                                    : Icons.favorite_outline,
-                                                size: 25.sp,
-                                                color: Colors.red,
-                                              ),
+                                                  _isFavoriteList[index]
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_outline,
+                                                  size: 25.sp,
+                                                  color: Colors.red),
                                             ),
                                           ),
                                         ],
                                       ),
                                       Text(
-                                          user.personalInformation != null
-                                              ? '25 years 5 months, ${user.personalInformation!.height}'
+                                          user.personalInfo != null
+                                              ? '25 years 5 months, ${ (user.generalInfo?.height ?? 'N/A').toUpperCase()}'
                                               : 'N/A',
-                                          style: AppTextStyles.bodySmall(
-                                              color: AppColors.greyColor)),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(color: greyClr)),
                                       Text(
-                                          user.address != null
-                                              ? user.address!.permanentAddress!
-                                              : 'N/A',
-                                          style: AppTextStyles.bodyMedium(
-                                              color: AppColors.greyColor)),
+
+                                          (user.permanentAddress?.division ?? 'N/A').toUpperCase(),
+
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(color: greyClr)),
                                       Text(
-                                          user.education != null
-                                              ? user.education!.qualification!
-                                              : 'N/A',
-                                          style: AppTextStyles.bodyMedium(
-                                              color: AppColors.greyColor)),
+                                          (user.educationInfo?.highestEducation ?? 'N/A').toUpperCase(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(color: greyClr)),
                                       Text(
-                                          user.occupation != null
-                                              ? user.occupation!.occupation!
-                                              : 'N/A',
-                                          style: AppTextStyles.bodyMedium(
-                                              color: AppColors.greyColor)),
+                                          (user.occupationInfo?.occupation ?? 'N/A').toUpperCase(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(color: greyClr)),
                                       Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
                                           CircleAvatar(
-                                            backgroundColor: Colors.green,
-                                            radius: 4.r,
-                                          ),
+                                              backgroundColor: Colors.green,
+                                              radius: 4.r),
                                           Gap(4.w),
                                           Text('Active Now',
-                                              style: AppTextStyles.bodyMedium(
-                                                  color: Colors.green)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      color: Colors.green)),
                                         ],
                                       ),
                                       CustomElevatedButton(
@@ -198,8 +204,10 @@ class _UserScreenState extends State<UserScreen> {
                                           buttonName: 'Send Invitation',
                                           buttonHeight: 30.h,
                                           buttonWidth: 130.w,
-                                          style: AppTextStyles.titleSmall(
-                                              color: AppColors.whiteClr))
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(color: darkFontClr))
                                     ],
                                   ),
                                 ),
@@ -208,7 +216,7 @@ class _UserScreenState extends State<UserScreen> {
                           );
                         },
                         separatorBuilder: (context, index) => Gap(8.h),
-                        itemCount: controller.bioData.length,
+                        itemCount: users.length,
                       ),
                     ),
                     Gap(8.h),

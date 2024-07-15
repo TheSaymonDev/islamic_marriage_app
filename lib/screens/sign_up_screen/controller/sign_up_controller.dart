@@ -10,6 +10,7 @@ class SignUpController extends GetxController {
   bool isLoading = false;
   bool isChecked = false;
   int currentGender = 0;
+  String? identity;
   List<Gender> gender = [
     Gender(title: 'male', value: 'male'),
     Gender(title: 'female', value: 'female')
@@ -25,6 +26,7 @@ class SignUpController extends GetxController {
       _setLoading(false);
       if (response.success) {
         customSuccessMessage(message: 'Sent OTP Your Mobile');
+        identity = response.data['data']['identity'];
         return true;
       } else {
         final errorMessage = response.message['message'] ?? 'Registration Failed';

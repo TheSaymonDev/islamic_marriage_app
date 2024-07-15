@@ -6,7 +6,6 @@ import 'package:islamic_marriage/screens/chat_list_screen/chat_list_screen.dart'
 import 'package:islamic_marriage/screens/explore_screens/controller/all_user_controller.dart';
 import 'package:islamic_marriage/screens/explore_screens/explore_screen.dart';
 import 'package:islamic_marriage/screens/help_mate_screen/help_mate_screen.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/screens/profile_screen/profile_screen.dart';
 import 'package:islamic_marriage/screens/shop_screen/shop_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
@@ -33,17 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<AllUserController>().readAllUser();
+   Get.find<AllUserController>().getAllUser();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteClr,
       body: SafeArea(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: lightBgClr,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -55,35 +53,35 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             child: GNav(
-              rippleColor: AppColors.purpleClr,
+              rippleColor: purpleClr,
               hoverColor: Colors.grey[100]!,
               gap: 8.w,
-              activeColor: AppColors.purpleClr,
+              activeColor: purpleClr,
               iconSize: 24.sp,
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
               duration: const Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
-              color: AppColors.violetClr,
-              tabs: const [
+              color: violetClr,
+              tabs:  [
                 GButton(
                   icon: Icons.home,
-                  text: 'Home',
+                  text: 'nav1'.tr,
                 ),
                 GButton(
                   icon: Icons.supervised_user_circle,
-                  text: 'Help Mate',
+                  text: 'nav2'.tr,
                 ),
                 GButton(
                   icon: Icons.shopify,
-                  text: 'Shop',
+                  text: 'nav3'.tr,
                 ),
                 GButton(
                   icon: Icons.comment,
-                  text: 'Message',
+                  text: 'nav4'.tr,
                 ),
                 GButton(
                   icon: Icons.person,
-                  text: 'Profile',
+                  text: 'nav5'.tr
                 ),
               ],
               selectedIndex: _selectedIndex,

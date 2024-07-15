@@ -1,24 +1,22 @@
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/model/bio_data.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/model/current_user.dart';
 import 'package:islamic_marriage/services/api_service.dart';
-import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class MyBioDataController extends GetxController {
   bool isLoading = false;
-  BioData? myBioData;
+  CurrentUser? currentUser;
 
-  Future<void> readMyBioData() async {
+  Future<void> getCurrentUser() async {
     isLoading = true;
     update();
     try {
-      String userId = SharedPreferencesService().getUserId();
       final response = await ApiService().get(
-          url: '${AppUrls.readUserBioDataUrl}/$userId',
+          url: AppUrls.getCurrentUser,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
-        myBioData = BioData.fromJson(response.data['data']);
+        currentUser = CurrentUser.fromJson(response.data);
         isLoading = false;
         update();
       } else {

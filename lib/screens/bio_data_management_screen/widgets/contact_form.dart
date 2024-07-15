@@ -6,7 +6,6 @@ import 'package:islamic_marriage/screens/bio_data_management_screen/controller/c
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
-import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
 
@@ -18,17 +17,19 @@ class ContactForm extends StatefulWidget {
 }
 
 class _ContactFormState extends State<ContactForm> {
-  final ContactController _contactController = Get.find<ContactController>();
-  final _contact = Get.find<MyBioDataController>().myBioData!.contact;
+
+  final _contactController = Get.find<ContactController>();
 
   @override
   void initState() {
     super.initState();
-    if (_contact != null) {
-      _contactController.nameController.text = _contact.groomName!;
-      _contactController.guardiansMobileController.text = _contact.guardianMobile!;
-      _contactController.relationshipController.text = _contact.guardianRelationship!;
-      _contactController.emailController.text = _contact.email!;
+    final _contactData = Get.find<MyBioDataController>().currentUser!.data!.biodata!.contactInfo;
+
+    if (_contactData != null) {
+      _contactController.nameController.text = _contactData.groomName ?? '';
+      _contactController.guardiansMobileController.text = _contactData.guardianMobile ?? '';
+      _contactController.relationshipController.text = _contactData.relationShipWithGuardian ?? '';
+      _contactController.emailController.text = _contactData.email ?? '';
     } else {
       _contactController.nameController.text = '';
       _contactController.guardiansMobileController.text = '';
@@ -44,46 +45,45 @@ class _ContactFormState extends State<ContactForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const InputTitleText(title: "Groom's Name"),
+          InputTitleText(title: "brideOrGroomNameTitle".tr),
           Gap(4.h),
           CustomTextFormField(
             validator: requiredValidator,
-            hintText: "Name",
-            controller: _contactController.nameController,
+            controller: _contactController.nameController
           ),
           Gap(4.h),
-          Text('Please enter full name',
-              style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
+          Text('brideOrGroomNameNB'.tr,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: violetClr)),
           Gap(16.h),
-          const InputTitleText(title: "Guardian's mobile number"),
+
+          InputTitleText(title: "guardiansPhoneTitle".tr),
           Gap(4.h),
           CustomTextFormField(
               validator: mobileValidator,
               keyBoardType: TextInputType.phone,
-              hintText: "Mobile",
               controller: _contactController.guardiansMobileController),
           Gap(4.h),
           Text(
-              'This number will be given if anyone wants to contact your guardian. After verifying by calling this number, the Bio Data will be approved. If you write the number of your friend, colleague, cousin or yourself here, Bio Data will be permanently banned.',
-              style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
+              'guardiansPhoneNB'.tr,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: violetClr)),
           Gap(16.h),
-          const InputTitleText(title: "Relationship with guardian"),
+
+          InputTitleText(title: "relationshipWithGuardianTitle".tr),
           Gap(4.h),
           CustomTextFormField(
               validator: requiredValidator,
-              hintText: "Relationship",
               controller: _contactController.relationshipController),
           Gap(16.h),
-          const InputTitleText(title: "E-mail to received Bio Data"),
+
+          InputTitleText(title: "emailToReceivedBioDataTitle".tr),
           Gap(4.h),
           CustomTextFormField(
               validator: emailValidator,
-              hintText: "Email",
               controller: _contactController.emailController),
           Gap(4.h),
           Text(
-              "To avoid unwanted incidents, enter the guardian's email address if possible",
-              style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
+              "emailToReceivedBioDataNB".tr,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: violetClr)),
           Gap(16.h),
         ],
       ),

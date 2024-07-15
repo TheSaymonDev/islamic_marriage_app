@@ -9,7 +9,7 @@ class ResendOTPController extends GetxController{
   Future<void> resendOTP({required IdentityVerification resendOTP}) async {
     try {
       final response = await ApiService().post(
-          url: AppUrls.identityUrl, data: resendOTP);
+          url: AppUrls.resendOTPUrl, data: resendOTP);
       if (response.success) {
         customSuccessMessage(message: 'Resend OTP Your Mobile');
         // Reset timer duration
