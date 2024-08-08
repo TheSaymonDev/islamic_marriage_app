@@ -13,14 +13,14 @@ import 'package:islamic_marriage/widgets/custom_drop_down_button.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
 
-class CommunityCenterScreen extends StatefulWidget {
-  const CommunityCenterScreen({super.key});
+class CommunityCenterWidget extends StatefulWidget {
+  const CommunityCenterWidget({super.key});
 
   @override
-  State<CommunityCenterScreen> createState() => _CommunityCenterScreenState();
+  State<CommunityCenterWidget> createState() => _CommunityCenterWidgetState();
 }
 
-class _CommunityCenterScreenState extends State<CommunityCenterScreen> {
+class _CommunityCenterWidgetState extends State<CommunityCenterWidget> {
 
   final _kaziOfficeController = TextEditingController();
   final List<String> _sponsoredList = ['One Ummah', 'Believers Sign', 'Sunnah Shop'];

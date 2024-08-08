@@ -140,15 +140,23 @@ class _SignInScreenState extends State<SignInScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.find<SignInController>().launchInBrowser(
+                  Uri.parse('https://www.facebook.com/islamicmarriage.net'));
+            },
             icon: Icon(FontAwesomeIcons.facebook, size: 30.sp)),
         IconButton(
-            onPressed: () {}, icon: Icon(FontAwesomeIcons.google, size: 30.sp)),
+            onPressed: () {
+              Get.find<SignInController>().launchInBrowser(
+                  Uri.parse('https://www.linkedin.com/company/islamicmarrige'));
+            },
+            icon: Icon(FontAwesomeIcons.linkedin, size: 30.sp)),
         IconButton(
-            onPressed: () {},
-            icon: Icon(FontAwesomeIcons.instagram, size: 30.sp)),
-        IconButton(
-            onPressed: () {}, icon: Icon(FontAwesomeIcons.twitter, size: 30.sp))
+            onPressed: () {
+              Get.find<SignInController>()
+                  .launchInBrowser(Uri.parse('https://x.com/IMarriageBD'));
+            },
+            icon: Icon(FontAwesomeIcons.twitter, size: 30.sp))
       ],
     );
   }
@@ -162,10 +170,10 @@ class _SignInScreenState extends State<SignInScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       final inputText = _identityController.text.trim();
       final isEmail = RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+")
+              r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+")
           .hasMatch(inputText);
       final identity =
-      isEmail ? inputText : inputText; // Prepend for phone number if needed
+          isEmail ? inputText : inputText; // Prepend for phone number if needed
       final result = await controller.signInUser(
         signIn: SignIn(
             identity: identity, password: _passwordController.text.trim()),
@@ -173,7 +181,7 @@ class _SignInScreenState extends State<SignInScreen> {
       print(result);
       if (result == 'User not verified') {
         final identityVerification =
-        IdentityVerification(identity: _identityController.text.trim());
+            IdentityVerification(identity: _identityController.text.trim());
         Get.find<ResendOTPController>()
             .resendOTP(resendOTP: identityVerification);
         Get.toNamed(AppRoutes.otpVerificationScreen, arguments: {
@@ -184,9 +192,8 @@ class _SignInScreenState extends State<SignInScreen> {
         Get.offAllNamed(AppRoutes.homeScreen);
         _clearData();
       } else {
-       customErrorMessage(message: result);
+        customErrorMessage(message: result);
       }
     }
   }
-
 }

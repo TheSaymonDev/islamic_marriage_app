@@ -9,7 +9,7 @@ class AllUserController extends GetxController {
   AllUser? allUser;
 
   Future<void> getAllUser() async {
-    _setLoadingState(true);
+    _setLoading(true);
     try {
       final response = await ApiService().get(
         url: AppUrls.getAllUser,
@@ -18,27 +18,23 @@ class AllUserController extends GetxController {
 
       if (response.success) {
         allUser = AllUser.fromJson(response.data);
-        _setLoadingState(false);
+        _setLoading(false);
       } else {
-        _handleError(response.message['message'] ?? 'All Bio Data Read Failed');
+        final errorMessage =
+            response.message['message'] ?? 'All Bio Data Read Failed';
+        customErrorMessage(message: errorMessage);
+        _setLoading(false);
       }
     } catch (error) {
-      _handleError(error.toString());
+      customErrorMessage(message: error);
+      _setLoading(false);
     } finally {
-      _setLoadingState(false);
+      _setLoading(false);
     }
   }
 
-  void _setLoadingState(bool state) {
+  void _setLoading(bool state) {
     isLoading = state;
     update();
   }
-
-  void _handleError(String errorMessage) {
-    customErrorMessage(message: errorMessage);
-    isLoading = false;
-    update();
-  }
-
-
 }

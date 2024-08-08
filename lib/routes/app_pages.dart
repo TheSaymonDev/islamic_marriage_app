@@ -2,9 +2,11 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/about_us_screen/about_us_screen.dart';
 import 'package:islamic_marriage/screens/address_view_screen/address_view_screen.dart';
+import 'package:islamic_marriage/screens/bio_data_details_screen/bio_data_details_screen.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/bindings/bio_data_management_binding.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/bio_data_management_screen.dart';
 import 'package:islamic_marriage/screens/cart_screen/cart_screen.dart';
+import 'package:islamic_marriage/screens/favourite_bio_data_details_screen/favourite_bio_data_details_screen.dart';
 import 'package:islamic_marriage/screens/forget_otp_verification_screen/bindings/forget_otp_verification_binding.dart';
 import 'package:islamic_marriage/screens/forget_otp_verification_screen/forget_otp_verification_screen.dart';
 import 'package:islamic_marriage/screens/help_center_screens/bindings/help_center_binding.dart';
@@ -28,6 +30,7 @@ import 'package:islamic_marriage/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/bindings/sign_up_binding.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:islamic_marriage/screens/subscription_screens/subscription_screen.dart';
+import 'package:islamic_marriage/screens/wishlist_screen/wishlist_screen.dart';
 
 class AppPages {
   static final pages = [
@@ -94,5 +97,12 @@ class AppPages {
       name: AppRoutes.aboutUsScreen,
       page: () => AboutUsScreen(),
     ),
+    GetPage(
+        name: AppRoutes.bioDataDetailsScreen,
+        page: () => BioDataDetailsScreen()),
+    GetPage(name: AppRoutes.wishlistScreen, page: () => WishlistScreen()),
+    GetPage(
+        name: AppRoutes.favouriteBioDataDetailsScreen,
+        page: () => FavouriteBioDataDetailsScreen())
   ];
 }

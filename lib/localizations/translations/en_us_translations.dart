@@ -60,6 +60,8 @@ final Map<String, String> enUs = {
   'user': 'User',
   'kaziOffice': 'Kazi Office',
   'communityCenter': 'Community\nCenter',
+  'welcome': 'Welcome! ',
+  'letsFindTitle': "Let's find your soulmate",
 
   // For Helpmate Screen
   'typeOfBioData': 'Type of Bio Data',
@@ -73,6 +75,8 @@ final Map<String, String> enUs = {
 
   // For Profile Screen
   'myBioData': 'My Bio Data',
+  'profileUpdate': 'Profile Update',
+  'wishlist': 'Favourite Bio Data',
   'editBioData': 'Edit Bio Data',
   'subscription': 'Subscription',
   'address': 'Address',
@@ -85,7 +89,7 @@ final Map<String, String> enUs = {
   'cancelBtn': 'Cancel',
 
   // For Profile Update Screen
-  'profileUpdate': 'Profile Update',
+  'profileUpdateAppbarTitle': 'Profile Update',
   'nameHint': 'Name',
   'phoneHint': 'Phone',
   'emailHint': 'Email',
@@ -94,6 +98,19 @@ final Map<String, String> enUs = {
   'oldPass': 'Old Password',
   'confirm': 'Confirm',
   'changePass': 'Change Password',
+
+  // For BioData Details Screen
+  'bioDataDetailsAppbarTitle': 'Bio Data Details',
+  'bioDataNo': 'BioData No: 01',
+  'addressTitle': 'Address',
+  'eduQualificationTitle': 'Educational Qualification',
+  'familyInfoTitle': 'Family Information',
+  'personalInfoTitle': 'Personal Information',
+  'occupationalInfoTitle': 'Occupational Information',
+  'marriageInfoTitle': 'Marriage Related Information',
+  'expectedLifePartnerTitle': 'Expected Life Partner',
+  'authorizedQueTitle': 'Authorized Question',
+  'contactTitle': 'Contact Information',
 
   // BioData Management Screen
   'step1': 'General Information',
@@ -149,6 +166,9 @@ final Map<String, String> enUs = {
   'presentAddressTitle': 'Present Address',
   'sameAsPermanentAddressTitle': 'Same as permanent address',
   'growUpTitle': 'Where did you grow up?',
+  'divisionHint': 'Division',
+  'districtHint': 'District',
+  'subDistrict': 'Sub-District',
 
   // For Educational Qualifications Form
   'educationalMethodTitle': 'Educational Method',
@@ -314,10 +334,20 @@ final Map<String, String> enUs = {
   'twitter': 'Twitter',
   'facebook': 'Facebook',
   'select': 'Select',
+  'faqQue1': 'How much does it cost to submit a Bio Data?',
+  'faqQue2': 'Is this website for everyone?',
+  'faqQue3': 'What could be the reason for not approving the Bio Data?',
+  'faqAns1': "It does not cost any money to submit the bio-data. But if you want to communicate by choosing someone's bio-data, you have to pay a subscription fee.",
+  'faqAns2': "This website is not for everyone. Only Muslims can submit the bio-data.",
+  'faqAns3': "1. If you are not a Muslim.\n 2. If you provide any false information.\n 3. If you do not fill up all information. \n 4. If your contact information is not correct. \n 5. if you do not agree to our terms and conditions.",
+
+  // For WishList Screen
+  'wishlistAppbarTitle': 'Favourite Bio Data',
 
 
   'dropDownValidationMsg' : 'Please select an item',
   'dobValidationMsg': 'Please select date',
   'fieldRequiredMsg': 'Field is required',
   'writeHere': 'Write here'
+
 };

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:islamic_marriage/screens/profile_update_screen/models/profile_update.dart';
@@ -9,6 +10,11 @@ import 'package:islamic_marriage/utils/app_urls.dart';
 
 class ProfileUpdateController extends GetxController {
   bool isLoading = false;
+  ProfileUpdate? profileInfo;
+
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
   int currentGender = 0;
 
   List<Gender> gender = [
@@ -29,6 +35,34 @@ class ProfileUpdateController extends GetxController {
       imageFile = File(pickedImage.path);
     }
     update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getProfileInfo();
+  }
+
+  Future<void> getProfileInfo() async {
+    _setLoading(true);
+    try {
+      final response = await ApiService().get(
+          url: AppUrls.getCurrentUser,
+          headers: AppUrls.getHeaderWithToken);
+      if (response.success) {
+        profileInfo = ProfileUpdate.fromJson(response.data['data']);
+        _assignProfileData();
+       _setLoading(false);
+      } else {
+        final errorMessage =
+            response.message['message'] ?? 'User Info Read Failed';
+        customErrorMessage(message: errorMessage);
+       _setLoading(false);
+      }
+    } catch (error) {
+      customErrorMessage(message: error.toString());
+     _setLoading(false);
+    }
   }
 
   Future<bool> updateProfile({required ProfileUpdate profileUpdate}) async {
@@ -54,6 +88,13 @@ class ProfileUpdateController extends GetxController {
       _setLoading(false);
       return false;
     }
+  }
+
+  void _assignProfileData() {
+    nameController.text = profileInfo?.name ?? '';
+    phoneController.text = profileInfo?.phone ?? '';
+    emailController.text = profileInfo?.email ?? '';
+    update();
   }
 
   void _setLoading(bool value) {

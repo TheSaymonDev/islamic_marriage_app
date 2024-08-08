@@ -12,14 +12,14 @@ import 'package:islamic_marriage/widgets/custom_card.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
 
-class KaziOfficeScreen extends StatefulWidget {
-  const KaziOfficeScreen({super.key});
+class KaziOfficeWidget extends StatefulWidget {
+  const KaziOfficeWidget({super.key});
 
   @override
-  State<KaziOfficeScreen> createState() => _KaziOfficeScreenState();
+  State<KaziOfficeWidget> createState() => _KaziOfficeWidgetState();
 }
 
-class _KaziOfficeScreenState extends State<KaziOfficeScreen> {
+class _KaziOfficeWidgetState extends State<KaziOfficeWidget> {
 
   final _kaziOfficeController = TextEditingController();
 

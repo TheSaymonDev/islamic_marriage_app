@@ -67,7 +67,7 @@ class _AddressFormState extends State<AddressForm> {
           //   },
           // ),
           CustomTextFormField(
-            hintText: 'Division',
+            hintText: 'divisionHint'.tr,
               controller: _addressInfoController.selectedDivision,
               validator: requiredValidator),
           Gap(8.h),
@@ -75,7 +75,7 @@ class _AddressFormState extends State<AddressForm> {
             children: [
               Expanded(
                   child: CustomTextFormField(
-                    hintText: 'District',
+                    hintText: 'districtHint'.tr,
                       controller: _addressInfoController.selectedDistrict,
                       validator: requiredValidator)),
               // Expanded(
@@ -94,7 +94,7 @@ class _AddressFormState extends State<AddressForm> {
               Gap(8.w),
               Expanded(
                   child: CustomTextFormField(
-                    hintText: 'Sub-District',
+                    hintText: 'subDistrictHint'.tr,
                       controller: _addressInfoController.selectedSubDistrict,
                       validator: requiredValidator)),
               // Expanded(
@@ -142,7 +142,7 @@ class _AddressFormState extends State<AddressForm> {
             replacement: Column(
               children: [
                 CustomTextFormField(
-                  hintText: 'Division',
+                  hintText: 'divisionHint'.tr,
                     controller: _addressInfoController.selectedDivision1,
                     validator: requiredValidator),
                 // CustomDropdownButton1<Division>(
@@ -162,7 +162,7 @@ class _AddressFormState extends State<AddressForm> {
                   children: [
                     Expanded(
                         child: CustomTextFormField(
-                          hintText: 'District',
+                          hintText: 'districtHint'.tr,
                             controller: _addressInfoController.selectedDistrict1,
                             validator: requiredValidator)),
                     // Expanded(
@@ -181,7 +181,7 @@ class _AddressFormState extends State<AddressForm> {
                     Gap(8.w),
                     Expanded(
                         child: CustomTextFormField(
-                          hintText: 'Sub-District',
+                          hintText: 'subDistrictHint'.tr,
                             controller: _addressInfoController.selectedSubDistrict1,
                             validator: requiredValidator)),
                     // Expanded(

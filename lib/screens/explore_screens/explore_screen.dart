@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/explore_screens/explore_screen_components/community_center_screen.dart';
-import 'package:islamic_marriage/screens/explore_screens/explore_screen_components/kazi_office_screen.dart';
-import 'package:islamic_marriage/screens/explore_screens/explore_screen_components/user_screen.dart';
+import 'package:islamic_marriage/screens/explore_screens/widgets/community_center_widget.dart';
+import 'package:islamic_marriage/screens/explore_screens/widgets/kazi_office_widget.dart';
+import 'package:islamic_marriage/screens/explore_screens/widgets/user_widget.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -50,17 +50,26 @@ class _ExploreScreenState extends State<ExploreScreen>
             tabs: [
               Tab(
                 child: Center(
-                  child: Text('user'.tr, textAlign: TextAlign.center,),
+                  child: Text(
+                    'user'.tr,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
               Tab(
                 child: Center(
-                  child: Text('kaziOffice'.tr, textAlign: TextAlign.center,),
+                  child: Text(
+                    'kaziOffice'.tr,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
               Tab(
                 child: Center(
-                  child: Text('communityCenter'.tr, textAlign: TextAlign.center,),
+                  child: Text(
+                    'communityCenter'.tr,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ],
@@ -70,9 +79,9 @@ class _ExploreScreenState extends State<ExploreScreen>
               physics: const NeverScrollableScrollPhysics(),
               controller: _tabController,
               children: const [
-                UserScreen(),
-                KaziOfficeScreen(),
-                CommunityCenterScreen()
+                UserWidget(),
+                KaziOfficeWidget(),
+                CommunityCenterWidget()
               ],
             ),
           ),

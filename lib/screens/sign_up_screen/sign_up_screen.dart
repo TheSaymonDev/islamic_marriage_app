@@ -143,15 +143,23 @@ class SignUpScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.find<SignUpController>().launchInBrowser(
+                  Uri.parse('https://www.facebook.com/islamicmarriage.net'));
+            },
             icon: Icon(FontAwesomeIcons.facebook, size: 30.sp)),
         IconButton(
-            onPressed: () {}, icon: Icon(FontAwesomeIcons.google, size: 30.sp)),
+            onPressed: () {
+              Get.find<SignUpController>().launchInBrowser(
+                  Uri.parse('https://www.linkedin.com/company/islamicmarrige'));
+            },
+            icon: Icon(FontAwesomeIcons.linkedin, size: 30.sp)),
         IconButton(
-            onPressed: () {},
-            icon: Icon(FontAwesomeIcons.instagram, size: 30.sp)),
-        IconButton(
-            onPressed: () {}, icon: Icon(FontAwesomeIcons.twitter, size: 30.sp))
+            onPressed: () {
+              Get.find<SignUpController>()
+                  .launchInBrowser(Uri.parse('https://x.com/IMarriageBD'));
+            },
+            icon: Icon(FontAwesomeIcons.twitter, size: 30.sp))
       ],
     );
   }

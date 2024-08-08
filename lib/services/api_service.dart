@@ -6,7 +6,6 @@ import 'package:islamic_marriage/utils/api_response.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 
 class ApiService {
-
   Future<ApiResponse<dynamic>> get({
     required String url,
     Map<String, String>? headers,
@@ -29,7 +28,7 @@ class ApiService {
     required String url,
     required dynamic data,
     Map<String, String>? headers,
-  })async {
+  }) async {
     developer.log(url.toString());
     developer.log('Data: $data');
     developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
@@ -48,7 +47,7 @@ class ApiService {
   Future<ApiResponse<dynamic>> postWithOutData({
     required String url,
     Map<String, String>? headers,
-  })async {
+  }) async {
     developer.log(url.toString());
     developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
 
@@ -80,8 +79,10 @@ class ApiService {
     multipartRequest.fields['data'] = jsonEncode(data);
 
     // Add file
-    String fileField = 'groomSelfieUrl'; // Ensure this matches the backend expectation
-    multipartRequest.files.add(await http.MultipartFile.fromPath(fileField, file.path));
+    String fileField =
+        'groomSelfieUrl'; // Ensure this matches the backend expectation
+    multipartRequest.files
+        .add(await http.MultipartFile.fromPath(fileField, file.path));
 
     final response = await multipartRequest.send();
     final streamResponse = await http.Response.fromStream(response);
@@ -95,7 +96,7 @@ class ApiService {
     required String url,
     required dynamic data,
     Map<String, String>? headers,
-  })async {
+  }) async {
     developer.log(url.toString());
     developer.log('Data: $data');
     developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
@@ -124,11 +125,14 @@ class ApiService {
 
     final multipartRequest = http.MultipartRequest('PUT', Uri.parse(url));
     multipartRequest.headers.addAll(headers ?? AppUrls.requestHeader);
-    data.forEach((key, value) => multipartRequest.fields[key] = value.toString());
+    data.forEach(
+        (key, value) => multipartRequest.fields[key] = value.toString());
 
-    if (file != null) { // Check if file is provided before adding it
+    if (file != null) {
+      // Check if file is provided before adding it
       String fileField = 'photo';
-      multipartRequest.files.add(await http.MultipartFile.fromPath(fileField, file.path));
+      multipartRequest.files
+          .add(await http.MultipartFile.fromPath(fileField, file.path));
     }
 
     final response = await multipartRequest.send();
@@ -143,7 +147,7 @@ class ApiService {
     required String url,
     required dynamic data,
     Map<String, String>? headers,
-  })async {
+  }) async {
     developer.log(url.toString());
     developer.log('Data: $data');
     developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
@@ -152,6 +156,23 @@ class ApiService {
       Uri.parse(url),
       headers: headers ?? AppUrls.requestHeader,
       body: jsonEncode(data),
+    );
+
+    developer.log('Status Code: ${response.statusCode}');
+    developer.log('Body: ${response.body}');
+    return _handleApiResponse(response);
+  }
+
+  Future<ApiResponse<dynamic>> patchWithOutBody({
+    required String url,
+    Map<String, String>? headers,
+  }) async {
+    developer.log(url.toString());
+    developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
+
+    final response = await http.patch(
+      Uri.parse(url),
+      headers: headers ?? AppUrls.requestHeader
     );
 
     developer.log('Status Code: ${response.statusCode}');

@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/help_center_screens/controller/contact_us_controller.dart';
 import 'package:islamic_marriage/screens/profile_screen/widgets/custom_button.dart';
 
-class ContactUsScreen extends StatelessWidget {
-  const ContactUsScreen({super.key});
+class ContactUsWidget extends StatelessWidget {
+  const ContactUsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,10 @@ class ContactUsScreen extends StatelessWidget {
               title: 'linkedin'.tr),
           Gap(8.h),
           CustomButton(
-              onTap: () {},
+              onTap: () {
+                Get.find<ContactUsController>().launchInBrowser(Uri.parse(
+                    'https://x.com/IMarriageBD'));
+              },
               iconData: FontAwesomeIcons.twitter,
               title: 'twitter'.tr),
           Gap(8.h),

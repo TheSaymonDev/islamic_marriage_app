@@ -66,65 +66,66 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
         width: double.infinity.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: GetBuilder<MyBioDataController>(
-          builder: (controller) => controller.isLoading? customCircularProgressIndicator: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconStepper(
-                activeStepColor: Colors.transparent,
-                activeStepBorderColor: Colors.transparent,
-                lineColor: violetClr,
-                stepColor: Colors.transparent,
-                enableNextPreviousButtons: false,
-                stepRadius: 20.sp,
-                icons: [
-                  Icon(FontAwesomeIcons.circleInfo,
-                      color: activeStep == 0 ? purpleClr : violetClr),
-                  Icon(FontAwesomeIcons.locationDot,
-                      color: activeStep == 1 ? purpleClr : violetClr),
-                  Icon(FontAwesomeIcons.graduationCap,
-                      color: activeStep == 2 ? purpleClr : violetClr),
-                  Icon(FontAwesomeIcons.peopleRoof,
-                      color: activeStep == 3 ? purpleClr : violetClr),
-                  Icon(FontAwesomeIcons.idCard,
-                      color: activeStep == 4 ? purpleClr : violetClr),
-                  Icon(FontAwesomeIcons.briefcase,
-                      color: activeStep == 5 ? purpleClr : violetClr),
-                  Icon(FontAwesomeIcons.handshakeAngle,
-                      color: activeStep == 6 ? purpleClr : violetClr),
-                  Icon(FontAwesomeIcons.handHoldingHeart,
-                      color: activeStep == 7 ? purpleClr : violetClr),
-                  Icon(FontAwesomeIcons.productHunt,
-                      color: activeStep == 8 ? purpleClr : violetClr),
-                  Icon(FontAwesomeIcons.phoneVolume,
-                      color: activeStep == 9 ? purpleClr : violetClr),
-                ],
+            builder: (controller) => controller.isLoading
+                ? customCircularProgressIndicator
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IconStepper(
+                        activeStepColor: Colors.transparent,
+                        activeStepBorderColor: Colors.transparent,
+                        lineColor: violetClr,
+                        stepColor: Colors.transparent,
+                        enableNextPreviousButtons: false,
+                        stepRadius: 20.sp,
+                        icons: [
+                          Icon(FontAwesomeIcons.circleInfo,
+                              color: activeStep == 0 ? purpleClr : violetClr),
+                          Icon(FontAwesomeIcons.locationDot,
+                              color: activeStep == 1 ? purpleClr : violetClr),
+                          Icon(FontAwesomeIcons.graduationCap,
+                              color: activeStep == 2 ? purpleClr : violetClr),
+                          Icon(FontAwesomeIcons.peopleRoof,
+                              color: activeStep == 3 ? purpleClr : violetClr),
+                          Icon(FontAwesomeIcons.idCard,
+                              color: activeStep == 4 ? purpleClr : violetClr),
+                          Icon(FontAwesomeIcons.briefcase,
+                              color: activeStep == 5 ? purpleClr : violetClr),
+                          Icon(FontAwesomeIcons.handshakeAngle,
+                              color: activeStep == 6 ? purpleClr : violetClr),
+                          Icon(FontAwesomeIcons.handHoldingHeart,
+                              color: activeStep == 7 ? purpleClr : violetClr),
+                          Icon(FontAwesomeIcons.productHunt,
+                              color: activeStep == 8 ? purpleClr : violetClr),
+                          Icon(FontAwesomeIcons.phoneVolume,
+                              color: activeStep == 9 ? purpleClr : violetClr),
+                        ],
 
-                // activeStep property set to activeStep variable defined above.
-                activeStep: activeStep,
+                        // activeStep property set to activeStep variable defined above.
+                        activeStep: activeStep,
 
-                // This ensures step-tapping updates the activeStep.
-                onStepReached: (index) {
-                  setState(() {
-                    activeStep = index;
-                  });
-                },
-              ),
-              Text(headerText(), style: AppTextStyles.titleLarge()),
-              Divider(
-                color: greyClr,
-                height: 0.h,
-                thickness: 2.w,
-              ),
-              Gap(16.h),
-              Expanded(
-                child: SingleChildScrollView(child: bodyComponents()),
-              ),
-              Gap(8.h),
-              Container(child: button()),
-              Gap(16.h)
-            ],
-          )
-        ),
+                        // This ensures step-tapping updates the activeStep.
+                        onStepReached: (index) {
+                          setState(() {
+                            activeStep = index;
+                          });
+                        },
+                      ),
+                      Text(headerText(), style: AppTextStyles.titleLarge()),
+                      Divider(
+                        color: greyClr,
+                        height: 0.h,
+                        thickness: 2.w,
+                      ),
+                      Gap(16.h),
+                      Expanded(
+                        child: SingleChildScrollView(child: bodyComponents()),
+                      ),
+                      Gap(8.h),
+                      Container(child: button()),
+                      Gap(16.h)
+                    ],
+                  )),
       ),
       // body: Container(
       //   height: double.infinity.h,
@@ -548,7 +549,7 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
                         final result = await controller.upsertContact();
                         if (result) {
                           setState(() {
-                           Navigator.pop(context);
+                            Navigator.pop(context);
                           });
                         }
                       }

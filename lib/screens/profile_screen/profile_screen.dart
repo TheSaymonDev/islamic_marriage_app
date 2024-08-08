@@ -30,14 +30,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           children: [
             Gap(16.h),
-            CustomProfileAvatar(
-              onTap: () {
-                Get.toNamed(AppRoutes.profileUpdateScreen);
-              },
-              iconData: FontAwesomeIcons.penToSquare,
-              foregroundImage: AssetImage(AppUrls.placeHolderPng),
-            ),
-            Gap(16.h),
+            // CustomProfileAvatar(
+            //   onTap: () {
+            //     Get.toNamed(AppRoutes.profileUpdateScreen);
+            //   },
+            //   iconData: FontAwesomeIcons.penToSquare,
+            //   foregroundImage: AssetImage(AppUrls.placeHolderPng),
+            // ),
+            // Gap(16.h),
             CustomElevatedButton(
               onPressed: () {
                 Get.toNamed(AppRoutes.myBioDataScreen);
@@ -49,10 +49,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Gap(16.h),
             CustomButton(
               onTap: () {
+                Get.toNamed(AppRoutes.profileUpdateScreen);
+              },
+              iconData: FontAwesomeIcons.circleUser,
+              title: 'profileUpdate'.tr
+            ),
+            Gap(8.h),
+            CustomButton(
+              onTap: () {
                 Get.toNamed(AppRoutes.bioDataManagementScreen);
               },
               iconData: FontAwesomeIcons.penToSquare,
               title: 'editBioData'.tr,
+            ),
+            Gap(8.h),
+            CustomButton(
+              onTap: () {
+                Get.toNamed(AppRoutes.wishlistScreen);
+              },
+              iconData: FontAwesomeIcons.shieldHeart,
+              title: 'wishlist'.tr,
             ),
             Gap(8.h),
             CustomButton(

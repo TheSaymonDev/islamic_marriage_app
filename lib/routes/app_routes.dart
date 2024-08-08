@@ -1,5 +1,6 @@
 class AppRoutes {
   static const initialRoute = onboardingScreen;
+  static const splashScreen = '/splash_screen';
   static const onboardingScreen = '/onboarding_screen';
   static const signInScreen = '/sign_in_screen';
   static const signUpScreen = '/sign_up_screen';
@@ -31,4 +32,6 @@ class AppRoutes {
   static const messageScreen = '/message_screen';
   static const productDetailsScreen = '/product_details_screen';
   static const reviewScreen = '/review_screen';
+  static const wishlistScreen = '/wishlist_screen';
+  static const favouriteBioDataDetailsScreen = '/favourite_bio_data_details_screen';
 }

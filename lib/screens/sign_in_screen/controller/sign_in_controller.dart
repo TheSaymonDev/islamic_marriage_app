@@ -4,6 +4,7 @@ import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignInController extends GetxController {
   bool isLoading = false;
@@ -15,9 +16,6 @@ class SignInController extends GetxController {
     try {
       final response = await ApiService().post(url: AppUrls.signInUrl, data: signIn);
       _setLoading(false);
-
-      print('Response: $response'); // Debug print to check the response structure
-
       if (response.success) {
         final message = response.data['message'];
         if (message == 'Login Successful') {
@@ -36,6 +34,15 @@ class SignInController extends GetxController {
       _setLoading(false);
       customErrorMessage(message: error.toString());
       return error.toString();
+    }
+  }
+
+  Future<void> launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
     }
   }
 

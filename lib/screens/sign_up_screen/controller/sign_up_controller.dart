@@ -4,6 +4,7 @@ import 'package:islamic_marriage/screens/sign_up_screen/model/sign_up.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpController extends GetxController {
   bool isObscure = true;
@@ -37,6 +38,15 @@ class SignUpController extends GetxController {
       customErrorMessage(message: error.toString());
       _setLoading(false);
       return false;
+    }
+  }
+
+  Future<void> launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
     }
   }
 

@@ -2,116 +2,117 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
+import 'package:islamic_marriage/screens/wishlist_screen/models/wishlist.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
+import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
 import 'package:islamic_marriage/widgets/custom_expansion_tile.dart';
 import 'package:islamic_marriage/widgets/custom_bio_data_table.dart';
-import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
-class MyBioDataScreen extends StatefulWidget {
-  const MyBioDataScreen({
-    super.key,
-  });
+class FavouriteBioDataDetailsScreen extends StatefulWidget {
+  const FavouriteBioDataDetailsScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyBioDataScreen> createState() => _MyBioDataScreenState();
+  State<FavouriteBioDataDetailsScreen> createState() =>
+      _FavouriteBioDataDetailsScreenState();
 }
 
-class _MyBioDataScreenState extends State<MyBioDataScreen> {
+class _FavouriteBioDataDetailsScreenState
+    extends State<FavouriteBioDataDetailsScreen> {
+  late Biodata user;
+
   @override
   void initState() {
+    user = Get.arguments['user'] as Biodata;
     super.initState();
-    Get.find<MyBioDataController>().getCurrentUser();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppbar(
-          onPressedBack: () {
-            Get.back();
-          },
-          title: 'myBioData'.tr,
-        ),
+            onPressedBack: () {
+              Get.back();
+            },
+            title: 'bioDataDetailsAppbarTitle'.tr),
         body: Container(
           height: double.infinity.h,
           width: double.infinity.w,
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: GetBuilder<MyBioDataController>(
-            builder: (controller) => controller.isLoading
-                ? customCircularProgressIndicator
-                : _buildMyBioData(controller),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity.w,
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.r),
+                    color: AppColors.violetClr,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 85.h,
+                        width: 85.w,
+                        child: CircleAvatar(
+                          foregroundImage: AssetImage(AppUrls.placeHolderPng),
+                        ),
+                      ),
+                      Gap(8.h),
+                      Text('bioDataNo'.tr,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: darkFontClr)),
+                      Gap(8.h),
+                      CustomBioDataTable(data: generateGeneralInfo(user)),
+                    ],
+                  ),
+                ),
+                CustomExpansionTile(title: 'addressTitle'.tr, children: [
+                  CustomBioDataTable(data: generateAddress(user))
+                ]),
+                CustomExpansionTile(
+                    title: 'eduQualificationTitle'.tr,
+                    children: [
+                      CustomBioDataTable(
+                          data: generateEduQualificationInfo(user))
+                    ]),
+                CustomExpansionTile(title: 'familyInfoTitle'.tr, children: [
+                  CustomBioDataTable(data: generateFamilyInfo(user))
+                ]),
+                CustomExpansionTile(title: 'personalInfoTitle'.tr, children: [
+                  CustomBioDataTable(data: generatePersonalInfo(user))
+                ]),
+                CustomExpansionTile(
+                    title: 'occupationalInfoTitle'.tr,
+                    children: [
+                      CustomBioDataTable(data: generateOccupationalInfo(user))
+                    ]),
+                CustomExpansionTile(title: 'marriageInfoTitle'.tr, children: [
+                  CustomBioDataTable(data: generateMarriageRelatedInfo(user))
+                ]),
+                CustomExpansionTile(
+                    title: 'expectedLifePartnerTitle'.tr,
+                    children: [
+                      CustomBioDataTable(
+                          data: generateExpectedLifePartner(user))
+                    ]),
+                CustomExpansionTile(
+                    title: 'authorizedQueTitle'.tr,
+                    children: [CustomBioDataTable(data: generatePledge(user))]),
+                // CustomExpansionTile(title: 'Contact Information', children: [
+                //   CustomBioDataTable(data: generateContact(user))
+                // ]),
+              ],
+            ),
           ),
         ));
   }
 
-  Widget _buildMyBioData(MyBioDataController controller) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity.w,
-            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.r),
-              color: AppColors.violetClr,
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 85.h,
-                  width: 85.w,
-                  child: CircleAvatar(
-                    foregroundImage: AssetImage(AppUrls.placeHolderPng),
-                  ),
-                ),
-                Gap(8.h),
-                Text('bioDataNo'.tr,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(color: darkFontClr)),
-                Gap(8.h),
-                CustomBioDataTable(data: generateGeneralInfo(controller)),
-              ],
-            ),
-          ),
-          CustomExpansionTile(title: 'addressTitle'.tr, children: [
-            CustomBioDataTable(data: generateAddress(controller))
-          ]),
-          CustomExpansionTile(title: 'eduQualificationTitle'.tr, children: [
-            CustomBioDataTable(data: generateEduQualificationInfo(controller))
-          ]),
-          CustomExpansionTile(title: 'familyInfoTitle'.tr, children: [
-            CustomBioDataTable(data: generateFamilyInfo(controller))
-          ]),
-          CustomExpansionTile(title: 'personalInfoTitle'.tr, children: [
-            CustomBioDataTable(data: generatePersonalInfo(controller))
-          ]),
-          CustomExpansionTile(title: 'occupationalInfoTitle'.tr, children: [
-            CustomBioDataTable(data: generateOccupationalInfo(controller))
-          ]),
-          CustomExpansionTile(title: 'marriageInfoTitle'.tr, children: [
-            CustomBioDataTable(data: generateMarriageRelatedInfo(controller))
-          ]),
-          CustomExpansionTile(title: 'expectedLifePartnerTitle'.tr, children: [
-            CustomBioDataTable(data: generateExpectedLifePartner(controller))
-          ]),
-          CustomExpansionTile(
-              title: 'authorizedQueTitle'.tr,
-              children: [CustomBioDataTable(data: generatePledge(controller))]),
-          CustomExpansionTile(title: 'contactTitle'.tr, children: [
-            CustomBioDataTable(data: generateContact(controller))
-          ]),
-        ],
-      ),
-    );
-  }
-
-  Map<String, String?> generateGeneralInfo(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.generalInfo;
+  Map<String, String?> generateGeneralInfo(Biodata user) {
+    final data = user.generalInfo;
     if (data != null) {
       return {
         'bioDataTypeTitle'.tr: data.bioDataType ?? 'N/A',
@@ -138,11 +139,10 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
     }
   }
 
-  Map<String, String?> generateAddress(MyBioDataController controller) {
-    final permanentAdd =
-        controller.currentUser?.data?.biodata?.permanentAddress;
-    final currentAdd = controller.currentUser?.data?.biodata?.currentAddress;
-    final grewUp = controller.currentUser?.data?.biodata?.grewUp;
+  Map<String, String?> generateAddress(Biodata user) {
+    final permanentAdd = user.permanentAddress;
+    final currentAdd = user.currentAddress;
+    final grewUp = user.grewUp;
 
     return {
       'permanentAddressTitle'.tr: permanentAdd != null
@@ -155,9 +155,8 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
     };
   }
 
-  Map<String, String?> generateEduQualificationInfo(
-      MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.educationInfo;
+  Map<String, String?> generateEduQualificationInfo(Biodata user) {
+    final data = user.educationInfo;
     return {
       'educationalMethodTitle'.tr: data?.educationMethod ?? 'N/A',
       'highestEducationalTitle'.tr: data?.highestEducation ?? 'N/A',
@@ -169,8 +168,8 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
     };
   }
 
-  Map<String, String?> generateFamilyInfo(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.familyInfo;
+  Map<String, String?> generateFamilyInfo(Biodata user) {
+    final data = user.familyInfo;
     return {
       "fathersNameTitle".tr: data?.fatherName ?? 'N/A',
       'fatherAliveTitle'.tr: data?.fatherAlive ?? 'N/A',
@@ -189,8 +188,8 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
     };
   }
 
-  Map<String, String?> generatePersonalInfo(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.personalInfo;
+  Map<String, String?> generatePersonalInfo(Biodata user) {
+    final data = user.personalInfo;
     return {
       'clothingOutSideTitle'.tr: data?.clothingOutside ?? 'N/A',
       'sunnahBeardSinceTitle'.tr: data?.sunnahBeardSince ?? 'N/A',
@@ -212,9 +211,8 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
     };
   }
 
-  Map<String, String?> generateOccupationalInfo(
-      MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.occupationInfo;
+  Map<String, String?> generateOccupationalInfo(Biodata user) {
+    final data = user.occupationInfo;
     return {
       'occupationTitle'.tr: data?.occupation ?? 'N/A',
       'descriptionOfProfessionTitle'.tr: data?.descriptionOfProfession ?? 'N/A',
@@ -222,9 +220,8 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
     };
   }
 
-  Map<String, String?> generateMarriageRelatedInfo(
-      MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.marriageInfo;
+  Map<String, String?> generateMarriageRelatedInfo(Biodata user) {
+    final data = user.marriageInfo;
     return {
       'guardianAgreeTitle'.tr: data?.guardianAgree ?? 'N/A',
       'wifeInVeilTitle'.tr: data?.wifeInVeil ?? 'N/A',
@@ -236,9 +233,8 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
     };
   }
 
-  Map<String, String?> generateExpectedLifePartner(
-      MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.expectedLifePartnerInfo;
+  Map<String, String?> generateExpectedLifePartner(Biodata user) {
+    final data = user.expectedLifePartnerInfo;
     return {
       //'expectedAgeTitle'.tr: data != null ? '${data.expectedMinAge ?? 'N/A'}-${data.expectedMaxAge ?? 'N/A'}' : 'N/A',
       'expectedComplexionTitle'.tr: data?.expectedComplexion ?? 'N/A',
@@ -253,23 +249,12 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
     };
   }
 
-  Map<String, String?> generatePledge(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.pledgeInfo;
+  Map<String, String?> generatePledge(Biodata user) {
+    final data = user.pledgeInfo;
     return {
       'parentalAwarenessTitle'.tr: data?.parentalAwareness ?? 'N/A',
       'informationTruthTitle'.tr: data?.informationTruth ?? 'N/A',
       'agreementTitle'.tr: data?.agreement ?? 'N/A',
-    };
-  }
-
-  Map<String, String?> generateContact(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.contactInfo;
-    return {
-      "brideOrGroomNameTitle".tr: data?.groomName ?? 'N/A',
-      "guardiansPhoneTitle".tr: data?.guardianMobile ?? 'N/A',
-      'relationshipWithGuardianTitle'.tr:
-          data?.relationShipWithGuardian ?? 'N/A',
-      'emailToReceivedBioDataTitle'.tr: data?.email ?? 'N/A',
     };
   }
 }

@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/model/all_divisions.dart';
+import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/dropdown_item.dart';
+import 'package:islamic_marriage/screens/explore_screens/model/all_user.dart';
 import 'package:islamic_marriage/screens/help_mate_screen/controller/all_bio_data_controller.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/model/bio_data.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_bio_data_table.dart';
-import 'package:islamic_marriage/widgets/custom_drop_down_button1.dart';
 import 'package:islamic_marriage/widgets/custom_drop_down_button_test.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/widgets/custom_bio_data_bg.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
+import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
 import 'package:lottie/lottie.dart';
 
 class HelpMateScreen extends StatefulWidget {
-
   const HelpMateScreen({super.key});
 
   @override
@@ -27,12 +26,6 @@ class HelpMateScreen extends StatefulWidget {
 }
 
 class _HelpMateScreenState extends State<HelpMateScreen> {
-
-  final _allBioDataController = Get.find<AllBioDataController>();
-
-  DropdownItem? selectedBioDataType;
-  DropdownItem? selectedMaritalStatus;
-
   final List<DropdownItem> _bioDataType = [
     DropdownItem(title: "malesBioData".tr, value: 'maleBioData'),
     DropdownItem(title: "femalesBioData".tr, value: 'femaleBioData')
@@ -46,39 +39,6 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
     DropdownItem(title: "widower".tr, value: "widower"),
   ];
 
-  final _scrollController = ScrollController();
-
-  late List<Division> _divisions;
-
-  @override
-  void initState() {
-    super.initState();
-    _divisions = getDivisions;
-    _scrollController.addListener(_onScroll);
-    _allBioDataController.selectedDivision=null;
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.maxScrollExtent ==
-        _scrollController.offset) {
-      if (_allBioDataController.hasMore && !_allBioDataController.isLoading) {
-        if (_allBioDataController.selectedBioDataType == null &&
-            _allBioDataController.selectedMaritalStatus == null &&
-            _allBioDataController.permanentAddress.isEmpty) {
-          _allBioDataController.readAllBioData(isLoadMore: true);
-        } else {
-          _allBioDataController.readAllSearchedBioData(isLoadMore: true);
-        }
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AllBioDataController>(builder: (controller) {
@@ -87,23 +47,26 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
         width: double.infinity.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
-          controller: _scrollController,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Gap(16.h),
               CustomBioDataBg(
-                  child: Visibility(
-                      visible: controller.bioData.isNotEmpty,
-                      replacement: _buildSearchFiltering(controller),
-                      child: _buildClearItem(controller))),
+                child: Visibility(
+                  visible: controller.allUser?.data?.isNotEmpty ?? false,
+                  replacement: _buildSearchFiltering(controller),
+                  child: _buildClearItem(controller),
+                ),
+              ),
               Gap(16.h),
               Flexible(
-                  child: controller.isLoading && controller.bioData.isEmpty
-                      ? customCircularProgressIndicator
-                      : controller.bioData.isEmpty
-                          ? Center(child: Lottie.asset(AppUrls.searchJson))
-                          : _buildBioData(controller))
+                child: controller.isLoading &&
+                        (controller.allUser?.data?.isEmpty ?? true)
+                    ? customCircularProgressIndicator
+                    : (controller.allUser?.data?.isEmpty ?? true)
+                        ? Center(child: Lottie.asset(AppUrls.searchJson))
+                        : _buildBioData(controller),
+              ),
             ],
           ),
         ),
@@ -116,17 +79,18 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
-          'Found ${controller.countBioData.toString()} Bio Data',
+          'Found ${controller.allUser?.data?.length ?? 0} Bio Data',
           style: AppTextStyles.titleMedium(color: AppColors.whiteClr),
         ),
         CustomElevatedButton(
           onPressed: () {
-            controller.clearBioData();
+            controller.allUser?.data?.clear();
+            controller.update();
           },
           buttonName: 'Clear',
           icon: Icons.clear,
           buttonWidth: 130.w,
-        )
+        ),
       ],
     );
   }
@@ -136,74 +100,61 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('typeOfBioData'.tr,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: darkFontClr)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: darkFontClr)),
         CustomDropdownButtonTest(
-          value: selectedBioDataType,
+          value: controller.selectedBioDataType,
           validator: dropdownValidator,
           items: _bioDataType,
           onChanged: (newValue) {
             setState(() {
-              selectedBioDataType = newValue;
+              controller.selectedBioDataType = newValue;
             });
           },
         ),
         Gap(16.h),
         Text('maritalStatus'.tr,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: darkFontClr)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: darkFontClr)),
         CustomDropdownButtonTest(
-          value: selectedMaritalStatus,
+          value: controller.selectedMaritalStatus,
           validator: dropdownValidator,
           items: _maritalStatus,
           onChanged: (newValue) {
             setState(() {
-              selectedMaritalStatus = newValue;
+              controller.selectedMaritalStatus = newValue;
             });
           },
         ),
         Gap(16.h),
         Text('permanentAddress'.tr,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: darkFontClr)),
-        CustomDropdownButton1<Division>(
-          validator: dropdownValidator,
-          value: _allBioDataController.selectedDivision,
-          items: _divisions,
-          onChanged: (value) {
-            setState(() {
-              _allBioDataController.selectedDivision = value;
-              _allBioDataController.selectedDistrict = null;
-              _allBioDataController.selectedSubDistrict = null;
-            });
-          },
-        ),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: darkFontClr)),
+        CustomTextFormField(
+            hintText: 'divisionHint'.tr,
+            controller: controller.selectedDivision,
+            validator: requiredValidator),
         Gap(8.h),
         Row(
           children: [
             Expanded(
-              child: CustomDropdownButton1<District>(
-                validator: dropdownValidator,
-                value: _allBioDataController.selectedDistrict,
-                items: _allBioDataController.selectedDivision?.districts ?? [],
-                onChanged: (value) {
-                  setState(() {
-                    _allBioDataController.selectedDistrict = value;
-                    _allBioDataController.selectedSubDistrict = null;
-                  });
-                },
-              ),
+              child: CustomTextFormField(
+                  hintText: 'districtHint'.tr,
+                  controller: controller.selectedDistrict,
+                  validator: requiredValidator),
             ),
             Gap(8.w),
             Expanded(
-              child: CustomDropdownButton1<SubDistrict>(
-                validator: dropdownValidator,
-                value: _allBioDataController.selectedSubDistrict,
-                items:
-                    _allBioDataController.selectedDistrict?.subDistricts ?? [],
-                onChanged: (value) {
-                  setState(() {
-                    _allBioDataController.selectedSubDistrict = value;
-                  });
-                },
-              ),
+              child: CustomTextFormField(
+                  hintText: 'subDistrict'.tr,
+                  controller: controller.selectedSubDistrict,
+                  validator: requiredValidator),
             ),
           ],
         ),
@@ -211,14 +162,7 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
         Center(
           child: CustomElevatedButton(
             onPressed: () {
-              // controller.offset = 0;
-              // if (controller.selectedBioDataType == null &&
-              //     controller.selectedMaritalStatus == null &&
-              //     controller.permanentAddress.isEmpty) {
-              //   controller.readAllBioData(isLoadMore: true);
-              // } else {
-              //   controller.readAllSearchedBioData(isLoadMore: true);
-              // }
+              controller.getAllSearchedUser();
             },
             buttonName: 'searchBtn'.tr,
             icon: Icons.search,
@@ -231,29 +175,19 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
 
   Widget _buildBioData(AllBioDataController controller) {
     return ListView.separated(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          if (index < controller.bioData.length) {
-            final bioData = controller.bioData[index];
-            return _buildBioDataCard(bioData);
-          } else {
-            return controller.hasMore
-                ? Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    child: Center(
-                      child: customCircularProgressIndicator,
-                    ),
-                  )
-                : SizedBox();
-          }
-        },
-        separatorBuilder: (context, index) => Gap(16.h),
-        itemCount: controller.bioData.length + (controller.hasMore ? 1 : 0));
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final bioData = controller.allUser!.data![index];
+        return _buildBioDataCard(bioData);
+      },
+      separatorBuilder: (context, index) => Gap(16.h),
+      itemCount: controller.allUser?.data?.length ?? 0,
+    );
   }
 
-  CustomBioDataBg _buildBioDataCard(BioData bioData) {
+  CustomBioDataBg _buildBioDataCard(Data bioData) {
     return CustomBioDataBg(
       child: Column(
         children: [
@@ -265,32 +199,38 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
             ),
           ),
           Gap(8.h),
-          Text('Name: ${bioData.fullName}',
+          Text(
+              'Name ${(bioData.contactInfo?.groomName ?? 'N/A').toUpperCase()}',
               style: AppTextStyles.titleLarge(color: AppColors.whiteClr)),
           Gap(16.h),
           CustomBioDataTable(data: generateGeneralInfo(bioData)),
           Gap(16.h),
           CustomElevatedButton(
             onPressed: () {
-             // Get.to(() => BioDataDetailsScreen(user: bioData));
+              Get.toNamed(
+                AppRoutes.bioDataDetailsScreen,
+                arguments: {'user': bioData},
+              );
             },
             buttonName: 'Full Bio Data',
             buttonWidth: 300.w,
             buttonHeight: 50.h,
-          )
+          ),
         ],
       ),
     );
   }
-  Map<String, String?> generateGeneralInfo(BioData bioData) {
-    final data = bioData.personalInformation;
-    if(data != null){
+
+  Map<String, String?> generateGeneralInfo(Data bioData) {
+    final data = bioData.generalInfo;
+    if (data != null) {
       return {
-        'Date of Birth': formatDate(data.dateOfBirth!),
-        'Height': data.height,
-        'Complexion': data.complexion,
+        'Date of Birth':
+            data.dateOfBirth != null ? formatDate(data.dateOfBirth!) : 'N/A',
+        'Height': data.height ?? 'N/A',
+        'Complexion': data.complexion ?? 'N/A',
       };
-    }else{
+    } else {
       return {
         'Date of Birth': 'N/A',
         'Height': 'N/A',
@@ -298,5 +238,4 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
       };
     }
   }
-
 }
