@@ -7,8 +7,8 @@ import 'package:islamic_marriage/screens/explore_screens/controller/all_user_con
 import 'package:islamic_marriage/screens/explore_screens/explore_screen.dart';
 import 'package:islamic_marriage/screens/help_mate_screen/help_mate_screen.dart';
 import 'package:islamic_marriage/screens/home_screen/controller/bottom_nav_controller.dart';
+import 'package:islamic_marriage/screens/plan_screens/plan_screen.dart';
 import 'package:islamic_marriage/screens/profile_screen/profile_screen.dart';
-import 'package:islamic_marriage/screens/shop_screen/shop_screen.dart';
 import 'package:islamic_marriage/screens/wishlist_screen/controllers/wishlist_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 
@@ -23,12 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _widgetOptions = [
     const ExploreScreen(),
     const HelpMateScreen(),
-    const ShopScreen(),
+    // const ShopScreen(),
+    PlanScreen(),
     const ChatListScreen(),
     const ProfileScreen(),
   ];
 
-  int _selectedIndex = 0;
+
 
   @override
   void initState() {
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             boxShadow: [
               BoxShadow(
                 blurRadius: 20,
-                color: Colors.black.withOpacity(.1),
+                color: Colors.black.withValues(alpha: .1),
               )
             ],
           ),
@@ -75,8 +76,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icons.supervised_user_circle,
                     text: 'nav2'.tr,
                   ),
+                  // GButton(
+                  //   icon: Icons.shopify,
+                  //   text: 'nav3'.tr,
+                  // ),
                   GButton(
-                    icon: Icons.shopify,
+                    icon: Icons.subscriptions,
                     text: 'nav3'.tr,
                   ),
                   GButton(
@@ -85,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   GButton(icon: Icons.person, text: 'nav5'.tr),
                 ],
-                selectedIndex: _selectedIndex,
+                selectedIndex: controller.selectedIndex,
                 onTabChange: controller.changeScreen,
               ),
             ),

@@ -22,7 +22,7 @@ class AppRoutes {
   static const myBioDataScreen = '/my_bio_data_screen';
   static const bioDataDetailsScreen = '/bio_data_details_screen';
   static const profileUpdateScreen = '/profile_update_screen';
-  static const subscriptionScreen = '/subscription_screen';
+  static const planScreen = '/plan_screen';
   static const cartScreen = '/cart_screen';
   static const helpCenterScreen = '/help_center_screen';
   static const privacyPolicyScreen = '/privacy_policy_screen';

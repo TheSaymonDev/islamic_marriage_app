@@ -59,7 +59,7 @@ class _ContactFormState extends State<ContactForm> {
           InputTitleText(title: "guardiansPhoneTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-              validator: mobileValidator,
+              validator: phoneValidator,
               keyBoardType: TextInputType.phone,
               controller: _contactController.guardiansMobileController),
           Gap(4.h),

@@ -29,7 +29,7 @@ class AppUrls{
   static const cashOnDeliveryJson = '$_lottiePath/cash_on_delivery.json';
   static const emptyCartJson = '$_lottiePath/empty_cart.json';
 
-  static const _baseUrl = "https://api.upashaharfilling.com/api/v1";
+  static const _baseUrl = "https://api.islamicmarriage.net/api/v1";
   static const Map<String, String> requestHeader = {"Content-Type": "application/json"};
 
   static Map<String, String> get getHeaderWithToken{
@@ -71,17 +71,6 @@ class AppUrls{
   static const getCurrentUser = '$_baseUrl/users/me';
   static const addRemoveToFavouriteListUrl = '$_baseUrl/users/favourite';
 
-  // for read bio data
-  static const readGeneralInfoUrl = '$_baseUrl/biodata/personal-info/fetch/1';
-  static const readAddressUrl = '$_baseUrl/biodata/address/fetch/1';
-  static const readEduQualificationUrl = '$_baseUrl/biodata/education/fetch/1';
-  static const readFamilyInfoUrl = '$_baseUrl/biodata/family-info/fetch/1';
-  static const readPersonalInfoUrl = '$_baseUrl/biodata/lifestyle/fetch/1';
-  static const readOccupationalInfoUrl = '$_baseUrl/biodata/occupation/fetch/1';
-  static const readMarriageInfoUrl = '$_baseUrl/biodata/marriage-info/fetch/1';
-  static const readExpectedLifePartnerInfoUrl = '$_baseUrl/biodata/expected-partner/fetch/1';
-  static const readPledgeUrl = '$_baseUrl/biodata/pledge/fetch/1';
-  static const readContactUrl = '$_baseUrl/biodata/contact/fetch/1';
 
   static const readUserBioDataUrl = '$_baseUrl/biodata/single';
   static const readAllSearchedBioDataUrl = '$_baseUrl/users/searched-biodata';

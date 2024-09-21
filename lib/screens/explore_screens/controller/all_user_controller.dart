@@ -12,7 +12,7 @@ class AllUserController extends GetxController {
     _setLoading(true);
     try {
       final response = await ApiService().get(
-        url: AppUrls.getAllUser,
+        url: '${AppUrls.getAllUser}?status=approved',
         headers: AppUrls.getHeaderWithToken,
       );
 

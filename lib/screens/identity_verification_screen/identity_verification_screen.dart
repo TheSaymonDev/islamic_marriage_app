@@ -47,7 +47,7 @@ class IdentityVerificationScreen extends StatelessWidget {
                 CustomTextFormField(
                     hintText: 'identityPhoneHint'.tr,
                     controller: _identityController,
-                    validator: mobileValidator,
+                    validator: phoneValidator,
                     keyBoardType: TextInputType.phone),
                 Gap(16.h),
                 GetBuilder<IdentityVerificationController>(

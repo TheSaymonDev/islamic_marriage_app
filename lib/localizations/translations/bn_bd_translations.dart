@@ -7,7 +7,7 @@ final Map<String, String> bnBd = {
   // For SignIn Screen
   'islamic': 'ইসলামিক ',
   'marriage': 'ম্যারেজ',
-  'logInIdentityHint': 'আইডেন্টিটি',
+  'logInIdentityHint': 'ই-মেইল অথবা ফোন',
   'logInPasswordHint': 'পাসওয়ার্ড',
   'rememberMe': 'মনে রাখুন',
   'forgotPassword': 'পাসওয়ার্ড ভুলে গেছেন?',
@@ -20,7 +20,7 @@ final Map<String, String> bnBd = {
   'male': 'পুরুষ',
   'female': 'মহিলা',
   'signUpNameHint': 'নাম',
-  'signUpMobileHint': 'মোবাইল',
+  'signUpMobileHint': 'ফোন',
   'signUpEmailHint': 'ই-মেইল',
   'signUpPasswordHint': 'পাসওয়ার্ড',
   'signUp': 'সাইন আপ',
@@ -52,7 +52,7 @@ final Map<String, String> bnBd = {
   // For Home Screen
   'nav1': 'হোম',
   'nav2': 'হেল্প ম্যাট',
-  'nav3': 'শপ',
+  'nav3': 'প্ল্যান',
   'nav4': 'ম্যাসেজ',
   'nav5': 'প্রোফাইল',
 
@@ -68,6 +68,7 @@ final Map<String, String> bnBd = {
   'maritalStatus': 'বৈবাহিক অবস্থা',
   'permanentAddress': 'স্থায়ী ঠিকানা',
   'searchBtn': 'খুঁজুন',
+  'bioDataNoTitle': 'বায়ো ডাটা নং',
 
   // For Profile Screen
   'myBioData': 'আমার বায়োডাটা',

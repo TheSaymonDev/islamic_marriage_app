@@ -7,7 +7,7 @@ final Map<String, String> enUs = {
   // For SignIn Screen
   'islamic': 'Islamic ',
   'marriage': 'Marriage',
-  'logInIdentityHint': 'Identity',
+  'logInIdentityHint': 'Email or Phone',
   'logInPasswordHint': 'Password',
   'rememberMe': 'Remember me',
   'forgotPassword': 'Forgot Password?',
@@ -20,7 +20,7 @@ final Map<String, String> enUs = {
   'male': 'Male',
   'female': 'Female',
   'signUpNameHint': 'Name',
-  'signUpMobileHint': 'Mobile',
+  'signUpMobileHint': 'Phone',
   'signUpEmailHint': 'Email',
   'signUpPasswordHint': 'Password',
   'signUp': 'Sign Up',
@@ -52,7 +52,7 @@ final Map<String, String> enUs = {
   // For Home Screen
   'nav1': 'Home',
   'nav2': 'Help Mate',
-  'nav3': 'Shop',
+  'nav3': 'Plan',
   'nav4': 'Message',
   'nav5': 'Profile',
 
@@ -68,6 +68,7 @@ final Map<String, String> enUs = {
   'maritalStatus': 'Marital Status',
   'permanentAddress': 'Permanent Address',
   'searchBtn': 'Search',
+  'bioDataNoTitle': 'BioData No',
 
   // For Shop Screen
 

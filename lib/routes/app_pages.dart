@@ -6,11 +6,13 @@ import 'package:islamic_marriage/screens/bio_data_details_screen/bio_data_detail
 import 'package:islamic_marriage/screens/bio_data_management_screen/bindings/bio_data_management_binding.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/bio_data_management_screen.dart';
 import 'package:islamic_marriage/screens/cart_screen/cart_screen.dart';
+import 'package:islamic_marriage/screens/explore_screens/bindings/all_user_binding.dart';
 import 'package:islamic_marriage/screens/favourite_bio_data_details_screen/favourite_bio_data_details_screen.dart';
 import 'package:islamic_marriage/screens/forget_otp_verification_screen/bindings/forget_otp_verification_binding.dart';
 import 'package:islamic_marriage/screens/forget_otp_verification_screen/forget_otp_verification_screen.dart';
 import 'package:islamic_marriage/screens/help_center_screens/bindings/help_center_binding.dart';
 import 'package:islamic_marriage/screens/help_center_screens/help_center_screen.dart';
+import 'package:islamic_marriage/screens/help_mate_screen/bindings/all_bio_data_binding.dart';
 import 'package:islamic_marriage/screens/home_screen/bindings/home_binding.dart';
 import 'package:islamic_marriage/screens/home_screen/home_screen.dart';
 import 'package:islamic_marriage/screens/identity_verification_screen/bindings/identity_verification_binding.dart';
@@ -20,6 +22,7 @@ import 'package:islamic_marriage/screens/my_bio_data_screen/my_bio_data_screen.d
 import 'package:islamic_marriage/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/bindings/otp_verification_binding.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/otp_verification_screen.dart';
+import 'package:islamic_marriage/screens/plan_screens/plan_screen.dart';
 import 'package:islamic_marriage/screens/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:islamic_marriage/screens/profile_update_screen/bindings/profile_update_binding.dart';
 import 'package:islamic_marriage/screens/profile_update_screen/profile_update_screen.dart';
@@ -29,7 +32,7 @@ import 'package:islamic_marriage/screens/sign_in_screen/bindings/sign_in_binding
 import 'package:islamic_marriage/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/bindings/sign_up_binding.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/sign_up_screen.dart';
-import 'package:islamic_marriage/screens/subscription_screens/subscription_screen.dart';
+import 'package:islamic_marriage/screens/wishlist_screen/bindings/wishlist_binding.dart';
 import 'package:islamic_marriage/screens/wishlist_screen/wishlist_screen.dart';
 
 class AppPages {
@@ -60,9 +63,15 @@ class AppPages {
         page: () => SetPasswordScreen(),
         binding: SetPasswordBinding()),
     GetPage(
-        name: AppRoutes.homeScreen,
-        page: () => HomeScreen(),
-        binding: HomeBinding()),
+      name: AppRoutes.homeScreen,
+      page: () => HomeScreen(),
+      bindings: [
+        HomeBinding(),
+        AllUserBinding(),
+        WishlistBinding(),
+        AllBioDataBinding()
+      ],
+    ),
     GetPage(
         name: AppRoutes.myBioDataScreen,
         page: () => MyBioDataScreen(),
@@ -76,7 +85,7 @@ class AppPages {
         page: () => ProfileUpdateScreen(),
         binding: ProfileUpdateBinding()),
     GetPage(
-        name: AppRoutes.subscriptionScreen, page: () => SubscriptionScreen()),
+        name: AppRoutes.planScreen, page: () => PlanScreen()),
     GetPage(
       name: AppRoutes.addressViewScreen,
       page: () => AddressViewScreen(),

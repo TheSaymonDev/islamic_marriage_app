@@ -271,7 +271,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           InputTitleText(title: "groomsPhoneTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-            validator: mobileValidator,
+            validator: phoneValidator,
             controller: _personalInfoController.mobileController,
             keyBoardType: TextInputType.phone
           ),

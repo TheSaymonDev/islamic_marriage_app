@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:islamic_marriage/screens/plan_screens/widgets/subscription_plan_card.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/custom_card.dart';
-import 'package:islamic_marriage/screens/subscription_screens/widgets/subscription_plan_card.dart';
 
 class MyPurchasePlanWidget extends StatelessWidget {
   const MyPurchasePlanWidget({super.key});

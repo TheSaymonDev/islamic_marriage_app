@@ -86,7 +86,7 @@ class _AddressManagementScreenState extends State<AddressManagementScreen> {
                         hintText: 'Mobile',
                         controller: _mobileController,
                         keyBoardType: TextInputType.phone,
-                        validator: mobileValidator,
+                        validator: phoneValidator,
                       ),
                       Gap(32.h),
                       CustomTextFormField(
@@ -189,7 +189,7 @@ class _AddressManagementScreenState extends State<AddressManagementScreen> {
                   hintText: 'Mobile',
                   controller: _mobileController,
                   keyBoardType: TextInputType.phone,
-                  validator: mobileValidator,
+                  validator: phoneValidator,
                 ),
                 Gap(32.h),
                 CustomTextFormField(

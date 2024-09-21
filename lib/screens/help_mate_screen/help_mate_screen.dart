@@ -64,7 +64,11 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
                         (controller.allUser?.data?.isEmpty ?? true)
                     ? customCircularProgressIndicator
                     : (controller.allUser?.data?.isEmpty ?? true)
-                        ? Center(child: Lottie.asset(AppUrls.searchJson))
+                        ? SizedBox(
+                            height: 250.h,
+                            width: 250.w,
+                            child:
+                                Lottie.asset(AppUrls.searchJson))
                         : _buildBioData(controller),
               ),
             ],
@@ -84,8 +88,7 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
         ),
         CustomElevatedButton(
           onPressed: () {
-            controller.allUser?.data?.clear();
-            controller.update();
+            controller.clearData();
           },
           buttonName: 'Clear',
           icon: Icons.clear,
@@ -158,6 +161,17 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
             ),
           ],
         ),
+        Gap(8.h),
+        Text('bioDataNoTitle'.tr,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: darkFontClr)),
+        CustomTextFormField(
+            hintText: 'writeHere'.tr,
+            controller: controller.selectedBioDataNo,
+            keyBoardType: TextInputType.phone,
+            validator: requiredValidator),
         Gap(16.h),
         Center(
           child: CustomElevatedButton(

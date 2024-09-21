@@ -70,8 +70,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                 size: 25.sp)));
                   },
                 ),
-                _buildRememberMeAndForgotPasswordRow(context),
                 Gap(16.h),
+                _buildRememberMeAndForgotPasswordRow(context),
+                Gap(20.h),
                 GetBuilder<SignInController>(
                     builder: (controller) => controller.isLoading
                         ? customCircularProgressIndicator
@@ -95,14 +96,15 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Row _buildRememberMeAndForgotPasswordRow(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        GetBuilder<SignInController>(builder: (controller) {
-          return Checkbox(
-              value: controller.isChecked,
-              onChanged: (newValue) => controller.toggleIsChecked(newValue!));
-        }),
-        Text('rememberMe'.tr, style: Theme.of(context).textTheme.bodyMedium),
-        const Spacer(),
+        // GetBuilder<SignInController>(builder: (controller) {
+        //   return Checkbox(
+        //       value: controller.isChecked,
+        //       onChanged: (newValue) => controller.toggleIsChecked(newValue!));
+        // }),
+        // Text('rememberMe'.tr, style: Theme.of(context).textTheme.bodyMedium),
+        // const Spacer(),
         GestureDetector(
             onTap: () {
               Get.toNamed(AppRoutes.identityVerificationScreen);
@@ -192,7 +194,7 @@ class _SignInScreenState extends State<SignInScreen> {
         Get.offAllNamed(AppRoutes.homeScreen);
         _clearData();
       } else {
-        customErrorMessage(message: result);
+        return;
       }
     }
   }

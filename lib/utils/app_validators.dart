@@ -29,8 +29,8 @@ String? emailValidator(value) {
   return null;
 }
 
-String? mobileValidator(value) {
-  final RegExp bdNumberRegex = RegExp(r"^(?:\+?88|0088)?01[15-9]\d{8}$");
+String? phoneValidator(value) {
+  final RegExp bdNumberRegex = RegExp(r"^(?:\+?88|0088)?01[3456789]\d{8}$");
   if (value!.isEmpty) {
     return 'Please enter your mobile number.';
   }

@@ -16,6 +16,7 @@ class AllBioDataController extends GetxController {
   final selectedDivision = TextEditingController();
   final selectedDistrict = TextEditingController();
   final selectedSubDistrict = TextEditingController();
+  final selectedBioDataNo = TextEditingController();
 
   Future<void> getAllSearchedUser() async {
     _setLoading(true);
@@ -51,7 +52,7 @@ class AllBioDataController extends GetxController {
 
   String _buildSearchUrl() {
     String url =
-        '${AppUrls.getAllUser}?status=pending&sortBy=createdAt&sortOrder=ASC';
+        '${AppUrls.getAllUser}?status=approved';
     if (selectedBioDataType != null) {
       url += '&bioDataType=${selectedBioDataType!.value}';
     }
@@ -67,6 +68,21 @@ class AllBioDataController extends GetxController {
     if (selectedSubDistrict.text.isNotEmpty) {
       url += '&subDistrict=${selectedSubDistrict.text}';
     }
+    if (selectedSubDistrict.text.isNotEmpty) {
+      url += '&bioDataNo=${selectedBioDataNo.text}';
+    }
     return url;
   }
+
+  void clearData() {
+    allUser?.data?.clear();
+    selectedBioDataType = null;
+    selectedMaritalStatus = null;
+    selectedDivision.clear();
+    selectedDistrict.clear();
+    selectedSubDistrict.clear();
+    selectedBioDataNo.clear();
+    update();
+  }
+
 }

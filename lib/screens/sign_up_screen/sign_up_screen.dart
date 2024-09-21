@@ -41,7 +41,7 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 Gap(32.h),
                 const CustomTextLogo(),
-                Gap(120.h),
+                Gap(84.h),
                 GetBuilder<SignUpController>(builder: (controller) {
                   return CustomGenderSelection(
                       genders: controller.gender,
@@ -58,7 +58,7 @@ class SignUpScreen extends StatelessWidget {
                 CustomTextFormField(
                     hintText: 'signUpMobileHint'.tr,
                     controller: _phoneController,
-                    validator: mobileValidator,
+                    validator: phoneValidator,
                     keyBoardType: TextInputType.phone),
                 Gap(16.h),
                 CustomTextFormField(
@@ -81,15 +81,15 @@ class SignUpScreen extends StatelessWidget {
                               color: greyClr,
                               size: 25.sp)));
                 }),
-                _buildRememberMeRow(context),
-                Gap(16.h),
+                // _buildRememberMeRow(context),
+                Gap(24.h),
                 GetBuilder<SignUpController>(
                     builder: (controller) => controller.isLoading
                         ? customCircularProgressIndicator
                         : CustomElevatedButton(
                             onPressed: () => _formOnSubmit(controller),
                             buttonName: 'signUp'.tr)),
-                Gap(120.h),
+                Gap(96.h),
                 _buildLogInRow(context),
                 Gap(32.h),
                 Text('connectWith'.tr,
@@ -104,19 +104,19 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Row _buildRememberMeRow(BuildContext context) {
-    return Row(
-      children: [
-        GetBuilder<SignUpController>(builder: (controller) {
-          return Checkbox(
-            value: controller.isChecked,
-            onChanged: (newValue) => controller.toggleIsChecked(newValue),
-          );
-        }),
-        Text('rememberMe'.tr, style: Theme.of(context).textTheme.bodyMedium)
-      ],
-    );
-  }
+  // Row _buildRememberMeRow(BuildContext context) {
+  //   return Row(
+  //     children: [
+  //       GetBuilder<SignUpController>(builder: (controller) {
+  //         return Checkbox(
+  //           value: controller.isChecked,
+  //           onChanged: (newValue) => controller.toggleIsChecked(newValue),
+  //         );
+  //       }),
+  //       Text('rememberMe'.tr, style: Theme.of(context).textTheme.bodyMedium)
+  //     ],
+  //   );
+  // }
 
   Row _buildLogInRow(BuildContext context) {
     return Row(

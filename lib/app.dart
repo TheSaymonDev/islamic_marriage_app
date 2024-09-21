@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/localizations/app_localization.dart';
 import 'package:islamic_marriage/routes/app_pages.dart';
-import 'package:islamic_marriage/themes/app_theme.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_initial_bindings.dart';
 
