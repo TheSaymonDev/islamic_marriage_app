@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/model/gender.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/model/sign_up.dart';
 import 'package:islamic_marriage/services/api_service.dart';
+import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,6 +19,10 @@ class SignUpController extends GetxController {
   ];
 
   Future<bool> signUpUser({required SignUp signUp}) async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(message: 'Please check your internet connection');
+      return false;
+    }
     _setLoading(true);
     try {
       final response = await ApiService().post(

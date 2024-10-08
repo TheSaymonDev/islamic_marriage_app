@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/dropdown_item.dart';
 import 'package:islamic_marriage/screens/explore_screens/model/all_user.dart';
 import 'package:islamic_marriage/services/api_service.dart';
+import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
@@ -19,6 +20,10 @@ class AllBioDataController extends GetxController {
   final selectedBioDataNo = TextEditingController();
 
   Future<void> getAllSearchedUser() async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(message: 'Please check your internet connection');
+      return;
+    }
     _setLoading(true);
     String url = _buildSearchUrl();
     try {

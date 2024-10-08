@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/model/otp_verification.dart';
 import 'package:islamic_marriage/services/api_service.dart';
+import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
@@ -8,9 +9,11 @@ class OtpVerificationController extends GetxController {
   bool isLoading = false;
 
   Future<bool> verifyOTP({required OtpVerification otpVerification}) async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(message: 'Please check your internet connection');
+      return false;
+    }
     _setLoading(true);
-    print(otpVerification.identity);
-    print(otpVerification.otp);
     try {
       final response = await ApiService()
           .post(url: AppUrls.otpVerificationUrl, data: otpVerification);

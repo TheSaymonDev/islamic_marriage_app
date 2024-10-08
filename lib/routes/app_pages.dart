@@ -19,6 +19,8 @@ import 'package:islamic_marriage/screens/identity_verification_screen/bindings/i
 import 'package:islamic_marriage/screens/identity_verification_screen/identity_verification_screen.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/bindings/my_bio_data_binding.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/my_bio_data_screen.dart';
+import 'package:islamic_marriage/screens/no_internet_screen/bindings/no_internet_binding.dart';
+import 'package:islamic_marriage/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:islamic_marriage/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/bindings/otp_verification_binding.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/otp_verification_screen.dart';
@@ -84,8 +86,7 @@ class AppPages {
         name: AppRoutes.profileUpdateScreen,
         page: () => ProfileUpdateScreen(),
         binding: ProfileUpdateBinding()),
-    GetPage(
-        name: AppRoutes.planScreen, page: () => PlanScreen()),
+    GetPage(name: AppRoutes.planScreen, page: () => PlanScreen()),
     GetPage(
       name: AppRoutes.addressViewScreen,
       page: () => AddressViewScreen(),
@@ -112,6 +113,10 @@ class AppPages {
     GetPage(name: AppRoutes.wishlistScreen, page: () => WishlistScreen()),
     GetPage(
         name: AppRoutes.favouriteBioDataDetailsScreen,
-        page: () => FavouriteBioDataDetailsScreen())
+        page: () => FavouriteBioDataDetailsScreen()),
+    GetPage(
+        name: AppRoutes.noInternetScreen,
+        page: () => NoInternetScreen(),
+        binding: NoInternetBinding())
   ];
 }

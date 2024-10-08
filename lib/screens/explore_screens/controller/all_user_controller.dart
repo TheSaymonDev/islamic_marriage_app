@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/explore_screens/model/all_user.dart';
 import 'package:islamic_marriage/services/api_service.dart';
+import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
@@ -9,6 +10,10 @@ class AllUserController extends GetxController {
   AllUser? allUser;
 
   Future<void> getAllUser() async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(message: 'Please check your internet connection');
+      return;
+    }
     _setLoading(true);
     try {
       final response = await ApiService().get(

@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:islamic_marriage/screens/profile_update_screen/models/profile_update.dart';
 import 'package:islamic_marriage/screens/sign_up_screen/model/gender.dart';
 import 'package:islamic_marriage/services/api_service.dart';
+import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 
@@ -44,6 +45,10 @@ class ProfileUpdateController extends GetxController {
   }
 
   Future<void> getProfileInfo() async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(message: 'Please check your internet connection');
+      return;
+    }
     _setLoading(true);
     try {
       final response = await ApiService().get(

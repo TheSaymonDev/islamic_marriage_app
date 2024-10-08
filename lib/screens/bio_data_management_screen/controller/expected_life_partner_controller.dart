@@ -4,6 +4,7 @@ import 'package:islamic_marriage/screens/bio_data_management_screen/model/dropdo
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/expected_life_partner.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/api_service.dart';
+import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
@@ -25,6 +26,10 @@ class ExpectedLifePartnerController extends GetxController {
   final expectedQualityAttributes = TextEditingController();
 
   Future<bool> upsertExpectedLifePartner() async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(message: 'Please check your internet connection');
+      return false;
+    }
     isLoading = true;
     update();
     try {

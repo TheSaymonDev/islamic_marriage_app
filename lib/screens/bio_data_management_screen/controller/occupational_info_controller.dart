@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/model/occupational_info.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/api_service.dart';
+import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
@@ -16,6 +17,10 @@ class OccupationalInfoController extends GetxController {
   final incomeController = TextEditingController();
 
   Future<bool> upsertOccupationalInfo() async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(message: 'Please check your internet connection');
+      return false;
+    }
     isLoading = true;
     update();
     try {

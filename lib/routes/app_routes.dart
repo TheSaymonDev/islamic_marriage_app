@@ -34,4 +34,5 @@ class AppRoutes {
   static const reviewScreen = '/review_screen';
   static const wishlistScreen = '/wishlist_screen';
   static const favouriteBioDataDetailsScreen = '/favourite_bio_data_details_screen';
+  static const noInternetScreen = '/no_internet_screen';
 }

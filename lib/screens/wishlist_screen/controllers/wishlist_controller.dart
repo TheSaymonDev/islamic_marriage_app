@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/wishlist_screen/models/wishlist.dart';
 import 'package:islamic_marriage/services/api_service.dart';
+import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 
@@ -9,6 +10,10 @@ class WishListController extends GetxController {
   Wishlist? wishListItems;
 
   Future<void> getWishlist() async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(message: 'Please check your internet connection');
+      return;
+    }
     _setLoading(true);
     try {
       final response = await ApiService().get(
