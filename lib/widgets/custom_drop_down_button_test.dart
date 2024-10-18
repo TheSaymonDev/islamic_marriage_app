@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/model/dropdown_item.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 

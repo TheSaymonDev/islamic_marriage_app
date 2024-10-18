@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/product_details_screen/controller/product_des_controller.dart';
+import 'package:islamic_marriage/screens/product_details_screen/controllers/product_des_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';

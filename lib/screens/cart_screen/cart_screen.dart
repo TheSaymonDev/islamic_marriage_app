@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/checkout_screen/bindings/checkout_binding.dart';
 import 'package:islamic_marriage/screens/checkout_screen/checkout_screen.dart';
-import 'package:islamic_marriage/screens/product_details_screen/controller/product_des_controller.dart';
+import 'package:islamic_marriage/screens/product_details_screen/controllers/product_des_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';

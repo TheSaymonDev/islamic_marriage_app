@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/booking_screen/booking_screen.dart';
-import 'package:islamic_marriage/screens/kazi_office_details_screen/model/kazi_office_review_model.dart';
+import 'package:islamic_marriage/screens/kazi_office_details_screen/models/kazi_office_review_model.dart';
 import 'package:islamic_marriage/screens/review_screen/review_screen.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';

@@ -4,8 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/forget_otp_verification_screen/controllers/forget_otp_verification_controller.dart';
-import 'package:islamic_marriage/screens/otp_verification_screen/controller/timer_controller.dart';
-import 'package:islamic_marriage/screens/otp_verification_screen/model/otp_verification.dart';
+import 'package:islamic_marriage/screens/otp_verification_screen/controllers/timer_controller.dart';
+import 'package:islamic_marriage/screens/otp_verification_screen/models/otp_verification_model.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/widgets/custom_text_logo.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
@@ -23,22 +23,8 @@ class ForgetOtpVerificationScreen extends StatefulWidget {
 
 class _ForgetOtpVerificationScreenState
     extends State<ForgetOtpVerificationScreen> {
-  final _otpController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  String? identity;
 
-  @override
-  void initState() {
-    super.initState();
-    Get.find<TimerController>().startTimer();
-    identity = Get.arguments['identity'] as String;
-  }
-
-  @override
-  void dispose() {
-    Get.find<TimerController>().timer.cancel();
-    super.dispose();
-  }
+  final _forgetOtpVerificationController = Get.find<ForgetOtpVerificationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +38,7 @@ class _ForgetOtpVerificationScreenState
         padding: EdgeInsets.symmetric(horizontal: 32.w),
         child: SingleChildScrollView(
           child: Form(
-            key: _formKey,
+            key: _forgetOtpVerificationController.formKey,
             child: Column(
               children: [
                 Gap(32.h),
@@ -73,7 +59,7 @@ class _ForgetOtpVerificationScreenState
                 Gap(32.h),
                 PinCodeTextField(
                   backgroundColor: Colors.transparent,
-                  controller: _otpController,
+                  controller: _forgetOtpVerificationController.otpController,
                   appContext: context,
                   length: 6,
                   obscureText: false,
@@ -130,17 +116,17 @@ class _ForgetOtpVerificationScreenState
   }
 
   void _clearData() {
-    _otpController.clear();
+    _forgetOtpVerificationController.otpController.clear();
   }
 
   void _formOnSubmitSetPass(ForgetOtpVerificationController controller) async {
-    if (_formKey.currentState?.validate() ?? false) {
+    if (controller.formKey.currentState!.validate()) {
       final result = await controller.verifyForgetOtp(
-          otpVerification: OtpVerification(
-              identity: identity, otp: _otpController.text.trim()));
+          otpVerificationData: OtpVerificationModel(
+              identity: controller.identity, otp: controller.otpController.text.trim()));
       if (result == true) {
         Get.offNamed(AppRoutes.setPasswordScreen,
-            arguments: {'identity': identity});
+            arguments: {'identity': controller.identity});
         _clearData();
       }
     }

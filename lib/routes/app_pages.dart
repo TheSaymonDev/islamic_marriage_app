@@ -10,8 +10,8 @@ import 'package:islamic_marriage/screens/explore_screens/bindings/all_user_bindi
 import 'package:islamic_marriage/screens/favourite_bio_data_details_screen/favourite_bio_data_details_screen.dart';
 import 'package:islamic_marriage/screens/forget_otp_verification_screen/bindings/forget_otp_verification_binding.dart';
 import 'package:islamic_marriage/screens/forget_otp_verification_screen/forget_otp_verification_screen.dart';
-import 'package:islamic_marriage/screens/help_center_screens/bindings/help_center_binding.dart';
-import 'package:islamic_marriage/screens/help_center_screens/help_center_screen.dart';
+import 'package:islamic_marriage/screens/help_center_screen/bindings/help_center_binding.dart';
+import 'package:islamic_marriage/screens/help_center_screen/help_center_screen.dart';
 import 'package:islamic_marriage/screens/help_mate_screen/bindings/all_bio_data_binding.dart';
 import 'package:islamic_marriage/screens/home_screen/bindings/home_binding.dart';
 import 'package:islamic_marriage/screens/home_screen/home_screen.dart';
@@ -21,10 +21,11 @@ import 'package:islamic_marriage/screens/my_bio_data_screen/bindings/my_bio_data
 import 'package:islamic_marriage/screens/my_bio_data_screen/my_bio_data_screen.dart';
 import 'package:islamic_marriage/screens/no_internet_screen/bindings/no_internet_binding.dart';
 import 'package:islamic_marriage/screens/no_internet_screen/no_internet_screen.dart';
+import 'package:islamic_marriage/screens/onboarding_screen/bindings/onboarding_binding.dart';
 import 'package:islamic_marriage/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/bindings/otp_verification_binding.dart';
 import 'package:islamic_marriage/screens/otp_verification_screen/otp_verification_screen.dart';
-import 'package:islamic_marriage/screens/plan_screens/plan_screen.dart';
+import 'package:islamic_marriage/screens/plan_screen/plan_screen.dart';
 import 'package:islamic_marriage/screens/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:islamic_marriage/screens/profile_update_screen/bindings/profile_update_binding.dart';
 import 'package:islamic_marriage/screens/profile_update_screen/profile_update_screen.dart';
@@ -39,7 +40,10 @@ import 'package:islamic_marriage/screens/wishlist_screen/wishlist_screen.dart';
 
 class AppPages {
   static final pages = [
-    GetPage(name: AppRoutes.onboardingScreen, page: () => OnboardingScreen()),
+    GetPage(
+        name: AppRoutes.onboardingScreen,
+        page: () => OnboardingScreen(),
+        binding: OnboardingBinding()),
     GetPage(
         name: AppRoutes.signInScreen,
         page: () => SignInScreen(),

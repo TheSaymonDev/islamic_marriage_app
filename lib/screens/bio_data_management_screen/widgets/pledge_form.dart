@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/controller/pledge_controller.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/model/dropdown_item.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/pledge_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_drop_down_button_test.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/help_mate_screen/model/bio_data_model.dart';
+import 'package:islamic_marriage/screens/help_mate_screen/models/bio_data_model.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';

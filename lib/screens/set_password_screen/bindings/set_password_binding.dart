@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/set_password_screen/controller/set_password_controller.dart';
+import 'package:islamic_marriage/screens/set_password_screen/controllers/set_password_controller.dart';
 
 class SetPasswordBinding implements Bindings{
   @override

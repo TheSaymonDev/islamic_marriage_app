@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
-import 'package:islamic_marriage/screens/explore_screens/controller/all_user_controller.dart';
+import 'package:islamic_marriage/screens/explore_screens/controllers/all_user_controller.dart';
+import 'package:islamic_marriage/screens/home_screen/controllers/bottom_nav_controller.dart';
 import 'package:islamic_marriage/screens/wishlist_screen/controllers/wishlist_controller.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
@@ -74,7 +75,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Get.find<BottomNavController>().changeScreen(1);
+                        },
                         child: SvgPicture.asset(AppUrls.filterSvg,
                             height: 20.h, width: 20.w),
                       ),
@@ -132,7 +135,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                 fit: BoxFit.scaleDown, // Scales the text down to fit within the space
                                                 alignment: Alignment.centerLeft, // Align text to the left
                                                 child: Text(
-                                                  (user.contactInfo?.groomName ?? 'N/A').toUpperCase(),
+                                                  (user.contactInfo?.groomName ?? '').toUpperCase(),
                                                   style: Theme.of(context).textTheme.titleMedium,
                                                 ),
                                               ),
@@ -170,14 +173,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     ),
                                     Text(
                                         user.personalInfo != null
-                                            ? '25 years 5 months, ${(user.generalInfo?.height ?? 'N/A').toUpperCase()}'
-                                            : 'N/A',
+                                            ? '25 years 5 months, ${(user.generalInfo?.height ?? '').toUpperCase()}'
+                                            : '',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodySmall!
                                             .copyWith(color: greyClr)),
                                     Text(
-                                        (user.permanentAddress?.division ?? 'N/A')
+                                        (user.permanentAddress?.division ?? '')
                                             .toUpperCase(),
                                         style: Theme.of(context)
                                             .textTheme
@@ -185,14 +188,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                             .copyWith(color: greyClr)),
                                     Text(
                                         (user.educationInfo?.highestEducation ??
-                                            'N/A')
+                                            '')
                                             .toUpperCase(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
                                             .copyWith(color: greyClr)),
                                     Text(
-                                        (user.occupationInfo?.occupation ?? 'N/A')
+                                        (user.occupationInfo?.occupation ?? '')
                                             .toUpperCase(),
                                         style: Theme.of(context)
                                             .textTheme

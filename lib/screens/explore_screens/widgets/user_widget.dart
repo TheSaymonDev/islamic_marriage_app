@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
-import 'package:islamic_marriage/screens/explore_screens/controller/all_user_controller.dart';
+import 'package:islamic_marriage/screens/explore_screens/controllers/all_user_controller.dart';
 import 'package:islamic_marriage/screens/wishlist_screen/controllers/wishlist_controller.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/checkout_screen/controller/step_delivery_type_controller.dart';
-import 'package:islamic_marriage/screens/checkout_screen/model/delivery_option.dart';
+import 'package:islamic_marriage/screens/checkout_screen/controllers/step_delivery_type_controller.dart';
+import 'package:islamic_marriage/screens/checkout_screen/models/delivery_option.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 

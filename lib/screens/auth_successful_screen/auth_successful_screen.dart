@@ -30,7 +30,7 @@ class AuthSuccessfulScreen extends StatelessWidget {
             Text('Your Password has been changed successfully', style: AppTextStyles.bodyMedium()),
             const Spacer(),
             CustomElevatedButton(onPressed: (){
-              Get.to(()=>const SignInScreen());
+              Get.to(()=> SignInScreen());
             }, buttonName: 'Continue'),
             Gap(32.h),
           ],

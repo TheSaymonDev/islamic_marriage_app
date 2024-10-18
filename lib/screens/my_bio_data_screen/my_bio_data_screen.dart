@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controller/my_bio_data_controller.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
@@ -74,66 +74,71 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
                         .titleLarge!
                         .copyWith(color: darkFontClr)),
                 Gap(8.h),
-                CustomBioDataTable(data: generateGeneralInfo(controller)),
+                CustomBioDataTable(data: removeEmptyFields(generateGeneralInfo(controller))),
               ],
             ),
           ),
           CustomExpansionTile(title: 'addressTitle'.tr, children: [
-            CustomBioDataTable(data: generateAddress(controller))
+            CustomBioDataTable(data: removeEmptyFields(generateAddress(controller)))
           ]),
           CustomExpansionTile(title: 'eduQualificationTitle'.tr, children: [
-            CustomBioDataTable(data: generateEduQualificationInfo(controller))
+            CustomBioDataTable(data: removeEmptyFields(generateEduQualificationInfo(controller)))
           ]),
           CustomExpansionTile(title: 'familyInfoTitle'.tr, children: [
-            CustomBioDataTable(data: generateFamilyInfo(controller))
+            CustomBioDataTable(data: removeEmptyFields(generateFamilyInfo(controller)))
           ]),
           CustomExpansionTile(title: 'personalInfoTitle'.tr, children: [
-            CustomBioDataTable(data: generatePersonalInfo(controller))
+            CustomBioDataTable(data: removeEmptyFields(generatePersonalInfo(controller)))
           ]),
           CustomExpansionTile(title: 'occupationalInfoTitle'.tr, children: [
-            CustomBioDataTable(data: generateOccupationalInfo(controller))
+            CustomBioDataTable(data: removeEmptyFields(generateOccupationalInfo(controller)))
           ]),
           CustomExpansionTile(title: 'marriageInfoTitle'.tr, children: [
-            CustomBioDataTable(data: generateMarriageRelatedInfo(controller))
+            CustomBioDataTable(data: removeEmptyFields(generateMarriageRelatedInfo(controller)))
           ]),
           CustomExpansionTile(title: 'expectedLifePartnerTitle'.tr, children: [
-            CustomBioDataTable(data: generateExpectedLifePartner(controller))
+            CustomBioDataTable(data: removeEmptyFields(generateExpectedLifePartner(controller)))
           ]),
           CustomExpansionTile(
               title: 'authorizedQueTitle'.tr,
-              children: [CustomBioDataTable(data: generatePledge(controller))]),
+              children: [CustomBioDataTable(data: removeEmptyFields(generatePledge(controller)))]),
           CustomExpansionTile(title: 'contactTitle'.tr, children: [
-            CustomBioDataTable(data: generateContact(controller))
+            CustomBioDataTable(data: removeEmptyFields(generateContact(controller)))
           ]),
         ],
       ),
     );
   }
 
+  // Filter out empty fields
+  Map<String, String?> removeEmptyFields(Map<String, String?> data) {
+    return data..removeWhere((key, value) => value == null || value.isEmpty);
+  }
+
   Map<String, String?> generateGeneralInfo(MyBioDataController controller) {
     final data = controller.currentUser?.data?.biodata?.generalInfo;
     if (data != null) {
       return {
-        'bioDataTypeTitle'.tr: data.bioDataType ?? 'N/A',
-        'maritalStatusTitle'.tr: data.maritialStatus ?? 'N/A',
+        'bioDataTypeTitle'.tr: data.bioDataType ?? '',
+        'maritalStatusTitle'.tr: data.maritialStatus ?? '',
         'dateOfBirthTitle'.tr:
-            data.dateOfBirth != null ? formatDate(data.dateOfBirth!) : 'N/A',
-        'heightTitle'.tr: data.height ?? 'N/A',
-        'complexionTitle'.tr: data.complexion ?? 'N/A',
-        'weightTitle'.tr: data.weight ?? 'N/A',
-        'bloodGroupTitle'.tr: data.bloodGroup ?? 'N/A',
-        'nationalityTitle'.tr: data.nationality ?? 'N/A',
+            data.dateOfBirth != null ? formatDate(data.dateOfBirth!) : '',
+        'heightTitle'.tr: data.height ?? '',
+        'complexionTitle'.tr: data.complexion ?? '',
+        'weightTitle'.tr: data.weight ?? '',
+        'bloodGroupTitle'.tr: data.bloodGroup ?? '',
+        'nationalityTitle'.tr: data.nationality ?? '',
       };
     } else {
       return {
-        'bioDataTypeTitle'.tr: 'N/A',
-        'maritalStatusTitle'.tr: 'N/A',
-        'dateOfBirthTitle'.tr: 'N/A',
-        'heightTitle'.tr: 'N/A',
-        'complexionTitle'.tr: 'N/A',
-        'weightTitle'.tr: 'N/A',
-        'bloodGroupTitle'.tr: 'N/A',
-        'nationalityTitle'.tr: 'N/A',
+        'bioDataTypeTitle'.tr: '',
+        'maritalStatusTitle'.tr: '',
+        'dateOfBirthTitle'.tr: '',
+        'heightTitle'.tr: '',
+        'complexionTitle'.tr: '',
+        'weightTitle'.tr: '',
+        'bloodGroupTitle'.tr: '',
+        'nationalityTitle'.tr: '',
       };
     }
   }
@@ -146,12 +151,12 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
 
     return {
       'permanentAddressTitle'.tr: permanentAdd != null
-          ? '${permanentAdd.division ?? 'N/A'}, ${permanentAdd.district ?? 'N/A'}, ${permanentAdd.subDistrict ?? 'N/A'}'
-          : 'N/A',
+          ? '${permanentAdd.division ?? ''}, ${permanentAdd.district ?? ''}, ${permanentAdd.subDistrict ?? ''}'
+          : '',
       'presentAddressTitle'.tr: currentAdd != null
-          ? '${currentAdd.division ?? 'N/A'}, ${currentAdd.district ?? 'N/A'}, ${currentAdd.subDistrict ?? 'N/A'}'
-          : 'N/A',
-      'growUpTitle'.tr: grewUp ?? 'N/A',
+          ? '${currentAdd.division ?? ''}, ${currentAdd.district ?? ''}, ${currentAdd.subDistrict ?? ''}'
+          : '',
+      'growUpTitle'.tr: grewUp ?? '',
     };
   }
 
@@ -159,56 +164,56 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
       MyBioDataController controller) {
     final data = controller.currentUser?.data?.biodata?.educationInfo;
     return {
-      'educationalMethodTitle'.tr: data?.educationMethod ?? 'N/A',
-      'highestEducationalTitle'.tr: data?.highestEducation ?? 'N/A',
-      'passingYearTitle'.tr: data?.passingYear ?? 'N/A',
-      'resultTitle'.tr: data?.result ?? 'N/A',
-      'institutionNameTitle'.tr: data?.institutionName ?? 'N/A',
-      'othersEducationTitle'.tr: data?.otherEducation ?? 'N/A',
-      'religiousEducationTitle'.tr: data?.religiousEducation ?? 'N/A',
+      'educationalMethodTitle'.tr: data?.educationMethod ?? '',
+      'highestEducationalTitle'.tr: data?.highestEducation ?? '',
+      'passingYearTitle'.tr: data?.passingYear ?? '',
+      'resultTitle'.tr: data?.result ?? '',
+      'institutionNameTitle'.tr: data?.institutionName ?? '',
+      'othersEducationTitle'.tr: data?.otherEducation ?? '',
+      'religiousEducationTitle'.tr: data?.religiousEducation ?? '',
     };
   }
 
   Map<String, String?> generateFamilyInfo(MyBioDataController controller) {
     final data = controller.currentUser?.data?.biodata?.familyInfo;
     return {
-      "fathersNameTitle".tr: data?.fatherName ?? 'N/A',
-      'fatherAliveTitle'.tr: data?.fatherAlive ?? 'N/A',
-      "fathersProfessionTitle".tr: data?.fatherOccupation ?? 'N/A',
-      "mothersNameTitle".tr: data?.motherName ?? 'N/A',
-      'mothersAliveTitle'.tr: data?.motherAlive ?? 'N/A',
-      "mothersProfessionTitle".tr: data?.motherOccupation ?? 'N/A',
-      "brothersCountTitle".tr: data?.brotherCount?.toString() ?? 'N/A',
-      "brothersInfoTitle".tr: data?.brothersInfo?.toString() ?? 'N/A',
-      "sistersCountTitle".tr: data?.sisterCount?.toString() ?? 'N/A',
-      "sistersInfoTitle".tr: data?.sistersInfo?.toString() ?? 'N/A',
-      'professionOfUnclesTitle'.tr: data?.uncleAuntOccuption ?? 'N/A',
-      'familyIncomeStatusTitle'.tr: data?.familyStatus ?? 'N/A',
+      "fathersNameTitle".tr: data?.fatherName ?? '',
+      'fatherAliveTitle'.tr: data?.fatherAlive ?? '',
+      "fathersProfessionTitle".tr: data?.fatherOccupation ?? '',
+      "mothersNameTitle".tr: data?.motherName ?? '',
+      'mothersAliveTitle'.tr: data?.motherAlive ?? '',
+      "mothersProfessionTitle".tr: data?.motherOccupation ?? '',
+      "brothersCountTitle".tr: data?.brotherCount?.toString() ?? '',
+      "brothersInfoTitle".tr: data?.brothersInfo?.toString() ?? '',
+      "sistersCountTitle".tr: data?.sisterCount?.toString() ?? '',
+      "sistersInfoTitle".tr: data?.sistersInfo?.toString() ?? '',
+      'professionOfUnclesTitle'.tr: data?.uncleAuntOccuption ?? '',
+      'familyIncomeStatusTitle'.tr: data?.familyStatus ?? '',
       "familyReligiousConditionTitle".tr:
-          data?.familyRelagiousEnvironment ?? 'N/A',
+          data?.familyRelagiousEnvironment ?? '',
     };
   }
 
   Map<String, String?> generatePersonalInfo(MyBioDataController controller) {
     final data = controller.currentUser?.data?.biodata?.personalInfo;
     return {
-      'clothingOutSideTitle'.tr: data?.clothingOutside ?? 'N/A',
-      'sunnahBeardSinceTitle'.tr: data?.sunnahBeardSince ?? 'N/A',
+      'clothingOutSideTitle'.tr: data?.clothingOutside ?? '',
+      'sunnahBeardSinceTitle'.tr: data?.sunnahBeardSince ?? '',
       'clothesAboveAnklesTitle'.tr:
-          data?.clothesAboveAnkles?.toString() ?? 'N/A',
-      'fiveTimesPrayerSinceTitle'.tr: data?.fiveTimesPrayerSince ?? 'N/A',
-      'prayerMissWeeklyTitle'.tr: data?.prayerMissDaily ?? 'N/A',
-      'complyMahramNonMahramTitle'.tr: data?.complyNonMahram ?? 'N/A',
-      'reciteQuranTitle'.tr: data?.reciteQuranCorrectly ?? 'N/A',
-      'followedFiqh'.tr: data?.followedFiqah ?? 'N/A',
-      'watchOrListenTitle'.tr: data?.watchIslamicDramaSong ?? 'N/A',
-      'diseaseTitle'.tr: data?.mentalPhysicalDiseases ?? 'N/A',
-      'involvedInSpecialWorkTitle'.tr: data?.involvedSpecialDeenWork ?? 'N/A',
-      'aboutShrineTitle'.tr: data?.believeAboutMazar ?? 'N/A',
-      'islamicBooksTitle'.tr: data?.islamicReadedBookName ?? 'N/A',
-      'islamicScholarsTitle'.tr: data?.islamicFollowedScholarName ?? 'N/A',
-      'hobbiesTitle'.tr: data?.hobbiesLikeDislike ?? 'N/A',
-      "groomsPhoneTitle".tr: data?.groomPhone ?? 'N/A',
+          data?.clothesAboveAnkles?.toString() ?? '',
+      'fiveTimesPrayerSinceTitle'.tr: data?.fiveTimesPrayerSince ?? '',
+      'prayerMissWeeklyTitle'.tr: data?.prayerMissDaily ?? '',
+      'complyMahramNonMahramTitle'.tr: data?.complyNonMahram ?? '',
+      'reciteQuranTitle'.tr: data?.reciteQuranCorrectly ?? '',
+      'followedFiqh'.tr: data?.followedFiqah ?? '',
+      'watchOrListenTitle'.tr: data?.watchIslamicDramaSong ?? '',
+      'diseaseTitle'.tr: data?.mentalPhysicalDiseases ?? '',
+      'involvedInSpecialWorkTitle'.tr: data?.involvedSpecialDeenWork ?? '',
+      'aboutShrineTitle'.tr: data?.believeAboutMazar ?? '',
+      'islamicBooksTitle'.tr: data?.islamicReadedBookName ?? '',
+      'islamicScholarsTitle'.tr: data?.islamicFollowedScholarName ?? '',
+      'hobbiesTitle'.tr: data?.hobbiesLikeDislike ?? '',
+      "groomsPhoneTitle".tr: data?.groomPhone ?? '',
     };
   }
 
@@ -216,9 +221,9 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
       MyBioDataController controller) {
     final data = controller.currentUser?.data?.biodata?.occupationInfo;
     return {
-      'occupationTitle'.tr: data?.occupation ?? 'N/A',
-      'descriptionOfProfessionTitle'.tr: data?.descriptionOfProfession ?? 'N/A',
-      'monthlyIncomeTitle'.tr: data?.monthlyIncome ?? 'N/A',
+      'occupationTitle'.tr: data?.occupation ?? '',
+      'descriptionOfProfessionTitle'.tr: data?.descriptionOfProfession ?? '',
+      'monthlyIncomeTitle'.tr: data?.monthlyIncome ?? '',
     };
   }
 
@@ -226,13 +231,13 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
       MyBioDataController controller) {
     final data = controller.currentUser?.data?.biodata?.marriageInfo;
     return {
-      'guardianAgreeTitle'.tr: data?.guardianAgree ?? 'N/A',
-      'wifeInVeilTitle'.tr: data?.wifeInVeil ?? 'N/A',
-      'afterStudyTitle'.tr: data?.studyAfterMarriage ?? 'N/A',
-      'afterJobTitle'.tr: data?.jobAfterMarriage ?? 'N/A',
-      'livingPlaceTitle'.tr: data?.livingPlaceAfterMarriage ?? 'N/A',
-      "expectedGiftTitle".tr: data?.expectGiftFromBrideFamily ?? 'N/A',
-      "thoughAboutTitle".tr: data?.thoughtAboutMarriage ?? 'N/A',
+      'guardianAgreeTitle'.tr: data?.guardianAgree ?? '',
+      'wifeInVeilTitle'.tr: data?.wifeInVeil ?? '',
+      'afterStudyTitle'.tr: data?.studyAfterMarriage ?? '',
+      'afterJobTitle'.tr: data?.jobAfterMarriage ?? '',
+      'livingPlaceTitle'.tr: data?.livingPlaceAfterMarriage ?? '',
+      "expectedGiftTitle".tr: data?.expectGiftFromBrideFamily ?? '',
+      "thoughAboutTitle".tr: data?.thoughtAboutMarriage ?? '',
     };
   }
 
@@ -241,35 +246,35 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
     final data = controller.currentUser?.data?.biodata?.expectedLifePartnerInfo;
     return {
       //'expectedAgeTitle'.tr: data != null ? '${data.expectedMinAge ?? 'N/A'}-${data.expectedMaxAge ?? 'N/A'}' : 'N/A',
-      'expectedComplexionTitle'.tr: data?.expectedComplexion ?? 'N/A',
-      'expectedHeightTitle'.tr: data?.expectedHeight ?? 'N/A',
-      'expectedEducationTitle'.tr: data?.exptectedEducation ?? 'N/A',
-      'expectedDistrictTitle'.tr: data?.exptectedDistrict ?? 'N/A',
-      'expectedMaritalStatusTitle'.tr: data?.expectedMaritialStatus ?? 'N/A',
-      'expectedProfessionTitle'.tr: data?.expectedProfession ?? 'N/A',
+      'expectedComplexionTitle'.tr: data?.expectedComplexion ?? '',
+      'expectedHeightTitle'.tr: data?.expectedHeight ?? '',
+      'expectedEducationTitle'.tr: data?.exptectedEducation ?? '',
+      'expectedDistrictTitle'.tr: data?.exptectedDistrict ?? '',
+      'expectedMaritalStatusTitle'.tr: data?.expectedMaritialStatus ?? '',
+      'expectedProfessionTitle'.tr: data?.expectedProfession ?? '',
       'expectedFinancialConditionTitle'.tr:
-          data?.expectedFinancialCondition ?? 'N/A',
-      'expectedAttributesTitle'.tr: data?.expectedAttributes ?? 'N/A',
+          data?.expectedFinancialCondition ?? '',
+      'expectedAttributesTitle'.tr: data?.expectedAttributes ?? '',
     };
   }
 
   Map<String, String?> generatePledge(MyBioDataController controller) {
     final data = controller.currentUser?.data?.biodata?.pledgeInfo;
     return {
-      'parentalAwarenessTitle'.tr: data?.parentalAwareness ?? 'N/A',
-      'informationTruthTitle'.tr: data?.informationTruth ?? 'N/A',
-      'agreementTitle'.tr: data?.agreement ?? 'N/A',
+      'parentalAwarenessTitle'.tr: data?.parentalAwareness ?? '',
+      'informationTruthTitle'.tr: data?.informationTruth ?? '',
+      'agreementTitle'.tr: data?.agreement ?? '',
     };
   }
 
   Map<String, String?> generateContact(MyBioDataController controller) {
     final data = controller.currentUser?.data?.biodata?.contactInfo;
     return {
-      "brideOrGroomNameTitle".tr: data?.groomName ?? 'N/A',
-      "guardiansPhoneTitle".tr: data?.guardianMobile ?? 'N/A',
+      "brideOrGroomNameTitle".tr: data?.groomName ?? '',
+      "guardiansPhoneTitle".tr: data?.guardianMobile ?? '',
       'relationshipWithGuardianTitle'.tr:
-          data?.relationShipWithGuardian ?? 'N/A',
-      'emailToReceivedBioDataTitle'.tr: data?.email ?? 'N/A',
+          data?.relationShipWithGuardian ?? '',
+      'emailToReceivedBioDataTitle'.tr: data?.email ?? '',
     };
   }
 }

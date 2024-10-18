@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
-import 'package:islamic_marriage/screens/sign_up_screen/controller/sign_up_controller.dart';
-import 'package:islamic_marriage/screens/sign_up_screen/model/sign_up.dart';
+import 'package:islamic_marriage/screens/sign_up_screen/controllers/sign_up_controller.dart';
+import 'package:islamic_marriage/screens/sign_up_screen/models/sign_up_model.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_logo.dart';
@@ -18,11 +18,7 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
 
-  final _nameController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+final _signUpController = Get.find<SignUpController>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +32,7 @@ class SignUpScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 32.h),
         child: SingleChildScrollView(
           child: Form(
-            key: _formKey,
+            key: _signUpController.formKey,
             child: Column(
               children: [
                 Gap(32.h),
@@ -52,24 +48,24 @@ class SignUpScreen extends StatelessWidget {
                 Gap(16.h),
                 CustomTextFormField(
                     hintText: 'signUpNameHint'.tr,
-                    controller: _nameController,
+                    controller: _signUpController.nameController,
                     validator: nameValidator),
                 Gap(16.h),
                 CustomTextFormField(
                     hintText: 'signUpMobileHint'.tr,
-                    controller: _phoneController,
+                    controller: _signUpController.phoneController,
                     validator: phoneValidator,
                     keyBoardType: TextInputType.phone),
                 Gap(16.h),
                 CustomTextFormField(
                     hintText: 'signUpEmailHint'.tr,
-                    controller: _emailController,
+                    controller: _signUpController.emailController,
                     validator: emailValidator),
                 Gap(16.h),
                 GetBuilder<SignUpController>(builder: (controller) {
                   return CustomTextFormField(
                       hintText: 'signUpPasswordHint'.tr,
-                      controller: _passwordController,
+                      controller: _signUpController.passwordController,
                       obscureText: controller.isObscure,
                       validator: passwordValidator,
                       suffixIcon: IconButton(
@@ -165,20 +161,20 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _clearData() {
-    _emailController.clear();
-    _nameController.clear();
-    _phoneController.clear();
-    _passwordController.clear();
+    _signUpController.emailController.clear();
+    _signUpController.nameController.clear();
+    _signUpController.phoneController.clear();
+    _signUpController.passwordController.clear();
   }
 
   _formOnSubmit(SignUpController controller) async {
-    if (_formKey.currentState?.validate() ?? false) {
+    if (controller.formKey.currentState!.validate()) {
       final result = await controller.signUpUser(
-          signUp: SignUp(
-        name: _nameController.text,
-        phone: _phoneController.text.trim(),
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
+          signUpData: SignUpModel(
+        name: controller.nameController.text,
+        phone: controller.phoneController.text.trim(),
+        email: controller.emailController.text.trim(),
+        password: controller.passwordController.text.trim(),
         gender: controller.gender[controller.currentGender].value,
       ));
       if (result == true) {

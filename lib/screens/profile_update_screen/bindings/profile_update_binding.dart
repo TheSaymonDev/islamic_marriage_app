@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/profile_update_screen/controller/change_password_controller.dart';
-import 'package:islamic_marriage/screens/profile_update_screen/controller/profile_update_controller.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/controllers/change_password_controller.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/controllers/profile_update_controller.dart';
 
 class ProfileUpdateBinding implements Bindings{
   @override

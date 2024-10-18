@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/sign_up_screen/model/gender.dart';
+import 'package:islamic_marriage/screens/sign_up_screen/models/gender_model.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 
 class CustomGenderSelection extends StatelessWidget {
-  final List<Gender> genders;
+  final List<GenderModel> genders;
   final int currentGender;
   final Function(int) onGenderSelected;
 
