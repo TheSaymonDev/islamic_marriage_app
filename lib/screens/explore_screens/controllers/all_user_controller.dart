@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/explore_screens/models/all_user.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
+import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
@@ -41,5 +42,14 @@ class AllUserController extends GetxController {
   void _setLoading(bool state) {
     isLoading = state;
     update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    final token = SharedPreferencesService().getToken();
+    if (token.isNotEmpty) {
+      getAllUser();
+    }
   }
 }

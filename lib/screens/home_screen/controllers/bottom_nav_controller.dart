@@ -8,4 +8,6 @@ class BottomNavController extends GetxController{
     _selectedIndex=value;
     update();
   }
+
+
 }

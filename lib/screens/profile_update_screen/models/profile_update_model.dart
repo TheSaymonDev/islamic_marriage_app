@@ -1,10 +1,9 @@
-class ProfileUpdate {
+class ProfileUpdateModel {
   String? name;
   String? gender;
-  String? email;
-  String? phone;
 
-  ProfileUpdate({this.name, this.gender, this.email, this.phone});
+
+  ProfileUpdateModel({this.name, this.gender});
 
   // Convert a ProfileUpdate instance to JSON
   Map<String, dynamic> toJson() {
@@ -14,10 +13,8 @@ class ProfileUpdate {
     return data;
   }
 
-  ProfileUpdate.fromJson(Map<String, dynamic> json) {
+  ProfileUpdateModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     gender = json['gender'];
-    email = json['email'];
-    phone = json['phone'];
   }
 }

@@ -23,7 +23,10 @@ class CustomGenderSelection extends StatelessWidget {
         children: List.generate(
             genders.length,
                 (index) => GestureDetector(
-                onTap: () => onGenderSelected(index),
+                    onTap: () {
+                      print("User selected gender: ${genders[index].title}");
+                      onGenderSelected(index);
+                    },
                 child: Container(
                     height: 40.h,
                     width: 100.w,

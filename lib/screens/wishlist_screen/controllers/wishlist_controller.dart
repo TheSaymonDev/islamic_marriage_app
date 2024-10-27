@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/wishlist_screen/models/wishlist.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
+import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 
@@ -90,4 +91,14 @@ class WishListController extends GetxController {
     isLoading = value;
     update();
   }
+
+  @override
+  void onInit() {
+    super.onInit();
+    final token = SharedPreferencesService().getToken();
+    if (token.isNotEmpty) {
+      getWishlist();
+    }
+  }
+
 }

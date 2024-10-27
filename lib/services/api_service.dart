@@ -180,6 +180,34 @@ class ApiService {
     return _handleApiResponse(response);
   }
 
+  Future<ApiResponse<dynamic>> patchMultipart({
+    required String url,
+    required dynamic data,
+    File? file, // Make file argument optional
+    required Map<String, String>? headers,
+  }) async {
+    developer.log(url.toString());
+    developer.log('Data: $data');
+    developer.log('File: $file');
+    developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
+
+    final multipartRequest = http.MultipartRequest('PATCH', Uri.parse(url));
+    multipartRequest.headers.addAll(headers ?? AppUrls.requestHeader);
+    data.forEach((key, value) => multipartRequest.fields[key] = value.toString());
+
+    if (file != null) { // Check if file is provided before adding it
+      String fileField = 'profile';
+      multipartRequest.files.add(await http.MultipartFile.fromPath(fileField, file.path));
+    }
+
+    final response = await multipartRequest.send();
+    final streamResponse = await http.Response.fromStream(response);
+
+    developer.log('Status Code: ${streamResponse.statusCode}');
+    developer.log('Body: ${streamResponse.body}');
+    return _handleApiResponse(streamResponse);
+  }
+
   ApiResponse<dynamic> _handleApiResponse(http.Response response) {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return ApiResponse.success(data: jsonDecode(response.body));

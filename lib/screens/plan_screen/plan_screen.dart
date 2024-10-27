@@ -52,7 +52,7 @@ class _PlanScreenState extends State<PlanScreen> {
           CustomElevatedButton(
               onPressed: () {
                 if (_currentPage == 5) {
-                  Get.to(() => const HomeScreen());
+                  Get.to(() =>  HomeScreen());
                 } else {
                   _pageController.nextPage(
                       duration: const Duration(milliseconds: 500),

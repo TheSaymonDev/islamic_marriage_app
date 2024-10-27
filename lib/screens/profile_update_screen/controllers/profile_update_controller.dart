@@ -2,8 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:islamic_marriage/screens/profile_update_screen/models/profile_update.dart';
-import 'package:islamic_marriage/screens/sign_up_screen/models/gender_model.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/models/gender_model.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/models/profile_data_model.dart';
+import 'package:islamic_marriage/screens/profile_update_screen/models/profile_update_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
@@ -11,37 +12,37 @@ import 'package:islamic_marriage/utils/app_urls.dart';
 
 class ProfileUpdateController extends GetxController {
   bool isLoading = false;
-  ProfileUpdate? profileInfo;
 
+  ProfileDataModel? profileData;
+  final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
-  int currentGender = 0;
-
-  List<GenderModel> gender = [
-    GenderModel(title: 'male', value: 'male'),
-    GenderModel(title: 'female', value: 'female')
+  String? imgUrl;
+  final List<GenderModel> gender = [
+    GenderModel(title: 'male'.tr, value: 'male'),
+    GenderModel(title: 'female'.tr, value: 'female')
   ];
-
-  void selectGender(int index) {
+  int currentGender = 0;
+  void genderSelection(int index) {
     currentGender = index;
     update();
   }
 
   File? imageFile;
   Future<void> getImageFromGallery() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      imageFile = File(pickedImage.path);
+    try {
+      final pickedImage =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (pickedImage != null) {
+        imageFile = File(pickedImage.path);
+      } else {
+        customErrorMessage(message: 'No image selected.');
+      }
+      update();
+    } catch (error) {
+      customErrorMessage(message: 'Failed to pick image.');
     }
-    update();
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    getProfileInfo();
   }
 
   Future<void> getProfileInfo() async {
@@ -52,30 +53,35 @@ class ProfileUpdateController extends GetxController {
     _setLoading(true);
     try {
       final response = await ApiService().get(
-          url: AppUrls.getCurrentUser,
-          headers: AppUrls.getHeaderWithToken);
+          url: AppUrls.getCurrentUser, headers: AppUrls.getHeaderWithToken);
       if (response.success) {
-        profileInfo = ProfileUpdate.fromJson(response.data['data']);
+        profileData = ProfileDataModel.fromJson(response.data['data']);
         _assignProfileData();
-       _setLoading(false);
+        _setLoading(false);
       } else {
         final errorMessage =
             response.message['message'] ?? 'User Info Read Failed';
         customErrorMessage(message: errorMessage);
-       _setLoading(false);
+        _setLoading(false);
       }
     } catch (error) {
       customErrorMessage(message: error.toString());
-     _setLoading(false);
+      _setLoading(false);
     }
   }
 
-  Future<bool> updateProfile({required ProfileUpdate profileUpdate}) async {
+  Future<bool> updateProfile(
+      {required ProfileUpdateModel profileUpdateData}) async {
     _setLoading(true);
+    final data = {
+      'name': profileUpdateData.name,
+      'gender': profileUpdateData.gender,
+    };
     try {
-      final response = await ApiService().patch(
+      final response = await ApiService().patchMultipart(
           url: AppUrls.profileUpdateUrl,
-          data: profileUpdate,
+          data: data,
+          file: imageFile,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Successfully Profile Update');
@@ -96,14 +102,24 @@ class ProfileUpdateController extends GetxController {
   }
 
   void _assignProfileData() {
-    nameController.text = profileInfo?.name ?? '';
-    phoneController.text = profileInfo?.phone ?? '';
-    emailController.text = profileInfo?.email ?? '';
-    update();
+    nameController.text = profileData?.name ?? '';
+    phoneController.text = profileData?.phone ?? '';
+    emailController.text = profileData?.email ?? '';
+    imgUrl = profileData!.profileImage;
+    // Assign gender based on profile data (handling null case)
+    currentGender = (profileData?.gender != null
+        ? gender.indexWhere((g) => g.value == profileData!.gender)
+        : null)!;
   }
 
   void _setLoading(bool value) {
     isLoading = value;
     update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getProfileInfo();
   }
 }

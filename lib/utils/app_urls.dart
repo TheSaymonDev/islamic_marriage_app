@@ -29,7 +29,7 @@ class AppUrls{
   static const cashOnDeliveryJson = '$_lottiePath/cash_on_delivery.json';
   static const emptyCartJson = '$_lottiePath/empty_cart.json';
 
-  static const _baseUrl = "https://api.islamicmarriage.net/api/v1";
+  static const baseUrl = "https://api.islamicmarriage.net/api/v1";
   static const Map<String, String> requestHeader = {"Content-Type": "application/json"};
 
   static Map<String, String> get getHeaderWithToken{
@@ -46,34 +46,34 @@ class AppUrls{
   static const shortDes = "Lorem ipsum dolor sit amet consectetur";
 
   // for auth
-  static const signInUrl = '$_baseUrl/users/login';
-  static const signUpUrl = '$_baseUrl/users/signup';
-  static const identityUrl = '$_baseUrl/users/forget-password';
-  static const otpVerificationUrl = '$_baseUrl/users/verify-otp';
-  static const forgetOtpVerificationUrl = '$_baseUrl/users/forget-password/otp-verify';
-  static const setPasswordUrl = '$_baseUrl/users/reset-password';
-  static const resendOTPUrl = '$_baseUrl/users/resend-otp';
-  static const changePasswordUrl = '$_baseUrl/auth/changePassword';
-  static const profileUpdateUrl = '$_baseUrl/users/me';
+  static const signInUrl = '$baseUrl/users/login';
+  static const signUpUrl = '$baseUrl/users/signup';
+  static const identityUrl = '$baseUrl/users/forget-password';
+  static const otpVerificationUrl = '$baseUrl/users/verify-otp';
+  static const forgetOtpVerificationUrl = '$baseUrl/users/forget-password/otp-verify';
+  static const setPasswordUrl = '$baseUrl/users/reset-password';
+  static const resendOTPUrl = '$baseUrl/users/resend-otp';
+  static const changePasswordUrl = '$baseUrl/users/me/update-password';
+  static const profileUpdateUrl = '$baseUrl/users/me';
   // for create bio data
-  static const upsertBioDataUrl = '$_baseUrl/biodata';
-  static const upsertAddressInfoUrl = '$_baseUrl/addressInfo/upsertAddressInfo';
-  static const upsertEduQualificationsUrl = '$_baseUrl/educationInfo/upsertEducationInfo';
-  static const upsertFamilyInfoUrl = '$_baseUrl/familyInfo/upsertFamilyInfo';
-  static const upsertPersonalInfoUrl = '$_baseUrl/personalInfo/upsertPersonalInfo';
-  static const upsertOccupationalInfoUrl = '$_baseUrl/occupationInfo/upsertOccupationInfo';
-  static const upsertMarriageInfoUrl = '$_baseUrl/marriageInfo/upsertMarriageInfo';
-  static const upsertExpectedLifePartnerInfoUrl = '$_baseUrl/expectedPartnerInfo/upsertExpectedPartnerInfo';
-  static const upsertPledgeUrl = '$_baseUrl/pledgeInfo/upsertPledgeInfo';
-  static const upsertContactUrl = '$_baseUrl/contactInfo/upsertContactInfo';
+  static const upsertBioDataUrl = '$baseUrl/biodata';
+  static const upsertAddressInfoUrl = '$baseUrl/addressInfo/upsertAddressInfo';
+  static const upsertEduQualificationsUrl = '$baseUrl/educationInfo/upsertEducationInfo';
+  static const upsertFamilyInfoUrl = '$baseUrl/familyInfo/upsertFamilyInfo';
+  static const upsertPersonalInfoUrl = '$baseUrl/personalInfo/upsertPersonalInfo';
+  static const upsertOccupationalInfoUrl = '$baseUrl/occupationInfo/upsertOccupationInfo';
+  static const upsertMarriageInfoUrl = '$baseUrl/marriageInfo/upsertMarriageInfo';
+  static const upsertExpectedLifePartnerInfoUrl = '$baseUrl/expectedPartnerInfo/upsertExpectedPartnerInfo';
+  static const upsertPledgeUrl = '$baseUrl/pledgeInfo/upsertPledgeInfo';
+  static const upsertContactUrl = '$baseUrl/contactInfo/upsertContactInfo';
 
-  static const getAllUser = '$_baseUrl/biodata';
-  static const getCurrentUser = '$_baseUrl/users/me';
-  static const addRemoveToFavouriteListUrl = '$_baseUrl/users/favourite';
+  static const getAllUser = '$baseUrl/biodata';
+  static const getCurrentUser = '$baseUrl/users/me';
+  static const addRemoveToFavouriteListUrl = '$baseUrl/users/favourite';
 
 
-  static const readUserBioDataUrl = '$_baseUrl/biodata/single';
-  static const readAllSearchedBioDataUrl = '$_baseUrl/users/searched-biodata';
+  static const readUserBioDataUrl = '$baseUrl/biodata/single';
+  static const readAllSearchedBioDataUrl = '$baseUrl/users/searched-biodata';
 
-  static const submitBioDataUrl = '$_baseUrl/users/verify-biodata';
+  static const submitBioDataUrl = '$baseUrl/users/verify-biodata';
 }

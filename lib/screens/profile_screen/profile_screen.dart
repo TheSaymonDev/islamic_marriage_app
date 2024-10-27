@@ -12,14 +12,9 @@ import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/screens/profile_screen/widgets/custom_button.dart';
 import 'package:islamic_marriage/widgets/custom_profile_avatar.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -112,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Gap(8.h),
             CustomButton(
                 onTap: () {
-                  _showLogoutBottomSheet();
+                  _showLogoutBottomSheet(context);
                 },
                 iconData: FontAwesomeIcons.rightFromBracket,
                 title: 'logout'.tr)
@@ -122,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _showLogoutBottomSheet() {
+  void _showLogoutBottomSheet(BuildContext context) {
     Get.bottomSheet(
       CustomBottomSheet(
         children: [

@@ -3,23 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:islamic_marriage/screens/chat_list_screen/chat_list_screen.dart';
-import 'package:islamic_marriage/screens/explore_screens/controllers/all_user_controller.dart';
 import 'package:islamic_marriage/screens/explore_screens/explore_screen.dart';
 import 'package:islamic_marriage/screens/help_mate_screen/help_mate_screen.dart';
 import 'package:islamic_marriage/screens/home_screen/controllers/bottom_nav_controller.dart';
 import 'package:islamic_marriage/screens/plan_screen/plan_screen.dart';
 import 'package:islamic_marriage/screens/profile_screen/profile_screen.dart';
-import 'package:islamic_marriage/screens/wishlist_screen/controllers/wishlist_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _widgetOptions = [
     const ExploreScreen(),
     const HelpMateScreen(),
@@ -28,15 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
     const ChatListScreen(),
     const ProfileScreen(),
   ];
-
-
-
-  @override
-  void initState() {
-    super.initState();
-    Get.find<WishListController>().getWishlist();
-    Get.find<AllUserController>().getAllUser();
-  }
 
   @override
   Widget build(BuildContext context) {

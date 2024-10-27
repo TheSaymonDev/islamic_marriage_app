@@ -13,16 +13,8 @@ import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class ForgetOtpVerificationScreen extends StatefulWidget {
-  const ForgetOtpVerificationScreen({super.key});
-
-  @override
-  State<ForgetOtpVerificationScreen> createState() =>
-      _ForgetOtpVerificationScreenState();
-}
-
-class _ForgetOtpVerificationScreenState
-    extends State<ForgetOtpVerificationScreen> {
+class ForgetOtpVerificationScreen extends StatelessWidget {
+  ForgetOtpVerificationScreen({super.key});
 
   final _forgetOtpVerificationController = Get.find<ForgetOtpVerificationController>();
 

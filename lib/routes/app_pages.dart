@@ -6,13 +6,13 @@ import 'package:islamic_marriage/screens/bio_data_details_screen/bio_data_detail
 import 'package:islamic_marriage/screens/bio_data_management_screen/bindings/bio_data_management_binding.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/bio_data_management_screen.dart';
 import 'package:islamic_marriage/screens/cart_screen/cart_screen.dart';
-import 'package:islamic_marriage/screens/explore_screens/bindings/all_user_binding.dart';
+import 'package:islamic_marriage/screens/explore_screens/bindings/explore_binding.dart';
 import 'package:islamic_marriage/screens/favourite_bio_data_details_screen/favourite_bio_data_details_screen.dart';
 import 'package:islamic_marriage/screens/forget_otp_verification_screen/bindings/forget_otp_verification_binding.dart';
 import 'package:islamic_marriage/screens/forget_otp_verification_screen/forget_otp_verification_screen.dart';
 import 'package:islamic_marriage/screens/help_center_screen/bindings/help_center_binding.dart';
 import 'package:islamic_marriage/screens/help_center_screen/help_center_screen.dart';
-import 'package:islamic_marriage/screens/help_mate_screen/bindings/all_bio_data_binding.dart';
+import 'package:islamic_marriage/screens/help_mate_screen/bindings/help_mate_binding.dart';
 import 'package:islamic_marriage/screens/home_screen/bindings/home_binding.dart';
 import 'package:islamic_marriage/screens/home_screen/home_screen.dart';
 import 'package:islamic_marriage/screens/identity_verification_screen/bindings/identity_verification_binding.dart';
@@ -73,9 +73,9 @@ class AppPages {
       page: () => HomeScreen(),
       bindings: [
         HomeBinding(),
-        AllUserBinding(),
         WishlistBinding(),
-        AllBioDataBinding()
+        ExploreBinding(),
+        HelpMateBinding()
       ],
     ),
     GetPage(

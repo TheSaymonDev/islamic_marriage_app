@@ -102,7 +102,7 @@ class _BookingScreenState extends State<BookingScreen> {
               ),
               Gap(32.h),
               CustomElevatedButton(onPressed: (){
-                Get.to(()=>const HomeScreen());
+                Get.to(()=> HomeScreen());
               }, buttonName: 'Submit')
             ],
           ),
