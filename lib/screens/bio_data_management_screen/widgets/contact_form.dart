@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/contact_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
@@ -23,7 +23,7 @@ class _ContactFormState extends State<ContactForm> {
   @override
   void initState() {
     super.initState();
-    final _contactData = Get.find<MyBioDataController>().currentUser!.data!.biodata!.contactInfo;
+    final _contactData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.contactInfo;
 
     if (_contactData != null) {
       _contactController.nameController.text = _contactData.groomName ?? '';

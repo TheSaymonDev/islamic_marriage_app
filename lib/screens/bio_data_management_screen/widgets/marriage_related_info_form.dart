@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/marriage_related_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
@@ -22,7 +23,7 @@ class _MarriageRelatedInfoFormState extends State<MarriageRelatedInfoForm> {
   @override
   void initState() {
     super.initState();
-    final _marriageRelatedInfoData = Get.find<MyBioDataController>().currentUser!.data!.biodata!.marriageInfo;
+    final _marriageRelatedInfoData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.marriageInfo;
 
     if (_marriageRelatedInfoData != null) {
       _marriageInfoController.guardiansAgreeController.text = _marriageRelatedInfoData.guardianAgree ?? '';

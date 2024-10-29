@@ -165,7 +165,7 @@ final Map<String, String> bnBd = {
   'growUpTitle': 'আপনি কোথায় বড় হয়েছেন?',
   'divisionHint': 'বিভাগ',
   'districtHint': 'জেলা',
-  'subDistrict': 'উপজেলা',
+  'subDistrictHint': 'উপজেলা',
 
   // For Educational Qualifications Form
   'educationalMethodTitle': 'শিক্ষাগত পদ্ধতি',

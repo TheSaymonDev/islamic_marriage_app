@@ -1,19 +1,14 @@
-class AllUser {
+class CurrentUserModel {
   int? status;
   bool? success;
-  List<Data>? data;
+  Data? data;
 
-  AllUser({this.status, this.success, this.data});
+  CurrentUserModel({this.status, this.success, this.data});
 
-  AllUser.fromJson(Map<String, dynamic> json) {
+  CurrentUserModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     success = json['success'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -21,13 +16,85 @@ class AllUser {
     data['status'] = this.status;
     data['success'] = this.success;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
+  int? id;
+  String? name;
+  String? phone;
+  String? email;
+  String? password;
+  String? gender;
+  String? otp;
+  String? passwordResetOtp;
+  bool? passwordResetOtpVerified;
+  bool? otpVerified;
+  Biodata? biodata;
+  String? role;
+  String? createdAt;
+  String? updatedAt;
+
+  Data(
+      {this.id,
+        this.name,
+        this.phone,
+        this.email,
+        this.password,
+        this.gender,
+        this.otp,
+        this.passwordResetOtp,
+        this.passwordResetOtpVerified,
+        this.otpVerified,
+        this.biodata,
+        this.role,
+        this.createdAt,
+        this.updatedAt});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    phone = json['phone'];
+    email = json['email'];
+    password = json['password'];
+    gender = json['gender'];
+    otp = json['otp'];
+    passwordResetOtp = json['password_reset_otp'];
+    passwordResetOtpVerified = json['password_reset_otp_verified'];
+    otpVerified = json['otp_verified'];
+    biodata =
+    json['biodata'] != null ? new Biodata.fromJson(json['biodata']) : null;
+    role = json['role'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['phone'] = this.phone;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['gender'] = this.gender;
+    data['otp'] = this.otp;
+    data['password_reset_otp'] = this.passwordResetOtp;
+    data['password_reset_otp_verified'] = this.passwordResetOtpVerified;
+    data['otp_verified'] = this.otpVerified;
+    if (this.biodata != null) {
+      data['biodata'] = this.biodata!.toJson();
+    }
+    data['role'] = this.role;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Biodata {
   int? id;
   GeneralInfo? generalInfo;
   OccupationInfo? occupationInfo;
@@ -45,7 +112,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
 
-  Data(
+  Biodata(
       {this.id,
         this.generalInfo,
         this.occupationInfo,
@@ -63,7 +130,7 @@ class Data {
         this.createdAt,
         this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Biodata.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     generalInfo = json['generalInfo'] != null
         ? new GeneralInfo.fromJson(json['generalInfo'])
@@ -257,11 +324,7 @@ class CurrentAddress {
   String? currentDistrict;
   String? currentSubDistrict;
 
-  CurrentAddress(
-      {this.id,
-        this.currentDivision,
-        this.currentDistrict,
-        this.currentSubDistrict});
+  CurrentAddress({this.id, this.currentDivision, this.currentDistrict, this.currentSubDistrict});
 
   CurrentAddress.fromJson(Map<String, dynamic> json) {
     id = json['id'];

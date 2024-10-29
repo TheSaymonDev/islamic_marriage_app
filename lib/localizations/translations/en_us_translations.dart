@@ -169,7 +169,7 @@ final Map<String, String> enUs = {
   'growUpTitle': 'Where did you grow up?',
   'divisionHint': 'Division',
   'districtHint': 'District',
-  'subDistrict': 'Sub-District',
+  'subDistrictHint': 'Sub-District',
 
   // For Educational Qualifications Form
   'educationalMethodTitle': 'Educational Method',

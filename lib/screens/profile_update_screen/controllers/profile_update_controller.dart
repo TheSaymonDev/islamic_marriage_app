@@ -105,12 +105,18 @@ class ProfileUpdateController extends GetxController {
     nameController.text = profileData?.name ?? '';
     phoneController.text = profileData?.phone ?? '';
     emailController.text = profileData?.email ?? '';
-    imgUrl = profileData!.profileImage;
+    imgUrl = profileData?.profileImage;
+
     // Assign gender based on profile data (handling null case)
-    currentGender = (profileData?.gender != null
-        ? gender.indexWhere((g) => g.value == profileData!.gender)
-        : null)!;
+    if (profileData?.gender != null) {
+      currentGender = gender.indexWhere((g) => g.value == profileData!.gender);
+      // যদি `indexWhere` কিছু না পায় তবে এটি -1 ফেরত দিবে, সেক্ষেত্রে `currentGender`কে ডিফল্ট ভ্যালু দিন
+      currentGender = currentGender != -1 ? currentGender : 0;
+    } else {
+      currentGender = 0; // ডিফল্টভাবে male (বা female) সিলেক্ট করুন
+    }
   }
+
 
   void _setLoading(bool value) {
     isLoading = value;

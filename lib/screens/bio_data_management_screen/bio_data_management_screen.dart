@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/address_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/contact_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/edu_qualifications_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/expected_life_partner_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/family_info_controller.dart';
@@ -24,7 +25,6 @@ import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/marr
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/occupational_info_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/personal_info_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/pledge_form.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
@@ -49,7 +49,7 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<MyBioDataController>().getCurrentUser();
+    Get.find<CurrentUserBioDataController>().getCurrentUserData();
   }
 
   @override
@@ -65,7 +65,7 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
         height: double.infinity.h,
         width: double.infinity.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: GetBuilder<MyBioDataController>(
+        child: GetBuilder<CurrentUserBioDataController>(
             builder: (controller) => controller.isLoading
                 ? customCircularProgressIndicator
                 : Column(
@@ -362,7 +362,7 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
                     onPressed: () async {
                       if (controller.formKey.currentState!.validate()) {
                         final result =
-                            await controller.upsertEduQualificationsInfo();
+                            await controller.upsertEduInfo();
                         if (result) {
                           setState(() {
                             activeStep++;

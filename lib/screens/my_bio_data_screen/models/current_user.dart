@@ -456,9 +456,9 @@ class FamilyInfo {
   String? motherName;
   String? motherAlive;
   String? motherOccupation;
-  int? brotherCount;
+  String? brotherCount;
   String? brothersInfo;
-  int? sisterCount;
+  String? sisterCount;
   String? sistersInfo;
   String? uncleAuntOccuption;
   String? familyStatus;

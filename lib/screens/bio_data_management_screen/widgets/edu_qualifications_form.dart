@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/edu_qualifications_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
@@ -39,14 +40,14 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
     DropdownItem(title: 'a'.tr, value: 'A'),
     DropdownItem(title: 'aMinus'.tr, value: 'A-'),
     DropdownItem(title: 'b'.tr, value: 'B'),
-    DropdownItem(title: 'C'.tr, value: 'C'),
-    DropdownItem(title: 'D'.tr, value: 'D'),
+    DropdownItem(title: 'c'.tr, value: 'C'),
+    DropdownItem(title: 'd'.tr, value: 'D'),
   ];
 
   @override
   void initState() {
     super.initState();
-    final _eduQualificationData = Get.find<MyBioDataController>().currentUser?.data?.biodata?.educationInfo;
+    final _eduQualificationData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.educationInfo;
 
     if (_eduQualificationData != null) {
       _eduQualificationsController.selectedEduMethod = _eduMethod.firstWhereOrNull((item) => item.value == _eduQualificationData.educationMethod);

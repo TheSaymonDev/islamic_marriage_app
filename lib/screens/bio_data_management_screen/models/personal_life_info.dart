@@ -1,7 +1,7 @@
 class PersonalLifeInfo {
   String? clothingOutside;
   String? sunnahBeardSince;
-  String? clothesAboveAnkles;
+  bool? clothesAboveAnkles;
   String? fiveTimesPrayerSince;
   String? prayerMissDaily;
   String? complyNonMahram;

@@ -1,6 +1,3 @@
-
-
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/address_info.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/contact.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/edu_qualifications_info.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/expected_life_partner.dart';

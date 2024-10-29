@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/contact.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -9,9 +9,6 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class ContactController extends GetxController {
   bool isLoading = false;
-
-  //Contact? contact;
-
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final guardiansMobileController = TextEditingController();
@@ -23,96 +20,41 @@ class ContactController extends GetxController {
       customErrorMessage(message: 'Please check your internet connection');
       return false;
     }
-    isLoading = true;
-    update();
+    _setLoading(true);
     try {
       final contact = Contact(
           groomName: nameController.text,
           guardianMobile: guardiansMobileController.text,
           relationShipWithGuardian: relationshipController.text,
           email: emailController.text);
+      final Map<String, dynamic> data = {
+        "contactInfo": contact.toJson(),
+      };
       final response = await ApiService().patch(
           url: AppUrls.upsertBioDataUrl,
-          data: contact,
+          data: data,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Contact Created Successful');
-        Get.find<MyBioDataController>().getCurrentUser();
-        isLoading = false;
-        update();
+        Get.find<CurrentUserBioDataController>().getCurrentUserData();
+        _setLoading(false);
         return true;
       } else {
         final errorMessage =
             response.message['message'] ?? 'Contact Create Failed';
         customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
+        _setLoading(false);
         return false;
       }
     } catch (error) {
       customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
+      _setLoading(false);
       return false;
     }
   }
 
-  // Future<void> readContact() async {
-  //   isLoading = true;
-  //   update();
-  //   try {
-  //     final response = await ApiService().get(
-  //         url: AppUrls.readContactUrl, headers: AppUrls.getHeaderWithToken);
-  //     if (response.success) {
-  //       contact = Contact.fromJson(response.data['data']);
-  //       isLoading = false;
-  //       update();
-  //     } else {
-  //       final errorMessage =
-  //           response.message['message'] ?? 'Contact Read Failed';
-  //       customErrorMessage(message: errorMessage);
-  //       isLoading = false;
-  //       update();
-  //     }
-  //   } catch (error) {
-  //     customErrorMessage(message: error.toString());
-  //     isLoading = false;
-  //     update();
-  //   }
-  // }
-  //
-  // Future<bool> updateContact() async {
-  //   isLoading = true;
-  //   update();
-  //   try {
-  //     final contact = Contact(
-  //         groomName: nameController.text,
-  //         guardianMobile: guardiansMobileController.text,
-  //         guardianRelationship: guardiansMobileController.text,
-  //         email: emailController.text);
-  //     final response = await ApiService().put(
-  //         url: AppUrls.updateContactUrl,
-  //         data: contact,
-  //         headers: AppUrls.getHeaderWithToken);
-  //     if (response.success) {
-  //       customSuccessMessage(message: 'Contact Updated Successful');
-  //       Get.find<MyBioDataController>().readMyBioData();
-  //       isLoading = false;
-  //       update();
-  //       return true;
-  //     } else {
-  //       final errorMessage =
-  //           response.message['message'] ?? 'Contact Update Failed';
-  //       customErrorMessage(message: errorMessage);
-  //       isLoading = false;
-  //       update();
-  //       return false;
-  //     }
-  //   } catch (error) {
-  //     customErrorMessage(message: error.toString());
-  //     isLoading = false;
-  //     update();
-  //     return false;
-  //   }
-  // }
+  void _setLoading(bool value) {
+    isLoading = value;
+    update();
+  }
 }

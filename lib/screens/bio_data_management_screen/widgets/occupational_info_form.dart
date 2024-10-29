@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/occupational_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
@@ -24,7 +25,7 @@ class _OccupationalInfoFormState extends State<OccupationalInfoForm> {
   @override
   void initState() {
     super.initState();
-    final _occupationalInfoData = Get.find<MyBioDataController>().currentUser!.data!.biodata!.occupationInfo;
+    final _occupationalInfoData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.occupationInfo;
 
     if (_occupationalInfoData != null) {
       _occupationalInfoController.occupationController.text = _occupationalInfoData.occupation ?? '';

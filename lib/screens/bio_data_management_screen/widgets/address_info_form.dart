@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/address_info_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/all_divisions.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
@@ -23,25 +23,39 @@ class _AddressFormState extends State<AddressForm> {
   @override
   void initState() {
     super.initState();
-    final _addressInfoData = Get.find<MyBioDataController>().currentUser!.data!.biodata!.permanentAddress;
-    if (_addressInfoData != null) {
-      _addressInfoController.selectedDivision.text = _addressInfoData.division ?? '';
-      _addressInfoController.selectedDistrict.text = _addressInfoData.district ?? '';
-      _addressInfoController.selectedSubDistrict.text = _addressInfoData.subDistrict ?? '';
 
-      _addressInfoController.selectedDivision1.text = _addressInfoData.division ?? '';
-      _addressInfoController.selectedDistrict1.text = _addressInfoData.district ?? '';
-      _addressInfoController.selectedSubDistrict1.text = _addressInfoData.subDistrict ?? '';
+    final _bioData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata;
+
+    // Permanent Address Null Check
+    if (_bioData?.permanentAddress != null) {
+      _addressInfoController.selectedDivision.text = _bioData!.permanentAddress!.division ?? '';
+      _addressInfoController.selectedDistrict.text = _bioData.permanentAddress!.district ?? '';
+      _addressInfoController.selectedSubDistrict.text = _bioData.permanentAddress!.subDistrict ?? '';
     } else {
-      _addressInfoController.selectedDivision.text = '';
-      _addressInfoController.selectedDistrict.text = '';
-      _addressInfoController.selectedSubDistrict.text = '';
+      _addressInfoController.selectedDivision.clear();
+      _addressInfoController.selectedDistrict.clear();
+      _addressInfoController.selectedSubDistrict.clear();
+    }
 
-      _addressInfoController.selectedDivision1.text = '';
-      _addressInfoController.selectedDistrict1.text = '';
-      _addressInfoController.selectedSubDistrict1.text = '';
+    // Present Address Null Check
+    if (_bioData?.currentAddress != null) {
+      _addressInfoController.selectedCurrentDivision.text = _bioData!.currentAddress!.currentDivision ?? '';
+      _addressInfoController.selectedCurrentDistrict.text = _bioData.currentAddress!.currentDistrict ?? '';
+      _addressInfoController.selectedCurrentSubDistrict.text = _bioData.currentAddress!.currentSubDistrict ?? '';
+    } else {
+      _addressInfoController.selectedCurrentDivision.clear();
+      _addressInfoController.selectedCurrentDistrict.clear();
+      _addressInfoController.selectedCurrentSubDistrict.clear();
+    }
+
+    // Grew Up Null Check
+    if (_bioData?.grewUp != null) {
+      _addressInfoController.growUpController.text = _bioData!.grewUp!;
+    } else {
+      _addressInfoController.growUpController.clear();
     }
   }
+
 
   final _addressInfoController = Get.find<AddressInfoController>();
 
@@ -143,7 +157,7 @@ class _AddressFormState extends State<AddressForm> {
               children: [
                 CustomTextFormField(
                   hintText: 'divisionHint'.tr,
-                    controller: _addressInfoController.selectedDivision1,
+                    controller: _addressInfoController.selectedCurrentDivision,
                     validator: requiredValidator),
                 // CustomDropdownButton1<Division>(
                 //   validator: dropdownValidator,
@@ -163,7 +177,7 @@ class _AddressFormState extends State<AddressForm> {
                     Expanded(
                         child: CustomTextFormField(
                           hintText: 'districtHint'.tr,
-                            controller: _addressInfoController.selectedDistrict1,
+                            controller: _addressInfoController.selectedCurrentDistrict,
                             validator: requiredValidator)),
                     // Expanded(
                     //   child: CustomDropdownButton1<District>(
@@ -182,7 +196,7 @@ class _AddressFormState extends State<AddressForm> {
                     Expanded(
                         child: CustomTextFormField(
                           hintText: 'subDistrictHint'.tr,
-                            controller: _addressInfoController.selectedSubDistrict1,
+                            controller: _addressInfoController.selectedCurrentSubDistrict,
                             validator: requiredValidator)),
                     // Expanded(
                     //   child: CustomDropdownButton1<SubDistrict>(

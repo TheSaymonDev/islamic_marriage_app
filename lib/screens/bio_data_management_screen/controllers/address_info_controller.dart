@@ -90,8 +90,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/address_info.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/address_info_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -106,9 +106,9 @@ class AddressInfoController extends GetxController {
   final selectedDistrict = TextEditingController();
   final selectedSubDistrict = TextEditingController();
 
-  final selectedDivision1 = TextEditingController();
-  final selectedDistrict1 = TextEditingController();
-  final selectedSubDistrict1 = TextEditingController();
+  final selectedCurrentDivision = TextEditingController();
+  final selectedCurrentDistrict = TextEditingController();
+  final selectedCurrentSubDistrict = TextEditingController();
 
   final growUpController = TextEditingController();
   bool isSameAsPermanent = false;
@@ -118,36 +118,44 @@ class AddressInfoController extends GetxController {
       customErrorMessage(message: 'Please check your internet connection');
       return false;
     }
-    isLoading = true;
-    update();
+    _setLoading(true);
     try {
-      final address = PermanentAddress(
-          division: selectedDivision.text,
-          district: selectedSubDistrict.text,
-          subDistrict: selectedSubDistrict.text);
+      final data = Biodata(
+        permanentAddress: PermanentAddress(
+            division: selectedDivision.text,
+            district: selectedDistrict.text,
+            subDistrict: selectedSubDistrict.text),
+        currentAddress: CurrentAddress(
+            currentDivision: selectedCurrentDivision.text,
+            currentDistrict: selectedCurrentDistrict.text,
+            currentSubDistrict: selectedCurrentSubDistrict.text),
+        grewUp: growUpController.text,
+      );
       final response = await ApiService().patch(
           url: AppUrls.upsertBioDataUrl,
-          data: address,
+          data: data,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Address Info Created Successful');
-        Get.find<MyBioDataController>().getCurrentUser();
-        isLoading = false;
-        update();
+        Get.find<CurrentUserBioDataController>().getCurrentUserData();
+        _setLoading(false);
         return true;
       } else {
         final errorMessage =
             response.message['message'] ?? 'Address Create Failed';
         customErrorMessage(message: errorMessage);
-        isLoading = false;
-        update();
+        _setLoading(false);
         return false;
       }
     } catch (error) {
       customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
+      _setLoading(false);
       return false;
     }
+  }
+
+  void _setLoading(bool value) {
+    isLoading = value;
+    update();
   }
 }

@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/general_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_drop_down_button_test.dart';
@@ -93,7 +93,8 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
     _height = _createHeightList();
     _weight = _createWeightList();
 
-    final _generalInfoData = Get.find<MyBioDataController>().currentUser!.data!.biodata!.generalInfo;
+    final _generalInfoData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.generalInfo;
+
     if (_generalInfoData != null) {
       _generalInfoController.selectedBioDataType = _bioDataType.firstWhereOrNull((item) => item.value == _generalInfoData.bioDataType);
       _generalInfoController.selectedMaritalStatus = _maritalStatus.firstWhereOrNull((item) => item.value == _generalInfoData.maritialStatus);
@@ -104,6 +105,7 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       _generalInfoController.selectedNationality = _nationality.firstWhereOrNull((item) => item.value == _generalInfoData.nationality);
       _generalInfoController.dateOfBirthController.text = _generalInfoData.dateOfBirth ?? '';
     } else {
+      // Set default values when _generalInfoData is null
       _generalInfoController.selectedBioDataType = null;
       _generalInfoController.selectedMaritalStatus = null;
       _generalInfoController.selectedComplexion = null;
@@ -114,6 +116,7 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       _generalInfoController.dateOfBirthController.text = '';
     }
   }
+
 
   final _generalInfoController = Get.find<GeneralInfoController>();
 

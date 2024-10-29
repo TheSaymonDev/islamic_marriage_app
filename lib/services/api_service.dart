@@ -149,7 +149,7 @@ class ApiService {
     Map<String, String>? headers,
   }) async {
     developer.log(url.toString());
-    developer.log('Data: $data');
+    developer.log('Data (JSON): ${jsonEncode(data)}');
     developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
 
     final response = await http.patch(
