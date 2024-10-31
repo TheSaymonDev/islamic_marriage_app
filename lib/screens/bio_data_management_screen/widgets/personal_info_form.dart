@@ -20,62 +20,113 @@ class PersonalInfoForm extends StatefulWidget {
 }
 
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
-
   final List<DropdownItem> _fiqh = [
-   DropdownItem(title: 'hanafi'.tr, value: 'hanafi'),
-   DropdownItem(title: 'maliki'.tr, value: 'maliki'),
-   DropdownItem(title: 'shafi'.tr, value: 'shafi'),
-   DropdownItem(title: 'hanbali'.tr, value: 'hanbali'),
-   DropdownItem(title: 'ahleHadith'.tr, value: 'ahleHadith'),
+    DropdownItem(title: 'hanafi'.tr, value: 'hanafi'),
+    DropdownItem(title: 'maliki'.tr, value: 'maliki'),
+    DropdownItem(title: 'shafi'.tr, value: 'shafi'),
+    DropdownItem(title: 'hanbali'.tr, value: 'hanbali'),
+    DropdownItem(title: 'ahleHadith'.tr, value: 'ahleHadith'),
   ];
 
   String? imageUrl;
   final _personalInfoController = Get.find<PersonalInfoController>();
+  String? _bioDataType ;
 
+  @override
+  void initState() {
+    super.initState();
+   _initializeData();
+  }
 
-    @override
-    void initState() {
-      super.initState();
-      final _personalInfoData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.personalInfo;
+  void _initializeData() {
+    final currentBioData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata;
+    _bioDataType = currentBioData?.generalInfo?.bioDataType;
+    final personalInfo = currentBioData?.personalInfo;
 
-      if (_personalInfoData != null) {
-        _personalInfoController.clothesController.text = _personalInfoData.clothingOutside ?? '';
-        _personalInfoController.beardController.text = _personalInfoData.sunnahBeardSince ?? '';
-        _personalInfoController.aboveTheAnklesController.text = _personalInfoData.clothesAboveAnkles.toString() ?? '';
-        _personalInfoController.prayController.text = _personalInfoData.fiveTimesPrayerSince ?? '';
-        _personalInfoController.qazaController.text = _personalInfoData.prayerMissDaily ?? '';
-        _personalInfoController.mahramController.text = _personalInfoData.complyNonMahram ?? '';
-        _personalInfoController.reciteQuranController.text = _personalInfoData.reciteQuranCorrectly ?? '';
-        _personalInfoController.selectedFiqh = _fiqh.firstWhereOrNull((item) => item.value == _personalInfoData.followedFiqah);
-        _personalInfoController.watchOrListenController.text = _personalInfoData.watchIslamicDramaSong ?? '';
-        _personalInfoController.diseaseController.text = _personalInfoData.mentalPhysicalDiseases ?? '';
-        _personalInfoController.specialWorkController.text = _personalInfoData.involvedSpecialDeenWork ?? '';
-        _personalInfoController.mazarController.text = _personalInfoData.believeAboutMazar ?? '';
-        _personalInfoController.islamicBooksController.text = _personalInfoData.islamicReadedBookName ?? '';
-        _personalInfoController.islamicScholarsController.text = _personalInfoData.islamicFollowedScholarName ?? '';
-        _personalInfoController.hobbiesController.text = _personalInfoData.hobbiesLikeDislike ?? '';
-        _personalInfoController.mobileController.text = _personalInfoData.groomPhone ?? '';
-        _personalInfoController.imageUrl = _personalInfoData.groomSelfieUrl ?? '';
-      } else {
-        _personalInfoController.clothesController.text = '';
-        _personalInfoController.beardController.text = '';
-        _personalInfoController.aboveTheAnklesController.text = '';
-        _personalInfoController.prayController.text = '';
-        _personalInfoController.qazaController.text = '';
-        _personalInfoController.mahramController.text = '';
-        _personalInfoController.reciteQuranController.text = '';
-        _personalInfoController.selectedFiqh = null;
-        _personalInfoController.watchOrListenController.text = '';
-        _personalInfoController.diseaseController.text = '';
-        _personalInfoController.specialWorkController.text = '';
-        _personalInfoController.mazarController.text = '';
-        _personalInfoController.islamicBooksController.text = '';
-        _personalInfoController.islamicScholarsController.text = '';
-        _personalInfoController.hobbiesController.text = '';
-        _personalInfoController.mobileController.text = '';
-        _personalInfoController.imageUrl = null;
-      }
+    if (personalInfo != null) {
+      _personalInfoController.clothesController.text = personalInfo.clothingOutside ?? '';
+      _personalInfoController.beardController.text = personalInfo.sunnahBeardSince ?? '';
+      _personalInfoController.aboveTheAnklesController.text = personalInfo.clothesAboveAnkles ?? '';
+      _personalInfoController.veilController.text = personalInfo.veil ?? '';
+      _personalInfoController.prayController.text = personalInfo.fiveTimesPrayerSince ?? '';
+      _personalInfoController.qazaController.text = personalInfo.prayerMissDaily ?? '';
+      _personalInfoController.mahramController.text = personalInfo.complyNonMahram ?? '';
+      _personalInfoController.reciteQuranController.text = personalInfo.reciteQuranCorrectly ?? '';
+      _personalInfoController.selectedFiqh = _fiqh.firstWhereOrNull((item) => item.value == personalInfo.followedFiqah);
+      _personalInfoController.watchOrListenController.text = personalInfo.watchIslamicDramaSong ?? '';
+      _personalInfoController.diseaseController.text = personalInfo.mentalPhysicalDiseases ?? '';
+      _personalInfoController.specialWorkController.text = personalInfo.involvedSpecialDeenWork ?? '';
+      _personalInfoController.mazarController.text = personalInfo.believeAboutMazar ?? '';
+      _personalInfoController.islamicBooksController.text = personalInfo.islamicReadedBookName ?? '';
+      _personalInfoController.islamicScholarsController.text = personalInfo.islamicFollowedScholarName ?? '';
+      _personalInfoController.hobbiesController.text = personalInfo.hobbiesLikeDislike ?? '';
+      _personalInfoController.mobileController.text = personalInfo.groomPhone ?? '';
+      _personalInfoController.imageUrl = personalInfo.groomSelfieUrl ?? '';
+    } else {
+      _clearAllFields();
     }
+  }
+
+  void _clearAllFields() {
+    _personalInfoController.clothesController.clear();
+    _personalInfoController.beardController.clear();
+    _personalInfoController.aboveTheAnklesController.clear();
+    _personalInfoController.veilController.clear();
+    _personalInfoController.prayController.clear();
+    _personalInfoController.qazaController.clear();
+    _personalInfoController.mahramController.clear();
+    _personalInfoController.reciteQuranController.clear();
+    _personalInfoController.selectedFiqh = null;
+    _personalInfoController.watchOrListenController.clear();
+    _personalInfoController.diseaseController.clear();
+    _personalInfoController.specialWorkController.clear();
+    _personalInfoController.mazarController.clear();
+    _personalInfoController.islamicBooksController.clear();
+    _personalInfoController.islamicScholarsController.clear();
+    _personalInfoController.hobbiesController.clear();
+    _personalInfoController.mobileController.clear();
+    _personalInfoController.imageUrl = null;
+  }
+
+  Widget _maleBioDataWidget() {
+    _personalInfoController.veilController.clear();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InputTitleText(title: "sunnahBeardSinceTitle".tr),
+        Gap(4.h),
+        CustomTextFormField(
+          validator: requiredValidator,
+          controller: _personalInfoController.beardController,
+        ),
+        Gap(4.h),
+        Text('sunnahBeardSinceNB'.tr, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: violetClr)),
+        Gap(16.h),
+        InputTitleText(title: "clothesAboveAnklesTitle".tr),
+        Gap(4.h),
+        CustomTextFormField(
+          validator: requiredValidator,
+          controller: _personalInfoController.aboveTheAnklesController,
+        ),
+      ],
+    );
+  }
+
+  Widget _femaleBioDataWidget() {
+    _personalInfoController.beardController.clear();
+    _personalInfoController.aboveTheAnklesController.clear();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InputTitleText(title: "veilTitle".tr),
+        Gap(4.h),
+        CustomTextFormField(
+          validator: requiredValidator,
+          controller: _personalInfoController.veilController,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +135,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           InputTitleText(
-              title:
-                  "clothingOutSideTitle".tr),
+          InputTitleText(title: "clothingOutSideTitle".tr),
           Gap(4.h),
           CustomTextFormField(
               validator: requiredValidator,
@@ -94,32 +143,14 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           Gap(4.h),
           Text(
             'clothingOutSideNB'.tr,
-            style:
-                Theme.of(context).textTheme.bodySmall!.copyWith(color: violetClr),
-          ),
-
-          Gap(16.h),
-          InputTitleText(
-              title: "sunnahBeardSinceTitle".tr),
-          Gap(4.h),
-          CustomTextFormField(
-              validator: requiredValidator,
-              controller: _personalInfoController.beardController),
-          Gap(4.h),
-          Text(
-            'sunnahBeardSinceNB'.tr,
-            style:
-                Theme.of(context).textTheme.bodySmall!.copyWith(color: violetClr)
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: violetClr),
           ),
           Gap(16.h),
-
-          InputTitleText(title: "clothesAboveAnklesTitle".tr),
-          Gap(4.h),
-          CustomTextFormField(
-              validator: requiredValidator,
-              controller: _personalInfoController.aboveTheAnklesController),
+          _bioDataType == 'malesBioData' ? _maleBioDataWidget() : _femaleBioDataWidget(),
           Gap(16.h),
-
           InputTitleText(title: "fiveTimesPrayerSinceTitle".tr),
           Gap(4.h),
           CustomTextFormField(
@@ -128,44 +159,39 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           Gap(4.h),
           Text(
             'fiveTimesPrayerSinceNB'.tr,
-            style:
-                Theme.of(context).textTheme.bodySmall!.copyWith(color: violetClr),
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: violetClr),
           ),
           Gap(16.h),
 
-          InputTitleText(
-              title:
-                  "prayerMissWeeklyTitle".tr),
+          InputTitleText(title: "prayerMissWeeklyTitle".tr),
           Gap(4.h),
           CustomTextFormField(
               validator: requiredValidator,
               controller: _personalInfoController.qazaController,
-            keyBoardType: TextInputType.phone
-          ),
-          Gap(16.h),
-
-          InputTitleText(title: "complyMahramNonMahramTitle".tr),
-          Gap(4.h),
-          CustomTextFormField(
-              validator: requiredValidator,
-              controller: _personalInfoController.mahramController),
+              keyBoardType: TextInputType.phone),
           Gap(16.h),
 
           InputTitleText(
-              title: "reciteQuranTitle".tr),
+              title: "complyMahramNonMahramTitle".tr, isRequired: false),
+          Gap(4.h),
+          CustomTextFormField(
+              controller: _personalInfoController.mahramController),
+          Gap(16.h),
+
+          InputTitleText(title: "reciteQuranTitle".tr),
           Gap(4.h),
           CustomTextFormField(
               validator: requiredValidator,
               controller: _personalInfoController.reciteQuranController),
           Gap(16.h),
 
-          InputTitleText(
-            title: "followedFiqh".tr
-          ),
+          InputTitleText(title: "followedFiqh".tr, isRequired: false),
           Gap(4.h),
           CustomDropdownButtonTest(
               value: _personalInfoController.selectedFiqh,
-              validator: dropdownValidator,
               items: _fiqh,
               onChanged: (newValue) {
                 setState(() {
@@ -174,16 +200,13 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               }),
           Gap(16.h),
 
-          InputTitleText(
-              title: "watchOrListenTitle".tr),
+          InputTitleText(title: "watchOrListenTitle".tr, isRequired: false),
           Gap(4.h),
           CustomTextFormField(
-              validator: requiredValidator,
               controller: _personalInfoController.watchOrListenController),
           Gap(16.h),
 
-          InputTitleText(
-              title: "diseaseTitle".tr),
+          InputTitleText(title: "diseaseTitle".tr),
           Gap(4.h),
           CustomTextFormField(
               validator: requiredValidator,
@@ -191,10 +214,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           Gap(16.h),
 
           InputTitleText(
-              title: "involvedInSpecialWorkTitle".tr),
+              title: "involvedInSpecialWorkTitle".tr, isRequired: false),
           Gap(4.h),
           CustomTextFormField(
-              validator: requiredValidator,
               controller: _personalInfoController.specialWorkController),
           Gap(4.h),
           Text('involvedInSpecialWorkNB'.tr,
@@ -204,64 +226,31 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   .copyWith(color: violetClr)),
           Gap(16.h),
 
-          InputTitleText(
-              title: "aboutShrineTitle".tr),
+          InputTitleText(title: "aboutShrineTitle".tr),
           Gap(4.h),
           CustomTextFormField(
               validator: requiredValidator,
               controller: _personalInfoController.mazarController),
           Gap(16.h),
 
-          InputTitleText(
-              title: "islamicBooksTitle".tr),
+          InputTitleText(title: "islamicBooksTitle".tr, isRequired: false),
           Gap(4.h),
           CustomTextFormField(
-              validator: requiredValidator,
               controller: _personalInfoController.islamicBooksController),
           Gap(16.h),
 
-          InputTitleText(
-              title:
-                  "islamicScholarsTitle".tr),
+          InputTitleText(title: "islamicScholarsTitle".tr, isRequired: false),
           Gap(4.h),
           CustomTextFormField(
-              validator: requiredValidator,
               controller: _personalInfoController.islamicScholarsController),
           Gap(16.h),
-
-          // const InputTitleText(
-          //     title:
-          //         "Select the category is applicable to you (Otherwise leave the field blank)",
-          //     isRequired: false),
-          // Gap(4.h),
-          // CustomDropdownButton(
-          //     value: selectedSpecial,
-          //     items: _special,
-          //     onChanged: (newValue) {
-          //       setState(() {
-          //         selectedSpecial = newValue;
-          //       });
-          //     }),
-          // Gap(4.h),
-          // Text(
-          //     'Example: If you are a Converted Muslim, select the Converted Muslim category. If you are associated with Tablig, select the Tablig category. In this way, you can select one or the more the mentioned category',
-          //     style: Theme.of(context)
-          //         .textTheme
-          //         .bodySmall!
-          //         .copyWith(color: violetClr)),
-          // Gap(16.h),
-          InputTitleText(
-              title:
-                  "hobbiesTitle".tr),
+          InputTitleText(title: "hobbiesTitle".tr, isRequired: false),
           Gap(4.h),
           CustomTextFormField(
-            validator: requiredValidator,
-            controller: _personalInfoController.hobbiesController,
-            maxLines: 5
-          ),
+              controller: _personalInfoController.hobbiesController,
+              maxLines: 5),
           Gap(4.h),
-          Text(
-              'hobbiesNB'.tr,
+          Text('hobbiesNB'.tr,
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
@@ -271,13 +260,11 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           InputTitleText(title: "groomsPhoneTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-            validator: phoneValidator,
-            controller: _personalInfoController.mobileController,
-            keyBoardType: TextInputType.phone
-          ),
+              validator: phoneValidator,
+              controller: _personalInfoController.mobileController,
+              keyBoardType: TextInputType.phone),
           Gap(4.h),
-          Text(
-              "groomsPhoneNB".tr,
+          Text("groomsPhoneNB".tr,
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!

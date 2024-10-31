@@ -156,7 +156,7 @@ final Map<String, String> bnBd = {
   'oNegative': 'ও-',
   'abNegative': 'এবি-',
   'bangladeshi': 'বাংলাদেশি',
-  'american': 'আমেরিকান',
+  'nationalityHint': 'অনুগ্রহ করে জাতীয়তা উল্লেখ করুন',
 
   // For Address Form
   'permanentAddressTitle': 'স্থায়ী ঠিকানা',
@@ -166,10 +166,14 @@ final Map<String, String> bnBd = {
   'divisionHint': 'বিভাগ',
   'districtHint': 'জেলা',
   'subDistrictHint': 'উপজেলা',
+  'areaNameHint': 'এলাকার নাম বিস্তারিত',
+  'areaNameNB': 'গ্রামের বা এলাকার নাম লিখুন, বাড়ির নম্বর যুক্ত করবেন না। উদাহরণ- মিরপুর ১০, বাগমারা',
 
   // For Educational Qualifications Form
   'educationalMethodTitle': 'শিক্ষাগত পদ্ধতি',
+  'otherEduMethodHint': 'অনুগ্রহ করে শিক্ষাগত পদ্ধতি উল্লেখ করুন',
   'highestEducationalTitle': 'সর্বোচ্চ শিক্ষাগত যোগ্যতা',
+  'otherHighestEduMethodHint': 'অনুগ্রহ করে সর্বোচ্চ শিক্ষাগত যোগ্যতা উল্লেখ করুন',
   'passingYearTitle': 'পাসের বছর',
   'resultTitle': 'ফলাফল',
   'institutionNameTitle': 'প্রতিষ্ঠানের নাম',
@@ -189,26 +193,26 @@ final Map<String, String> bnBd = {
   'diploma': 'ডিপ্লোমা',
   'bsc': 'বি এস সি',
   'primaryIslamicEducation': 'প্রাথমিক ইসলামী শিক্ষা',
-  'aPlus': 'এ+',
-  'a': 'এ',
-  'aMinus': 'এ-',
-  'b': 'বি',
-  'c': 'সি',
-  'd': 'ডি',
+  // 'aPlus': 'এ+',
+  // 'a': 'এ',
+  // 'aMinus': 'এ-',
+  // 'b': 'বি',
+  // 'c': 'সি',
+  // 'd': 'ডি',
 
   // For Family info Form
   "fathersNameTitle": "বাবার নাম",
-  'fatherAliveTitle': 'তোমার বাবা কি বেঁচে আছে?',
+  'fatherAliveTitle': 'আপনার বাবা কি বেঁচে আছে?',
   "fathersProfessionTitle": "বাবার পেশার বিবরণ",
   "mothersNameTitle": "মায়ের নাম",
   'mothersAliveTitle': 'আপনার মা কি জীবিত?',
   "mothersProfessionTitle": "মায়ের পেশার বিবরণ",
-  'brothersCountTitle': 'আপনার কয়টি ভাই আছে?',
+  'brothersCountTitle': 'আপনার কয়জন ভাই আছে?',
   "brothersInfoTitle": "ভাইদের তথ্য",
-  'sistersCountTitle': 'আপনার কয়টি বোন আছে?',
+  'sistersCountTitle': 'আপনার কয়জন বোন আছে?',
   "sistersInfoTitle": "বোনদের তথ্য",
   'professionOfUnclesTitle': "চাচা-মামাদের পেশা",
-  'familyIncomeStatusTitle': 'পারিবারিক আয় অবস্থা',
+  'familyIncomeStatusTitle': 'পারিবারিক আয়ের অবস্থা',
   'familyReligiousConditionTitle': "আপনার পরিবারের ধর্মীয় অবস্থা কেমন?",
 
   'onlyForAuthority': 'কেবল কর্তৃপক্ষের জন্য',
@@ -232,21 +236,22 @@ final Map<String, String> bnBd = {
   'clothingOutSideTitle': 'আপনি সাধারণত বাড়ির বাইরে কী ধরনের পোশাক পরেন?',
   'sunnahBeardSinceTitle': 'আপনার কি সুন্নাহ অনুযায়ী দাঁড়ি আছে? কবে থেকে?',
   'clothesAboveAnklesTitle': 'আপনি কি গোড়ালির উপরে পোশাক পরেন?',
+  'veilTitle': 'আপনি নিকাব সহ পর্দা করেন, করলে কবে থেকে?',
   'fiveTimesPrayerSinceTitle': 'আপনি কি দিনে ৫ ওয়াক্ত নামাজ পড়েন? কবে থেকে?',
   'prayerMissWeeklyTitle':
       'সাধারণত সপ্তাহে কতবার (ওয়াক্ত) আপনার নামাজ মিস হয় (কাজা)?',
-  'complyMahramNonMahramTitle': 'আপনি কি মাহরাম/নন-মাহরাম এর সাথে সম্মতি করেন?',
+  'complyMahramNonMahramTitle': 'আপনি কি মাহরাম/নন-মাহরাম মেনে চলেন?',
   'reciteQuranTitle': 'আপনি কি কোরআন সঠিকভাবে তেলাওয়াত করতে পারেন?',
   'followedFiqh': 'আপনি কোন ফিকহ অনুসরণ করেন?',
   'watchOrListenTitle': 'আপনি কি নাটক/সিনেমা/ধারাবাহিক/গান দেখেন বা শোনেন?',
   'diseaseTitle': 'আপনার কি কোন মানসিক বা শারীরিক রোগ আছে?',
-  'involvedInSpecialWorkTitle': 'আপনি কি দীন এর কোন বিশেষ কাজে জড়িত আছেন?',
+  'involvedInSpecialWorkTitle': 'আপনি কি দ্বীন এর কোন বিশেষ কাজে জড়িত আছেন?',
   'aboutShrineTitle': 'মাজার (মাজার) সম্পর্কে আপনার ধারণা বা বিশ্বাস কী?',
-  'islamicBooksTitle': 'আপনি যে অন্তত ৩টি ইসলামী বই পড়েছেন তাদের নাম লিখুন',
-  'islamicScholarsTitle': 'আপনার পছন্দের অন্তত ৩ জন ইসলামী পণ্ডিতদের নাম লিখুন',
+  'islamicBooksTitle': 'আপনার পড়া যেকোনো ৩ টি ইসলামিক বইয়ের নাম লিখুন',
+  'islamicScholarsTitle': 'আপনার পছন্দের যেকোনো ৩ জন আলেমের নাম লিখুন',
   'hobbiesTitle':
-      'আপনার শখ, পছন্দ এবং অপছন্দ, স্বাদ, স্বপ্ন ইত্যাদি সম্পর্কে লিখুন',
-  'groomsPhoneTitle': "বরের মোবাইল নম্বর",
+      'আপনার শখ,পছন্দ,অপছন্দ সম্পর্কে লিখুন',
+  'groomsPhoneTitle': "বর / কনের মোবাইল নম্বর",
   'selfieTitle': 'বরের একটি সেলফি নিন এবং আপলোড করুন।',
 
   'clothingOutSideNB':
@@ -278,15 +283,17 @@ final Map<String, String> bnBd = {
       'আপনি কোথায় কাজ করেন, কোন কোম্পানিতে কাজ করেন আপনার আয় হালাল কিনা ইত্যাদি লিখতে পারেন।',
 
 // For MarriageInfo Form
-  'guardianAgreeTitle': 'আপনার অভিভাবকরা কি আপনার বিয়েতে সম্মত?',
+  'guardianAgreeTitle': 'আপনার অভিভাবকরা কি আপনার বিয়েতে রাজি?',
   'wifeInVeilTitle':
       'বিয়ের পর আপনি কি আপনার স্ত্রীকে পর্দায় রাখতে সক্ষম হবেন?',
   'afterStudyTitle': 'বিয়ের পর আপনি কি আপনার স্ত্রীকে পড়াশোনা করতে দিতে চান?',
   'afterJobTitle': 'বিয়ের পর আপনি কি আপনার স্ত্রীকে কোনো চাকরি করতে দিতে চান?',
-  'livingPlaceTitle': 'বিয়ের পর আপনি আপনার স্ত্রীকে নিয়ে কোথায় থাকবেন?',
+  'livingPlaceTitle': 'বিয়ের পর আপনি আপনার স্ত্রীকে কোথায় রাখবেন?',
   'expectedGiftTitle':
-      "আপনি বা আপনার পরিবার কি কনের পরিবার থেকে কোনো উপহার আশা করবেন?",
+      "আপনি বা আপনার পরিবার কি ঐ পরিবার থেকে কোনো উপহার আশা করবেন?",
   'thoughAboutTitle': 'আপনি কেন বিয়ে করছেন? বিয়ে নিয়ে আপনার চিন্তাভাবনা কী?',
+  'femaleJobTitle': 'আপনি কি বিয়ের পর চাকরি করতে ইচ্ছুক?',
+  'femaleStudyTitle': 'আপনি কি বিয়ের পর পড়াশোনা চালিয়ে যেতে চান?',
 
 // For Expected Life Partner
   'expectedAgeTitle': 'আকাঙ্ক্ষিত বয়স',
@@ -310,15 +317,16 @@ final Map<String, String> bnBd = {
 
 // For Pledge Form
   'parentalAwarenessTitle':
-      'আপনার পিতামাতা কি জানেন যে আপনি ইসলামিক-ম্যারেজ.নেট ওয়েবসাইটে বায়ো ডেটা জমা দিচ্ছেন?',
+      'আপনার পরিবার কি আপনার বিবাহের ইচ্ছা সম্পর্কে অবহিত?',
   'informationTruthTitle': 'আল্লাহর নামে সাক্ষ্য দিন যে দেওয়া সমস্ত তথ্য সত্য',
   'agreementTitle':
       'আপনি যদি কোনো মিথ্যা তথ্য প্রদান করেন, ইসলামিক-ম্যারেজ.নেট প্রচলিত আইন এবং পরকালের জন্য কোনো দায়িত্ব নেবে না। আপনি কি সম্মত?',
+  'agreementTitle2': 'ইসলামিক ম্যারিজ.নেট এর মাধ্যমে আপনার বাছাইকৃত বায়োডাটার সাথে আপনার পরবর্তী সম্পর্কজনিত কোনো কারণ কর্তৃপক্ষ দায়ভার গ্রহণ করবেনা,আপনি কি এ অঙ্গীকারে সম্মত?',
   'yes': 'হ্যাঁ',
   'no': 'না',
 
 // For Contact Form
-  'brideOrGroomNameTitle': "বধূ বা বর এর নাম",
+  'brideOrGroomNameTitle': "পাত্র / পাত্রী এর নাম",
   'guardiansPhoneTitle': "অভিভাবকের মোবাইল নম্বর",
   'relationshipWithGuardianTitle': 'অভিভাবকের সাথে সম্পর্ক',
   'emailToReceivedBioDataTitle': 'বায়ো ডেটা গ্রহণের জন্য ই-মেইল',
@@ -360,5 +368,7 @@ final Map<String, String> bnBd = {
   'dropDownValidationMsg': 'দয়া করে একটি আইটেম নির্বাচন করুন',
   'dobValidationMsg': 'দয়া করে তারিখ নির্বাচন করুন',
   'fieldRequiredMsg': 'ফিল্ডটি আবশ্যক',
-  'writeHere': 'এখানে লিখুন'
+  'writeHere': 'এখানে লিখুন',
+  'othersValue': 'অন্যান্য',
+  'anyValue': 'যেকোনো'
 };

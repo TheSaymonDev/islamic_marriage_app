@@ -27,16 +27,26 @@ class _PledgeFormState extends State<PledgeForm> {
   @override
   void initState() {
     super.initState();
-    final _pledgeData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.pledgeInfo;
+    final _pledgeData = Get.find<CurrentUserBioDataController>()
+        .currentUserBioData
+        ?.data
+        ?.biodata
+        ?.pledgeInfo;
 
     if (_pledgeData != null) {
-      _pledgeController.selectedParentalAwareness = _pledge.firstWhereOrNull((item) => item.value == _pledgeData.parentalAwareness);
-      _pledgeController.selectedInformationTruth = _pledge.firstWhereOrNull((item) => item.value == _pledgeData.informationTruth);
-      _pledgeController.selectedAgreement = _pledge.firstWhereOrNull((item) => item.value == _pledgeData.agreement);
+      _pledgeController.selectedParentalAwareness = _pledge.firstWhereOrNull(
+          (item) => item.value == _pledgeData.parentalAwareness);
+      _pledgeController.selectedInformationTruth = _pledge.firstWhereOrNull(
+          (item) => item.value == _pledgeData.informationTruth);
+      _pledgeController.selectedAgreement = _pledge
+          .firstWhereOrNull((item) => item.value == _pledgeData.agreement);
+      _pledgeController.selectedNoAuthorityLiability = _pledge
+          .firstWhereOrNull((item) => item.value == _pledgeData.noAuthorityLiability);
     } else {
       _pledgeController.selectedParentalAwareness = null;
       _pledgeController.selectedInformationTruth = null;
       _pledgeController.selectedAgreement = null;
+      _pledgeController.selectedNoAuthorityLiability = null;
     }
   }
 
@@ -45,6 +55,7 @@ class _PledgeFormState extends State<PledgeForm> {
     return Form(
       key: _pledgeController.formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InputTitleText(title: "parentalAwarenessTitle".tr),
           Gap(4.h),
@@ -79,6 +90,18 @@ class _PledgeFormState extends State<PledgeForm> {
               onChanged: (newValue) {
                 setState(() {
                   _pledgeController.selectedAgreement = newValue;
+                });
+              }),
+          Gap(16.h),
+          InputTitleText(title: "agreementTitle2".tr),
+          Gap(4.h),
+          CustomDropdownButtonTest(
+              value: _pledgeController.selectedNoAuthorityLiability,
+              validator: dropdownValidator,
+              items: _pledge,
+              onChanged: (newValue) {
+                setState(() {
+                  _pledgeController.selectedNoAuthorityLiability = newValue;
                 });
               }),
           Gap(16.h),

@@ -160,7 +160,7 @@ final Map<String, String> enUs = {
   'oNegative': 'O-',
   'abNegative': 'AB-',
   'bangladeshi': 'Bangladeshi',
-  'american': 'American',
+  'nationalityHint': 'Please specify nationality',
 
   // For Address Form
   'permanentAddressTitle': 'Permanent Address',
@@ -170,10 +170,14 @@ final Map<String, String> enUs = {
   'divisionHint': 'Division',
   'districtHint': 'District',
   'subDistrictHint': 'Sub-District',
+  'areaNameHint': 'Area Name Details',
+  'areaNameNB': 'Write the name of the village or area without entering the house number. Example- Mirpur 10, Baghmara',
 
   // For Educational Qualifications Form
   'educationalMethodTitle': 'Educational Method',
+  'otherEduMethodHint': 'Please specify educational method',
   'highestEducationalTitle': 'Highest Educational Qualification',
+  'otherHighestEduMethodHint': 'Please specify highest educational method',
   'passingYearTitle': 'Passing Year',
   'resultTitle': 'Result',
   'institutionNameTitle': 'Institution Name',
@@ -193,12 +197,12 @@ final Map<String, String> enUs = {
   'diploma': 'Diploma',
   'bsc': 'BSC',
   'primaryIslamicEducation': 'Primary Islamic Education',
-  'aPlus': 'A+',
-  'a': 'A',
-  'aMinus': 'A-',
-  'b': 'B',
-  'c': 'C',
-  'd': 'D',
+  // 'aPlus': 'A+',
+  // 'a': 'A',
+  // 'aMinus': 'A-',
+  // 'b': 'B',
+  // 'c': 'C',
+  // 'd': 'D',
 
   // For Family info Form
   "fathersNameTitle": "Father's Name",
@@ -233,6 +237,7 @@ final Map<String, String> enUs = {
   'clothingOutSideTitle': 'What kind of clothes do you usually wear outside the house?',
   'sunnahBeardSinceTitle': 'Do you have beard according to sunnah? Since when?',
   'clothesAboveAnklesTitle': 'Do you wear clothes above the ankles?',
+  'veilTitle': 'Do you observe veil with niqab? If so, since when?',
   'fiveTimesPrayerSinceTitle': 'Do you pray 5 times a day? Since when?',
   'prayerMissWeeklyTitle': 'Usually how many times(waqt) a week are your prayers missed (Qaza)?',
   'complyMahramNonMahramTitle': 'Do you comply with mahram/non-mahram?',
@@ -245,7 +250,7 @@ final Map<String, String> enUs = {
   'islamicBooksTitle': 'Write the names of at least 3 Islamic books you have read',
   'islamicScholarsTitle': 'Write the names of at least 3 Islamic Scholars of your choice',
   'hobbiesTitle': 'Write about your hobbies, likes and dislikes, tastes, dreams and so on',
-  'groomsPhoneTitle': "Groom's Mobile Number",
+  'groomsPhoneTitle': "Groom's / Bride's  Mobile Number",
   'selfieTitle': 'Take a selfie of the groom right now and upload it.',
 
   'clothingOutSideNB': 'For the bride, you can write like following- "Wear black burqa with niqab and hand foot socks" or "Wear burqa and hijab, do not wear niqab" or "Wear mask with hijab, do not wear niqab" or "Wear salwar kameez, do not wear niqab"',
@@ -277,6 +282,8 @@ final Map<String, String> enUs = {
   'livingPlaceTitle': 'Where will you live with your wife after marriage?',
   'expectedGiftTitle': "Would you or your family expect any gift from the bride's family?",
   'thoughAboutTitle': 'Why are you getting married? What are your thoughts on marriage?',
+  'femaleJobTitle': 'Do you wish to work after marriage?',
+  'femaleStudyTitle': 'Do you wish to continue studying after marriage?',
 
   // For Expected Life Partner
   'expectedAgeTitle': 'Expected Age',
@@ -299,11 +306,11 @@ final Map<String, String> enUs = {
       'You May Right Your Expectation In Detail. Also, You May Mention If There Is Any Special Condition',
 
   // For Pledge Form
-  'parentalAwarenessTitle':
-  'Do your parents know that you are submitting Bio Data to the islamic-marriage.net website?',
+  'parentalAwarenessTitle': 'Is your family aware of your desire to marry?',
   'informationTruthTitle': 'By Allah, testify that all the information given is true',
   'agreementTitle':
   'If you provide any false information, islamic-marriage.net will not take any responsibility for the conventional law and the hereafter. Do you agree?',
+  'agreementTitle2': 'IslamicMarriage.net will not be liable for any future relationship matters with the selected biodata. Do you agree to this commitment?',
 
   'yes': 'Yes',
   'no': 'No',
@@ -349,6 +356,8 @@ final Map<String, String> enUs = {
   'dropDownValidationMsg' : 'Please select an item',
   'dobValidationMsg': 'Please select date',
   'fieldRequiredMsg': 'Field is required',
-  'writeHere': 'Write here'
+  'writeHere': 'Write here',
+  'othersValue': 'Others',
+  'anyValue': 'Any'
 
 };

@@ -91,7 +91,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/address_info_model.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/address_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -99,16 +99,17 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class AddressInfoController extends GetxController {
   bool isLoading = false;
-  // Address? address;
   final formKey = GlobalKey<FormState>();
 
-  final selectedDivision = TextEditingController();
-  final selectedDistrict = TextEditingController();
-  final selectedSubDistrict = TextEditingController();
+  final divisionController = TextEditingController();
+  final districtController = TextEditingController();
+  final subDistrictController = TextEditingController();
+  final areaController = TextEditingController();
 
-  final selectedCurrentDivision = TextEditingController();
-  final selectedCurrentDistrict = TextEditingController();
-  final selectedCurrentSubDistrict = TextEditingController();
+  final currentDivisionController = TextEditingController();
+  final currentDistrictController = TextEditingController();
+  final currentSubDistrictController = TextEditingController();
+  final currentAreaController = TextEditingController();
 
   final growUpController = TextEditingController();
   bool isSameAsPermanent = false;
@@ -120,24 +121,48 @@ class AddressInfoController extends GetxController {
     }
     _setLoading(true);
     try {
-      final data = Biodata(
+      final data = AddressModel(
         permanentAddress: PermanentAddress(
-            division: selectedDivision.text,
-            district: selectedDistrict.text,
-            subDistrict: selectedSubDistrict.text),
-        currentAddress: CurrentAddress(
-            currentDivision: selectedCurrentDivision.text,
-            currentDistrict: selectedCurrentDistrict.text,
-            currentSubDistrict: selectedCurrentSubDistrict.text),
-        grewUp: growUpController.text,
+          division: divisionController.text,
+          district: districtController.text,
+          subDistrict: subDistrictController.text,
+          areaName: areaController.text,
+        ),
+        currentAddress: isSameAsPermanent ? CurrentAddress(
+            currentDivision: divisionController.text,
+            currentDistrict: districtController.text,
+            currentSubDistrict: subDistrictController.text,
+            areaName: areaController.text
+        ): CurrentAddress(
+            currentDivision: currentDivisionController.text,
+            currentDistrict: currentDistrictController.text,
+            currentSubDistrict: currentSubDistrictController.text,
+            areaName: currentAreaController.text
+        ),
+        grewUp: growUpController.text
       );
+      // final data = Biodata(
+      //   permanentAddress: PermanentAddress(
+      //       division: divisionController.text,
+      //       district: districtController.text,
+      //       subDistrict: subDistrictController.text,
+      //     areaName: areaController.text,
+      //   ),
+      //   currentAddress: CurrentAddress(
+      //       currentDivision: currentDivisionController.text,
+      //       currentDistrict: currentDistrictController.text,
+      //       currentSubDistrict: currentSubDistrictController.text,
+      //     areaName: currentAreaController.text
+      //   ),
+      //   grewUp: growUpController.text,
+      // );
       final response = await ApiService().patch(
           url: AppUrls.upsertBioDataUrl,
           data: data,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Address Info Created Successful');
-        Get.find<CurrentUserBioDataController>().getCurrentUserData();
+        Get.find<CurrentUserBioDataController>().getCurrentUserBioData();
         _setLoading(false);
         return true;
       } else {

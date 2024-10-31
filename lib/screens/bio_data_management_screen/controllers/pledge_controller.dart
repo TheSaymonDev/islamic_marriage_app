@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/pledge.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/pledge_info_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -14,6 +14,7 @@ class PledgeController extends GetxController {
   DropdownItem? selectedParentalAwareness;
   DropdownItem? selectedInformationTruth;
   DropdownItem? selectedAgreement;
+  DropdownItem? selectedNoAuthorityLiability;
 
   Future<bool> upsertPledge() async {
     if (!await ConnectivityService.isConnected()) {
@@ -22,20 +23,19 @@ class PledgeController extends GetxController {
     }
     _setLoading(true);
     try {
-      final pledge = Pledge(
-          parentalAwareness: selectedParentalAwareness!.value,
-          informationTruth: selectedInformationTruth!.value,
-          agreement: selectedAgreement!.value);
-      final Map<String, dynamic> data = {
-        "pledgeInfo": pledge.toJson(),
-      };
+      final data = PledgeInfoModel(
+          pledgeInfo: PledgeInfo(
+              parentalAwareness: selectedParentalAwareness!.value,
+              informationTruth: selectedInformationTruth!.value,
+              agreement: selectedAgreement!.value,
+              noAuthorityLiability: selectedNoAuthorityLiability!.value));
       final response = await ApiService().patch(
           url: AppUrls.upsertBioDataUrl,
           data: data,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Pledge Created Successful');
-        Get.find<CurrentUserBioDataController>().getCurrentUserData();
+        Get.find<CurrentUserBioDataController>().getCurrentUserBioData();
         _setLoading(false);
         return true;
       } else {

@@ -1,4 +1,25 @@
+class GeneralInfoModel {
+  GeneralInfo? generalInfo;
+
+  GeneralInfoModel({this.generalInfo});
+
+  GeneralInfoModel.fromJson(Map<String, dynamic> json) {
+    generalInfo = json['generalInfo'] != null
+        ? new GeneralInfo.fromJson(json['generalInfo'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.generalInfo != null) {
+      data['generalInfo'] = this.generalInfo!.toJson();
+    }
+    return data;
+  }
+}
+
 class GeneralInfo {
+  String? id;
   String? bioDataType;
   String? maritialStatus;
   String? height;
@@ -7,18 +28,22 @@ class GeneralInfo {
   String? complexion;
   String? bloodGroup;
   String? nationality;
+  String? othersNationality;
 
   GeneralInfo(
-      {this.bioDataType,
+      {this.id,
+        this.bioDataType,
         this.maritialStatus,
         this.height,
         this.weight,
         this.dateOfBirth,
         this.complexion,
         this.bloodGroup,
-        this.nationality});
+        this.nationality,
+        this.othersNationality});
 
   GeneralInfo.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     bioDataType = json['bioDataType'];
     maritialStatus = json['maritialStatus'];
     height = json['height'];
@@ -27,6 +52,7 @@ class GeneralInfo {
     complexion = json['complexion'];
     bloodGroup = json['bloodGroup'];
     nationality = json['nationality'];
+    othersNationality = json['othersNationality'];
   }
 
   Map<String, dynamic> toJson() {
@@ -39,6 +65,7 @@ class GeneralInfo {
     data['complexion'] = this.complexion;
     data['bloodGroup'] = this.bloodGroup;
     data['nationality'] = this.nationality;
+    data['othersNationality'] = this.othersNationality;
     return data;
   }
 }

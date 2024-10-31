@@ -40,11 +40,13 @@ class CustomDropdownButtonTest extends StatelessWidget {
       ),
       style: AppTextStyles.bodySmall(),
       iconStyleData: IconStyleData(
-        icon: const Icon(
-          Icons.keyboard_arrow_down,
-          color: AppColors.violetClr,
-        ),
-        iconSize: 25.sp,
+        icon: value == null
+            ? Icon(
+                Icons.keyboard_arrow_down,
+                color: AppColors.violetClr,
+                size: 25.sp,
+              )
+            : SizedBox.shrink(), // Empty widget when value is selected
       ),
       dropdownStyleData: DropdownStyleData(
         decoration: BoxDecoration(
@@ -58,6 +60,16 @@ class CustomDropdownButtonTest extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.w),
         fillColor: AppColors.filledClr,
         filled: true,
+        suffixIcon: value != null
+            ? IconButton(
+                icon: Icon(
+                  Icons.clear,
+                  color: AppColors.violetClr,
+                  size: 25.sp,
+                ),
+                onPressed: () => onChanged(null), // Clear selection
+              )
+            : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.r),
           borderSide: BorderSide(color: AppColors.violetClr, width: 2.w),

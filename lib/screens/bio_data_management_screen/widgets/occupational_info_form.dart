@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/occupational_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/controllers/my_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
@@ -25,7 +24,7 @@ class _OccupationalInfoFormState extends State<OccupationalInfoForm> {
   @override
   void initState() {
     super.initState();
-    final _occupationalInfoData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.occupationInfo;
+    final _occupationalInfoData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.occupationInfo;
 
     if (_occupationalInfoData != null) {
       _occupationalInfoController.occupationController.text = _occupationalInfoData.occupation ?? '';
@@ -66,12 +65,11 @@ class _OccupationalInfoFormState extends State<OccupationalInfoForm> {
           Gap(16.h),
           InputTitleText(
             title: "monthlyIncomeTitle".tr,
-            isRequired: true
+            isRequired: false
           ),
           Gap(4.h),
           CustomTextFormField(
               keyBoardType: TextInputType.phone,
-              validator: requiredValidator,
               controller: _occupationalInfoController.incomeController),
           Gap(16.h),
         ],

@@ -20,10 +20,7 @@ class ExpectedLifePartnerForm extends StatefulWidget {
 }
 
 class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
-  RangeValues? _ageRange = RangeValues(18, 30);
-
-  String? minAge;
-  String? maxAge;
+  RangeValues? _ageRange;
 
   final List<DropdownItem> _maritalStatus = [
     DropdownItem(title: "neverMarried".tr, value: "neverMarried"),
@@ -31,6 +28,7 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
     DropdownItem(title: "divorced".tr, value: "divorced"),
     DropdownItem(title: "widow".tr, value: "widow"),
     DropdownItem(title: "widower".tr, value: "widower"),
+    DropdownItem(title: "anyValue".tr, value: "any"),
   ];
   final List<DropdownItem> _complexion = [
     DropdownItem(title: "black".tr, value: "black"),
@@ -38,6 +36,7 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
     DropdownItem(title: "lightBrown".tr, value: "lightBrown"),
     DropdownItem(title: "fair".tr, value: "fair"),
     DropdownItem(title: "veryFair".tr, value: "veryFair"),
+    DropdownItem(title: "anyValue".tr, value: "any"),
   ];
 
 
@@ -46,9 +45,15 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
   @override
   void initState() {
     super.initState();
-    final _expectedLifePartnerData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.expectedLifePartnerInfo;
+    final _expectedLifePartnerData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.expectedLifePartnerInfo;
 
     if (_expectedLifePartnerData != null) {
+      _expectedPartnerController.expectedMinAge = int.parse(_expectedLifePartnerData.expectedMinAge!);
+      _expectedPartnerController.expectedMaxAge = int.parse(_expectedLifePartnerData.expectedMaxAge!);
+      _ageRange = RangeValues(
+        _expectedPartnerController.expectedMinAge?.toDouble() ?? 18,
+        _expectedPartnerController.expectedMaxAge?.toDouble() ?? 30,
+      );
       _expectedPartnerController.expectedComplexion = _complexion.firstWhereOrNull((item) => item.value == _expectedLifePartnerData.expectedComplexion);
       _expectedPartnerController.expectedHeight.text = _expectedLifePartnerData.expectedHeight ?? '';
       _expectedPartnerController.expectedEducation.text = _expectedLifePartnerData.exptectedEducation ?? '';
@@ -58,6 +63,7 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
       _expectedPartnerController.expectedFinancialCondition.text = _expectedLifePartnerData.expectedFinancialCondition ?? '';
       _expectedPartnerController.expectedQualityAttributes.text = _expectedLifePartnerData.expectedAttributes ?? '';
     } else {
+      _ageRange = RangeValues(18, 30);
       _expectedPartnerController.expectedComplexion = null;
       _expectedPartnerController.expectedHeight.text = '';
       _expectedPartnerController.expectedEducation.text = '';
@@ -76,73 +82,55 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // InputTitleText(title: "expectedAgeTitle".tr),
-          // Row(
-          //   children: [
-          //     Text('18',
-          //         style: Theme.of(context)
-          //             .textTheme
-          //             .bodySmall!
-          //             .copyWith(color: greyClr)),
-          //     Expanded(
-          //       child: SliderTheme(
-          //         data: SliderThemeData(
-          //             trackHeight: 2.h,
-          //             valueIndicatorColor: violetClr,
-          //             valueIndicatorTextStyle: Theme.of(context)
-          //                 .textTheme
-          //                 .titleSmall!
-          //                 .copyWith(color: lightBgClr)),
-          //         child: RangeSlider(
-          //           values: _ageRange!,
-          //           min: 18,
-          //           max: 70, // Adjust based on your price range
-          //           divisions: 70,
-          //           activeColor: violetClr,
-          //           inactiveColor: violetClr.withOpacity(0.3),
-          //           labels: RangeLabels(
-          //             _ageRange!.start.toStringAsFixed(0),
-          //             _ageRange!.end.toStringAsFixed(0),
-          //           ),
-          //           onChanged: (newRange) {
-          //             setState(() {
-          //               _ageRange = newRange;
-          //               _expectedPartnerController.expectedMinAge =
-          //                   newRange.start.toInt();
-          //               _expectedPartnerController.expectedMaxAge =
-          //                   newRange.end.toInt();
-          //             });
-          //           },
-          //         ),
-          //       ),
-          //     ),
-          //     Text('70',
-          //         style: Theme.of(context)
-          //             .textTheme
-          //             .bodySmall!
-          //             .copyWith(color: greyClr)),
-          //   ],
-          // ),
+          InputTitleText(title: "expectedAgeTitle".tr),
+          Row(
+            children: [
+              Text('18',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: greyClr)),
+              Expanded(
+                child: SliderTheme(
+                  data: SliderThemeData(
+                      trackHeight: 2.h,
+                      valueIndicatorColor: violetClr,
+                      valueIndicatorTextStyle: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(color: lightBgClr)),
+                  child: RangeSlider(
+                    values: _ageRange!,
+                    min: 18,
+                    max: 70, // Adjust based on your price range
+                    divisions: 70,
+                    activeColor: violetClr,
+                    inactiveColor: violetClr.withValues(alpha: 0.3),
+                    labels: RangeLabels(
+                      _ageRange!.start.toStringAsFixed(0),
+                      _ageRange!.end.toStringAsFixed(0),
+                    ),
+                    onChanged: (newRange) {
+                      setState(() {
+                        _ageRange = newRange;
+                        _expectedPartnerController.expectedMinAge =
+                            newRange.start.toInt();
+                        _expectedPartnerController.expectedMaxAge =
+                            newRange.end.toInt();
+                      });
+                    },
+                  ),
+                ),
+              ),
+              Text('70',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: greyClr)),
+            ],
+          ),
           InputTitleText(title: "expectedComplexionTitle".tr),
           Gap(4.h),
-          // Wrap(
-          //   crossAxisAlignment: WrapCrossAlignment.center,
-          //   spacing: 8.w,
-          //   runSpacing: 8.h,
-          //   children: List.generate(_complexion.length, (index) => GestureDetector(
-          //     onTap: (){},
-          //     child: Container(
-          //       height: 50.h,
-          //       width: 100.w,
-          //       alignment: Alignment.center,
-          //       decoration: BoxDecoration(
-          //         border: Border.all(color: violetClr, width: 2.w),
-          //         borderRadius: BorderRadius.circular(8.r),
-          //       ),
-          //       child: Text(_complexion[index].title, style: Theme.of(context).textTheme.titleSmall),
-          //     ),
-          //   ),),
-          // ),
           CustomDropdownButtonTest(
             value: _expectedPartnerController.expectedComplexion,
             validator: dropdownValidator,
@@ -160,12 +148,12 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
           CustomTextFormField(
               validator: requiredValidator,
               controller: _expectedPartnerController.expectedHeight),
-          Gap(4.h),
-          Text("expectedHeightNB".tr,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(color: violetClr)),
+          //Gap(4.h),
+          // Text("expectedHeightNB".tr,
+          //     style: Theme.of(context)
+          //         .textTheme
+          //         .bodySmall!
+          //         .copyWith(color: violetClr)),
           Gap(16.h),
 
           InputTitleText(title: "expectedEducationTitle".tr),
@@ -181,12 +169,12 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
             validator: requiredValidator,
             controller: _expectedPartnerController.expectedDistrict
           ),
-          Gap(4.h),
-          Text("expectedDistrictNB".tr,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(color: violetClr)),
+          //Gap(4.h),
+          // Text("expectedDistrictNB".tr,
+          //     style: Theme.of(context)
+          //         .textTheme
+          //         .bodySmall!
+          //         .copyWith(color: violetClr)),
           Gap(16.h),
 
           InputTitleText(title: "expectedMaritalStatusTitle".tr),
@@ -209,12 +197,12 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
             validator: requiredValidator,
             controller: _expectedPartnerController.expectedProfession
           ),
-          Gap(4.h),
-          Text("expectedProfessionNB".tr,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(color: violetClr)),
+          //Gap(4.h),
+          // Text("expectedProfessionNB".tr,
+          //     style: Theme.of(context)
+          //         .textTheme
+          //         .bodySmall!
+          //         .copyWith(color: violetClr)),
           Gap(16.h),
 
           InputTitleText(title: "expectedFinancialConditionTitle".tr),
@@ -223,12 +211,12 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
             validator:requiredValidator,
             controller: _expectedPartnerController.expectedFinancialCondition
           ),
-          Gap(4.h),
-          Text("expectedFinancialConditionNB".tr,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(color: violetClr)),
+          // Gap(4.h),
+          // Text("expectedFinancialConditionNB".tr,
+          //     style: Theme.of(context)
+          //         .textTheme
+          //         .bodySmall!
+          //         .copyWith(color: violetClr)),
           Gap(16.h),
 
           InputTitleText(title: "expectedAttributesTitle".tr),

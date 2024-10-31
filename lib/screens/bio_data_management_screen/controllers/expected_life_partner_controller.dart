@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/expected_life_partner.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/expected_partner_info_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -29,38 +29,27 @@ class ExpectedLifePartnerController extends GetxController {
     }
     _setLoading(true);
     try {
-      final expectedLifePartner = ExpectedLifePartner(
-        // expectedMinAge: expectedMinAge,
-        // expectedMaxAge: expectedMaxAge,
-        expectedHeight: expectedHeight.text,
-        expectedComplexion: expectedComplexion!.value,
-        exptectedEducation: expectedEducation.text,
-        exptectedDistrict: expectedDistrict.text,
-        expectedMaritialStatus: expectedMaritalStatus!.value,
-        expectedProfession: expectedProfession.text,
-        expectedFinancialCondition: expectedFinancialCondition.text,
-        expectedAttributes: expectedQualityAttributes.text,
+      final data = ExpectedPartnerInfoModel(
+        expectedLifePartnerInfo: ExpectedLifePartnerInfo(
+          expectedMinAge: expectedMinAge.toString(),
+          expectedMaxAge: expectedMaxAge.toString(),
+          expectedHeight: expectedHeight.text,
+          expectedComplexion: expectedComplexion!.value,
+          exptectedEducation: expectedEducation.text,
+          exptectedDistrict: expectedDistrict.text,
+          expectedMaritialStatus: expectedMaritalStatus!.value,
+          expectedProfession: expectedProfession.text,
+          expectedFinancialCondition: expectedFinancialCondition.text,
+          expectedAttributes: expectedQualityAttributes.text,
+        )
       );
-      print(expectedLifePartner.expectedMinAge);
-      print(expectedLifePartner.expectedMaxAge);
-      print(expectedLifePartner.expectedHeight);
-      print(expectedLifePartner.expectedComplexion);
-      print(expectedLifePartner.exptectedEducation);
-      print(expectedLifePartner.exptectedDistrict);
-      print(expectedLifePartner.expectedMaritialStatus);
-      print(expectedLifePartner.expectedProfession);
-      print(expectedLifePartner.expectedFinancialCondition);
-      print(expectedLifePartner.expectedAttributes);
-      final Map<String, dynamic> data = {
-        "expectedLifePartnerInfo": expectedLifePartner.toJson(),
-      };
       final response = await ApiService().patch(
           url: AppUrls.upsertBioDataUrl,
           data: data,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'ExpectedLifePartner Created Successful');
-        Get.find<CurrentUserBioDataController>().getCurrentUserData();
+        Get.find<CurrentUserBioDataController>().getCurrentUserBioData();
         _setLoading(false);
         return true;
       } else {

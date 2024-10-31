@@ -39,7 +39,7 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
   @override
   void initState() {
     super.initState();
-    final _familyInfoData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.familyInfo;
+    final _familyInfoData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.familyInfo;
 
     if (_familyInfoData != null) {
       _familyInfoController.fathersNameController.text = _familyInfoData.fatherName ?? '';
@@ -54,7 +54,7 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
       _familyInfoController.sistersInfoController.text = _familyInfoData.sistersInfo ?? '';
       _familyInfoController.professionOfUnclesController.text = _familyInfoData.uncleAuntOccuption ?? '';
       _familyInfoController.selectedFamilyIncomeStatus = _familyIncomeStatus.firstWhereOrNull((item) => item.value == _familyInfoData.familyStatus);
-      _familyInfoController.religiousConditionController.text = _familyInfoData.familyRelagiousEnvironment ?? '';
+      _familyInfoController.religiousConditionController.text = _familyInfoData.familyReligiousEnvironment ?? '';
     } else {
       _familyInfoController.fathersNameController.text = '';
       _familyInfoController.selectedFatherAlive = null;
@@ -159,10 +159,9 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
               keyBoardType: TextInputType.phone),
           Gap(16.h),
 
-          InputTitleText(title: "brothersInfoTitle".tr),
+          InputTitleText(title: "brothersInfoTitle".tr, isRequired: false),
           Gap(4.h),
           CustomTextFormField(
-            validator: requiredValidator,
               controller: _familyInfoController.brothersInfoController,
               maxLines: 5),
           Gap(16.h),
@@ -174,10 +173,9 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
               controller: _familyInfoController.sisterCountController,
               keyBoardType: TextInputType.phone),
           Gap(16.h),
-          InputTitleText(title: "sistersInfoTitle".tr),
+          InputTitleText(title: "sistersInfoTitle".tr, isRequired: false),
           Gap(4.h),
           CustomTextFormField(
-            validator: requiredValidator,
               controller: _familyInfoController.sistersInfoController,
               maxLines: 5),
           Gap(4.h),

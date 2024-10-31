@@ -16,7 +16,7 @@ class InputTitleText extends StatelessWidget {
           children: [
             TextSpan(
                 text: isRequired == true? ' *': '',
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.red))
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.red))
           ]),
     );
   }

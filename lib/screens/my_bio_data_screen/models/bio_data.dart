@@ -1,12 +1,12 @@
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/contact.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/edu_qualifications_info.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/expected_life_partner.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/family_info.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/general_info.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/marriage_related_info.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/occupational_info.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/personal_life_info.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/pledge.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/contact_info_model.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/educational_info_model.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/expected_partner_info_model.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/family_info_model.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/general_info_model.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/marriage_info_model.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/occupational_info_model.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/personal_info_model.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/pledge_info_model.dart';
 
 
 
@@ -26,14 +26,14 @@ class BioData {
   int? connection;
   bool? isSubmitToVerify;
   GeneralInfo? personalInformation;
-  EduQualificationsInfo? education;
+  EducationalInfoModel? education;
   FamilyInfo? familyInformation;
-  PersonalLifeInfo? lifeStyleInformation;
-  OccupationalInfo? occupation;
-  MarriageRelatedInfo? marriageInfo;
-  ExpectedLifePartner? partner;
-  Pledge? pledge;
-  Contact? contact;
+  PersonalInfo? lifeStyleInformation;
+  OccupationalInfoModel? occupation;
+  MarriageInfo? marriageInfo;
+  ExpectedPartnerInfoModel? partner;
+  PledgeInfo? pledge;
+  ContactInfo? contact;
 
   BioData(
       {this.id,
@@ -83,20 +83,20 @@ class BioData {
     personalInformation = json['PersonalInformation'] != null
         ? GeneralInfo.fromJson(json['PersonalInformation'])
         : null;
-    education = json['Education'] != null ? EduQualificationsInfo.fromJson(json['Education']) : null;
+    education = json['Education'] != null ? EducationalInfoModel.fromJson(json['Education']) : null;
     familyInformation = json['FamilyInformation'] != null
         ? FamilyInfo.fromJson(json['FamilyInformation'])
         : null;
     lifeStyleInformation = json['LifeStyleInformation'] != null
-        ? PersonalLifeInfo.fromJson(json['LifeStyleInformation'])
+        ? PersonalInfo.fromJson(json['LifeStyleInformation'])
         : null;
     marriageInfo = json['MarriageInfo'] != null
-        ? MarriageRelatedInfo.fromJson(json['MarriageInfo'])
+        ? MarriageInfo.fromJson(json['MarriageInfo'])
         : null;
-    occupation = json['Occupation'] != null ? OccupationalInfo.fromJson(json['Occupation']) : null;
-    partner = json['Partner'] != null ? ExpectedLifePartner.fromJson(json['Partner']) : null;
-    pledge = json['Pledge'] != null ? Pledge.fromJson(json['Pledge']) : null;
-    contact = json['Contact'] != null ? Contact.fromJson(json['Contact']) : null;
+    occupation = json['Occupation'] != null ? OccupationalInfoModel.fromJson(json['Occupation']) : null;
+    partner = json['Partner'] != null ? ExpectedPartnerInfoModel.fromJson(json['Partner']) : null;
+    pledge = json['Pledge'] != null ? PledgeInfo.fromJson(json['Pledge']) : null;
+    contact = json['Contact'] != null ? ContactInfo.fromJson(json['Contact']) : null;
   }
 }
 

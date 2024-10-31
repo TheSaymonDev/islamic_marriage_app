@@ -24,28 +24,32 @@ class _AddressFormState extends State<AddressForm> {
   void initState() {
     super.initState();
 
-    final _bioData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata;
+    final _bioData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata;
 
     // Permanent Address Null Check
     if (_bioData?.permanentAddress != null) {
-      _addressInfoController.selectedDivision.text = _bioData!.permanentAddress!.division ?? '';
-      _addressInfoController.selectedDistrict.text = _bioData.permanentAddress!.district ?? '';
-      _addressInfoController.selectedSubDistrict.text = _bioData.permanentAddress!.subDistrict ?? '';
+      _addressInfoController.divisionController.text = _bioData!.permanentAddress!.division ?? '';
+      _addressInfoController.districtController.text = _bioData.permanentAddress!.district ?? '';
+      _addressInfoController.subDistrictController.text = _bioData.permanentAddress!.subDistrict ?? '';
+      _addressInfoController.areaController.text = _bioData.permanentAddress!.areaName ?? '';
     } else {
-      _addressInfoController.selectedDivision.clear();
-      _addressInfoController.selectedDistrict.clear();
-      _addressInfoController.selectedSubDistrict.clear();
+      _addressInfoController.divisionController.clear();
+      _addressInfoController.districtController.clear();
+      _addressInfoController.subDistrictController.clear();
+      _addressInfoController.areaController.clear();
     }
 
     // Present Address Null Check
     if (_bioData?.currentAddress != null) {
-      _addressInfoController.selectedCurrentDivision.text = _bioData!.currentAddress!.currentDivision ?? '';
-      _addressInfoController.selectedCurrentDistrict.text = _bioData.currentAddress!.currentDistrict ?? '';
-      _addressInfoController.selectedCurrentSubDistrict.text = _bioData.currentAddress!.currentSubDistrict ?? '';
+      _addressInfoController.currentDivisionController.text = _bioData!.currentAddress!.currentDivision ?? '';
+      _addressInfoController.currentDistrictController.text = _bioData.currentAddress!.currentDistrict ?? '';
+      _addressInfoController.currentSubDistrictController.text = _bioData.currentAddress!.currentSubDistrict ?? '';
+      _addressInfoController.currentAreaController.text = _bioData.currentAddress!.areaName ?? '';
     } else {
-      _addressInfoController.selectedCurrentDivision.clear();
-      _addressInfoController.selectedCurrentDistrict.clear();
-      _addressInfoController.selectedCurrentSubDistrict.clear();
+      _addressInfoController.currentDivisionController.clear();
+      _addressInfoController.currentDistrictController.clear();
+      _addressInfoController.currentSubDistrictController.clear();
+      _addressInfoController.currentAreaController.clear();
     }
 
     // Grew Up Null Check
@@ -82,7 +86,7 @@ class _AddressFormState extends State<AddressForm> {
           // ),
           CustomTextFormField(
             hintText: 'divisionHint'.tr,
-              controller: _addressInfoController.selectedDivision,
+              controller: _addressInfoController.divisionController,
               validator: requiredValidator),
           Gap(8.h),
           Row(
@@ -90,7 +94,7 @@ class _AddressFormState extends State<AddressForm> {
               Expanded(
                   child: CustomTextFormField(
                     hintText: 'districtHint'.tr,
-                      controller: _addressInfoController.selectedDistrict,
+                      controller: _addressInfoController.districtController,
                       validator: requiredValidator)),
               // Expanded(
               //   child: CustomDropdownButton1<District>(
@@ -109,7 +113,7 @@ class _AddressFormState extends State<AddressForm> {
               Expanded(
                   child: CustomTextFormField(
                     hintText: 'subDistrictHint'.tr,
-                      controller: _addressInfoController.selectedSubDistrict,
+                      controller: _addressInfoController.subDistrictController,
                       validator: requiredValidator)),
               // Expanded(
               //   child: CustomDropdownButton1<SubDistrict>(
@@ -125,14 +129,14 @@ class _AddressFormState extends State<AddressForm> {
               // ),
             ],
           ),
-          // Gap(8.h),
-          // CustomTextFormField(
-          //     hintText: 'Area Name',
-          //     controller: _addressController.permanentAreaController),
-          // Gap(4.h),
-          // Text(
-          //     'Write the name of the village or area without entering the house number. Example- Mirpur 10, Baghmara',
-          //     style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
+          Gap(8.h),
+          CustomTextFormField(
+              hintText: 'areaNameHint'.tr,
+              controller: _addressInfoController.areaController),
+          Gap(4.h),
+          Text(
+              'areaNameNB'.tr,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.violetClr)),
           Gap(16.h),
           InputTitleText(title: 'presentAddressTitle'.tr),
           Row(
@@ -157,7 +161,7 @@ class _AddressFormState extends State<AddressForm> {
               children: [
                 CustomTextFormField(
                   hintText: 'divisionHint'.tr,
-                    controller: _addressInfoController.selectedCurrentDivision,
+                    controller: _addressInfoController.currentDivisionController,
                     validator: requiredValidator),
                 // CustomDropdownButton1<Division>(
                 //   validator: dropdownValidator,
@@ -177,7 +181,7 @@ class _AddressFormState extends State<AddressForm> {
                     Expanded(
                         child: CustomTextFormField(
                           hintText: 'districtHint'.tr,
-                            controller: _addressInfoController.selectedCurrentDistrict,
+                            controller: _addressInfoController.currentDistrictController,
                             validator: requiredValidator)),
                     // Expanded(
                     //   child: CustomDropdownButton1<District>(
@@ -196,7 +200,7 @@ class _AddressFormState extends State<AddressForm> {
                     Expanded(
                         child: CustomTextFormField(
                           hintText: 'subDistrictHint'.tr,
-                            controller: _addressInfoController.selectedCurrentSubDistrict,
+                            controller: _addressInfoController.currentSubDistrictController,
                             validator: requiredValidator)),
                     // Expanded(
                     //   child: CustomDropdownButton1<SubDistrict>(
@@ -212,22 +216,22 @@ class _AddressFormState extends State<AddressForm> {
                     // ),
                   ],
                 ),
-                // Gap(8.h),
-                // CustomTextFormField(
-                //     hintText: 'Area Name', controller: _addressController.presentAreaController),
-                // Gap(4.h),
-                // Text(
-                //     'Write the name of the village or area without entering the house number. Example- Mirpur 10, Baghmara',
-                //     style: AppTextStyles.bodySmall(color: AppColors.violetClr)),
+                Gap(8.h),
+                CustomTextFormField(
+                    hintText: 'areaNameHint'.tr,
+                    controller: _addressInfoController.currentAreaController),
+                Gap(4.h),
+                Text(
+                    'areaNameNB'.tr,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.violetClr)),
               ],
             ),
             child: const SizedBox(),
           ),
           Gap(16.h),
-          InputTitleText(title: 'growUpTitle'.tr),
+          InputTitleText(title: 'growUpTitle'.tr, isRequired: false,),
           Gap(4.h),
           CustomTextFormField(
-              validator: requiredValidator,
               controller: _addressInfoController.growUpController),
           Gap(16.h),
         ],

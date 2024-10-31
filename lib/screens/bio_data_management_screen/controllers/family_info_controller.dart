@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/family_info.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/family_info_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -34,44 +34,60 @@ class FamilyInfoController extends GetxController {
     }
     _setLoading(true);
     try {
-      final familyInfo = FamilyInfo(
-          fatherName: fathersNameController.text,
-          fatherAlive: selectedFatherAlive!.value,
-          fatherOccupation: fathersProfessionController.text,
-          motherName: mothersNameController.text,
-          motherAlive: selectedMotherAlive!.value,
-          motherOccupation: mothersProfessionController.text,
-          brotherCount: brotherCountController.text,
-          brothersInfo: brothersInfoController.text,
-          sisterCount: sisterCountController.text,
-          sistersInfo: sistersInfoController.text,
-          uncleAuntOccuption: professionOfUnclesController.text,
-          familyStatus: selectedFamilyIncomeStatus!.value,
-          familyRelagiousEnvironment: religiousConditionController.text);
-      print(familyInfo.fatherName);
-      print(familyInfo.fatherAlive);
-      print(familyInfo.fatherOccupation);
-      print(familyInfo.motherName);
-      print(familyInfo.motherAlive);
-      print(familyInfo.motherOccupation);
-      print(familyInfo.brotherCount);
-      print(familyInfo.sisterCount);
-      print(familyInfo.brothersInfo);
-      print(familyInfo.sistersInfo);
-      print(familyInfo.uncleAuntOccuption);
-      print(familyInfo.familyStatus);
-      print(familyInfo.familyRelagiousEnvironment);
-      final Map<String, dynamic> data = {
-        "familyInfo": familyInfo.toJson(),
-      };
+      // final familyInfo = FamilyInfo(
+      //     fatherName: fathersNameController.text,
+      //     fatherAlive: selectedFatherAlive!.value,
+      //     fatherOccupation: fathersProfessionController.text,
+      //     motherName: mothersNameController.text,
+      //     motherAlive: selectedMotherAlive!.value,
+      //     motherOccupation: mothersProfessionController.text,
+      //     brotherCount: brotherCountController.text,
+      //     brothersInfo: brothersInfoController.text,
+      //     sisterCount: sisterCountController.text,
+      //     sistersInfo: sistersInfoController.text,
+      //     uncleAuntOccuption: professionOfUnclesController.text,
+      //     familyStatus: selectedFamilyIncomeStatus!.value,
+      //     familyRelagiousEnvironment: religiousConditionController.text);
+      // print(familyInfo.fatherName);
+      // print(familyInfo.fatherAlive);
+      // print(familyInfo.fatherOccupation);
+      // print(familyInfo.motherName);
+      // print(familyInfo.motherAlive);
+      // print(familyInfo.motherOccupation);
+      // print(familyInfo.brotherCount);
+      // print(familyInfo.sisterCount);
+      // print(familyInfo.brothersInfo);
+      // print(familyInfo.sistersInfo);
+      // print(familyInfo.uncleAuntOccuption);
+      // print(familyInfo.familyStatus);
+      // print(familyInfo.familyRelagiousEnvironment);
+      // final Map<String, dynamic> data = {
+      //   "familyInfo": familyInfo.toJson(),
+      // };
+      final data = FamilyInfoModel(
+        familyInfo: FamilyInfo(
+            fatherName: fathersNameController.text,
+            fatherAlive: selectedFatherAlive!.value,
+            fatherOccupation: fathersProfessionController.text,
+            motherName: mothersNameController.text,
+            motherAlive: selectedMotherAlive!.value,
+            motherOccupation: mothersProfessionController.text,
+            brotherCount: brotherCountController.text,
+            brothersInfo: brothersInfoController.text,
+            sisterCount: sisterCountController.text,
+            sistersInfo: sistersInfoController.text,
+            uncleAuntOccuption: professionOfUnclesController.text,
+            familyStatus: selectedFamilyIncomeStatus!.value,
+            familyReligiousEnvironment: religiousConditionController.text),
+      );
       final response = await ApiService().patch(
           url: AppUrls.upsertBioDataUrl,
           data: data,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Family Info Created Successful');
-        Get.find<CurrentUserBioDataController>().getCurrentUserData();
-       _setLoading(false);
+        Get.find<CurrentUserBioDataController>().getCurrentUserBioData();
+        _setLoading(false);
         return true;
       } else {
         final errorMessage =
@@ -82,7 +98,7 @@ class FamilyInfoController extends GetxController {
       }
     } catch (error) {
       customErrorMessage(message: error.toString());
-     _setLoading(false);
+      _setLoading(false);
       return false;
     }
   }

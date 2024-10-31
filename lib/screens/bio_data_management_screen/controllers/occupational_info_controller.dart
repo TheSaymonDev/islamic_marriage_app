@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/occupational_info.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/occupational_info_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -19,41 +19,47 @@ class OccupationalInfoController extends GetxController {
       customErrorMessage(message: 'Please check your internet connection');
       return false;
     }
-   _setLoading(true);
+    _setLoading(true);
     try {
-      final occupationalInfo = OccupationalInfo(
-        occupation: occupationController.text,
-        descriptionOfProfession: descriptionController.text,
-        monthlyIncome: incomeController.text
+      // final occupationalInfo = OccupationalInfo(
+      //   occupation: occupationController.text,
+      //   descriptionOfProfession: descriptionController.text,
+      //   monthlyIncome: incomeController.text
+      // );
+      // final Map<String, dynamic> data = {
+      //   "occupationInfo": occupationalInfo.toJson(),
+      // };
+      final data = OccupationalInfoModel(
+        occupationInfo: OccupationInfo(
+            occupation: occupationController.text,
+            descriptionOfProfession: descriptionController.text,
+            monthlyIncome: incomeController.text),
       );
-      final Map<String, dynamic> data = {
-        "occupationInfo": occupationalInfo.toJson(),
-      };
       final response = await ApiService().patch(
           url: AppUrls.upsertBioDataUrl,
           data: data,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Occupational Info Created Successful');
-        Get.find<CurrentUserBioDataController>().getCurrentUserData();
-       _setLoading(false);
+        Get.find<CurrentUserBioDataController>().getCurrentUserBioData();
+        _setLoading(false);
         return true;
       } else {
         final errorMessage =
             response.message['message'] ?? 'Occupational Info Create Failed';
         customErrorMessage(message: errorMessage);
-      _setLoading(false);
+        _setLoading(false);
         return false;
       }
     } catch (error) {
       customErrorMessage(message: error.toString());
-    _setLoading(false);
+      _setLoading(false);
       return false;
     }
   }
+
   void _setLoading(bool value) {
     isLoading = value;
     update();
   }
-
 }

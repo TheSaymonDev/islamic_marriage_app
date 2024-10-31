@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
-import 'package:islamic_marriage/screens/bio_data_management_screen/models/personal_life_info.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/personal_info_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -30,6 +30,7 @@ class PersonalInfoController extends GetxController {
   final islamicScholarsController = TextEditingController();
   final hobbiesController = TextEditingController();
   final mobileController = TextEditingController();
+  final veilController = TextEditingController();
   String? imageUrl;
 
   File? imageFile;
@@ -49,34 +50,34 @@ class PersonalInfoController extends GetxController {
     }
     _setLoading(true);
     try {
-      final personalInfo = PersonalLifeInfo(
-        clothingOutside: clothesController.text,
-        sunnahBeardSince: beardController.text,
-        clothesAboveAnkles: true,
-        fiveTimesPrayerSince: prayController.text,
-        prayerMissDaily: qazaController.text,
-        complyNonMahram: mahramController.text,
-        reciteQuranCorrectly: reciteQuranController.text,
-        followedFiqah: selectedFiqh!.value,
-        watchIslamicDramaSong: watchOrListenController.text,
-        mentalPhysicalDiseases: diseaseController.text,
-        involvedSpecialDeenWork: specialWorkController.text,
-        believeAboutMazar: mazarController.text,
-        islamicReadedBookName: islamicBooksController.text,
-        islamicFollowedScholarName: islamicScholarsController.text,
-        hobbiesLikeDislike: hobbiesController.text,
-        groomPhone: mobileController.text,
+      final data = PersonalInfoModel(
+        personalInfo: PersonalInfo(
+          clothingOutside: clothesController.text,
+          sunnahBeardSince: beardController.text,
+          clothesAboveAnkles: clothesController.text,
+          fiveTimesPrayerSince: prayController.text,
+          prayerMissDaily: qazaController.text,
+          complyNonMahram: mahramController.text,
+          reciteQuranCorrectly: reciteQuranController.text,
+          followedFiqah: selectedFiqh!.value,
+          watchIslamicDramaSong: watchOrListenController.text,
+          mentalPhysicalDiseases: diseaseController.text,
+          involvedSpecialDeenWork: specialWorkController.text,
+          believeAboutMazar: mazarController.text,
+          islamicReadedBookName: islamicBooksController.text,
+          islamicFollowedScholarName: islamicScholarsController.text,
+          hobbiesLikeDislike: hobbiesController.text,
+          groomPhone: mobileController.text,
+          veil: veilController.text
+        )
       );
-      final Map<String, dynamic> data = {
-        "personalInfo": personalInfo.toJson(),
-      };
       final response = await ApiService().patch(
           url: AppUrls.upsertBioDataUrl,
           data: data,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         customSuccessMessage(message: 'Personal Info Created Successfully');
-        Get.find<CurrentUserBioDataController>().getCurrentUserData();
+        Get.find<CurrentUserBioDataController>().getCurrentUserBioData();
         _setLoading(false);
         return true;
       } else {

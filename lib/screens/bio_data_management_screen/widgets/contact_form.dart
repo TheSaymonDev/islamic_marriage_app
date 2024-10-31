@@ -23,7 +23,7 @@ class _ContactFormState extends State<ContactForm> {
   @override
   void initState() {
     super.initState();
-    final _contactData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.contactInfo;
+    final _contactData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.contactInfo;
 
     if (_contactData != null) {
       _contactController.nameController.text = _contactData.groomName ?? '';

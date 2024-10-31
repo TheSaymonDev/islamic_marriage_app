@@ -50,7 +50,7 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
   ];
   final List<DropdownItem> _nationality = [
     DropdownItem(title: "bangladeshi".tr, value: "bangladeshi"),
-    DropdownItem(title: "american".tr, value: "american"),
+    DropdownItem(title: "othersValue".tr, value: "others"),
   ];
 
   late List<DropdownItem> _height;
@@ -93,7 +93,7 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
     _height = _createHeightList();
     _weight = _createWeightList();
 
-    final _generalInfoData = Get.find<CurrentUserBioDataController>().currentUserData?.data?.biodata?.generalInfo;
+    final _generalInfoData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.generalInfo;
 
     if (_generalInfoData != null) {
       _generalInfoController.selectedBioDataType = _bioDataType.firstWhereOrNull((item) => item.value == _generalInfoData.bioDataType);
@@ -103,7 +103,13 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       _generalInfoController.selectedWeight = _weight.firstWhereOrNull((item) => item.value == _generalInfoData.weight);
       _generalInfoController.selectedBloodGroup = _bloodGroup.firstWhereOrNull((item) => item.value == _generalInfoData.bloodGroup);
       _generalInfoController.selectedNationality = _nationality.firstWhereOrNull((item) => item.value == _generalInfoData.nationality);
+      if (_generalInfoController.selectedNationality?.value == "others") {
+        _generalInfoController.isOtherNationality = true;
+      } else {
+        _generalInfoController.isOtherNationality = false;
+      }
       _generalInfoController.dateOfBirthController.text = _generalInfoData.dateOfBirth ?? '';
+      _generalInfoController.otherNationalityController.text = _generalInfoData.othersNationality ?? '';
     } else {
       // Set default values when _generalInfoData is null
       _generalInfoController.selectedBioDataType = null;
@@ -114,6 +120,7 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       _generalInfoController.selectedBloodGroup = null;
       _generalInfoController.selectedNationality = null;
       _generalInfoController.dateOfBirthController.text = '';
+      _generalInfoController.otherNationalityController.text = '';
     }
   }
 
@@ -213,11 +220,11 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
           ),
           Gap(16.h),
 
-          InputTitleText(title: 'bloodGroupTitle'.tr),
+          InputTitleText(title: 'bloodGroupTitle'.tr, isRequired: false),
           Gap(4.h),
           CustomDropdownButtonTest(
             value: _generalInfoController.selectedBloodGroup,
-            validator: dropdownValidator,
+            // validator: dropdownValidator,
             items: _bloodGroup,
             onChanged: (newValue) {
               setState(() {
@@ -227,6 +234,20 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
           ),
           Gap(16.h),
 
+          // InputTitleText(title: 'nationalityTitle'.tr),
+          // Gap(4.h),
+          // CustomDropdownButtonTest(
+          //   value: _generalInfoController.selectedNationality,
+          //   validator: dropdownValidator,
+          //   items: _nationality,
+          //   onChanged: (newValue) {
+          //     setState(() {
+          //       _generalInfoController.selectedNationality = newValue;
+          //     });
+          //   },
+          // ),
+
+          // Nationality Dropdown
           InputTitleText(title: 'nationalityTitle'.tr),
           Gap(4.h),
           CustomDropdownButtonTest(
@@ -236,9 +257,31 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
             onChanged: (newValue) {
               setState(() {
                 _generalInfoController.selectedNationality = newValue;
+                if (newValue?.value == "others") {
+                  _generalInfoController.isOtherNationality = true;
+                } else {
+                  _generalInfoController.isOtherNationality = false;
+                  _generalInfoController.otherNationalityController.clear();
+                }
               });
             },
           ),
+
+          // Display text field if "Other" is selected
+          if (_generalInfoController.isOtherNationality)
+            Padding(
+              padding: EdgeInsets.only(top: 8.h),
+              child: CustomTextFormField(
+                controller: _generalInfoController.otherNationalityController,
+                validator: (value) {
+                  if (_generalInfoController.isOtherNationality && (value == null || value.isEmpty)) {
+                    return "nationalityHint".tr;
+                  }
+                  return null;
+                },
+                hintText: 'nationalityHint'.tr,
+              ),
+            ),
           Gap(16.h),
         ],
       ),
