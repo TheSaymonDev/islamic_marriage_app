@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/my_bio_data_screen/models/current_user.dart';
+import 'package:islamic_marriage/screens/my_bio_data_screen/models/my_bio_data_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -7,9 +7,9 @@ import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
 class MyBioDataController extends GetxController {
   bool isLoading = false;
-  CurrentUser? currentUser;
+  MyBioDataModel? myBioData;
 
-  Future<void> getCurrentUser() async {
+  Future<void> getMyBioData() async {
     if (!await ConnectivityService.isConnected()) {
       customErrorMessage(message: 'Please check your internet connection');
       return;
@@ -20,7 +20,7 @@ class MyBioDataController extends GetxController {
           url: AppUrls.getCurrentUser,
           headers: AppUrls.getHeaderWithToken);
       if (response.success) {
-        currentUser = CurrentUser.fromJson(response.data);
+        myBioData = MyBioDataModel.fromJson(response.data);
       _setLoading(false);
       } else {
         final errorMessage =
@@ -36,5 +36,11 @@ class MyBioDataController extends GetxController {
   void _setLoading(bool value) {
     isLoading = value;
     update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getMyBioData();
   }
 }

@@ -12,20 +12,20 @@ import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/pledge_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/submit_bio_data_controller.dart';
 
-class BioDataManagementBinding implements Bindings{
+class BioDataManagementBinding implements Bindings {
   @override
   void dependencies() {
-   Get.lazyPut(() => CurrentUserBioDataController());
-   Get.lazyPut(() => GeneralInfoController());
-   Get.lazyPut(() => AddressInfoController());
-   Get.lazyPut(() => EduQualificationsController());
-   Get.lazyPut(() => FamilyInfoController());
-   Get.lazyPut(() => PersonalInfoController());
-   Get.lazyPut(() => OccupationalInfoController());
-   Get.lazyPut(() => MarriageRelatedInfoController());
-   Get.lazyPut(() => ExpectedLifePartnerController());
-   Get.lazyPut(() => PledgeController());
-   Get.lazyPut(() => ContactController());
-  // Get.lazyPut(() => SubmitBioDataController());
+    Get.lazyPut(() => CurrentUserBioDataController());
+    Get.lazyPut(() => GeneralInfoController());
+    Get.lazyPut(() => AddressInfoController());
+    Get.lazyPut(() => EduQualificationsController());
+    Get.lazyPut(() => FamilyInfoController());
+    Get.lazyPut(() => PersonalInfoController());
+    Get.lazyPut(() => OccupationalInfoController());
+    Get.lazyPut(() => MarriageRelatedInfoController());
+    Get.lazyPut(() => ExpectedLifePartnerController());
+    Get.lazyPut(() => PledgeController());
+    Get.lazyPut(() => ContactController());
+    Get.lazyPut(() => SubmitBioDataController());
   }
 }

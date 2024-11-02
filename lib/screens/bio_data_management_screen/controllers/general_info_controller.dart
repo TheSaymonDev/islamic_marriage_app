@@ -29,27 +29,6 @@ class GeneralInfoController extends GetxController {
     }
     _setLoading(true);
     try {
-      // final generalInfo = GeneralInfoModel(
-      //     bioDataType: selectedBioDataType!.value,
-      //     maritialStatus: selectedMaritalStatus!.value,
-      //     height: selectedHeight!.value,
-      //     weight: selectedWeight!.value,
-      //     complexion: selectedComplexion!.value,
-      //     bloodGroup: selectedBloodGroup!.value,
-      //     nationality: selectedNationality!.value,
-      //     dateOfBirth: dateOfBirthController.text,
-      //     othersNationality: otherNationalityController.text);
-      // print(generalInfo.bioDataType);
-      // print(generalInfo.maritialStatus);
-      // print(generalInfo.height);
-      // print(generalInfo.weight);
-      // print(generalInfo.complexion);
-      // print(generalInfo.bloodGroup);
-      // print(generalInfo.nationality);
-      // print(generalInfo.dateOfBirth);
-      // final Map<String, dynamic> data = {
-      //   "generalInfo": generalInfo.toJson(),
-      // };
       final data = GeneralInfoModel(
           generalInfo: GeneralInfo(
         bioDataType: selectedBioDataType!.value,

@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
-import 'package:islamic_marriage/screens/explore_screens/controllers/all_user_controller.dart';
+import 'package:islamic_marriage/screens/explore_screens/controllers/all_bio_data_controller.dart';
 import 'package:islamic_marriage/screens/home_screen/controllers/bottom_nav_controller.dart';
 import 'package:islamic_marriage/screens/wishlist_screen/controllers/wishlist_controller.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
@@ -22,7 +22,6 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
-
   late String _name;
 
   @override
@@ -31,21 +30,20 @@ class _ExploreScreenState extends State<ExploreScreen> {
     _name = SharedPreferencesService().getUserName();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity.h,
       width: double.infinity.w,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: GetBuilder<AllUserController>(builder: (allUserController) {
+      child: GetBuilder<AllBioDataController>(builder: (allBioDataController) {
         return GetBuilder<WishListController>(builder: (wishListController) {
-          if (allUserController.isLoading || wishListController.isLoading) {
+          if (allBioDataController.isLoading || wishListController.isLoading) {
             // Show a loader when either controller is loading
             return Center(child: customCircularProgressIndicator);
           }
-          if (allUserController.allUser == null ||
-              allUserController.allUser!.data!.isEmpty) {
+          if (allBioDataController.allBioData == null ||
+              allBioDataController.allBioData!.data!.isEmpty) {
             // Show a message if no users are found
             return Center(child: Text('No users found.'));
           }
@@ -92,11 +90,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        final user = allUserController.allUser!.data![index];
+                        final user =
+                            allBioDataController.allBioData!.data![index];
                         return CustomCard(
                           height: 220.h,
-                          border:
-                          Border.all(color: AppColors.violetClr, width: 1.w),
+                          border: Border.all(
+                              color: AppColors.violetClr, width: 1.w),
                           padding: EdgeInsets.only(bottom: 4.h),
                           child: Row(
                             children: [
@@ -112,7 +111,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   width: 130.w,
                                   child: CircleAvatar(
                                     foregroundImage:
-                                    AssetImage(AppUrls.placeHolderPng),
+                                        AssetImage(AppUrls.placeHolderPng),
                                   ),
                                 ),
                               ),
@@ -121,22 +120,27 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
                                             SizedBox(
                                               width: 190.w,
                                               child: FittedBox(
-                                                fit: BoxFit.scaleDown, // Scales the text down to fit within the space
-                                                alignment: Alignment.centerLeft, // Align text to the left
+                                                fit: BoxFit
+                                                    .scaleDown, // Scales the text down to fit within the space
+                                                alignment: Alignment
+                                                    .centerLeft, // Align text to the left
                                                 child: Text(
-                                                  (user.contactInfo?.groomName ?? '').toUpperCase(),
-                                                  style: Theme.of(context).textTheme.titleMedium,
+                                                  (user.name ?? '')
+                                                      .toUpperCase(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium,
                                                 ),
                                               ),
                                             ),
@@ -153,7 +157,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                               if (wishListController
                                                   .isInWishlist(user.id!)) {
                                                 wishListController
-                                                    .removeFromWishlist(user.id!);
+                                                    .removeFromWishlist(
+                                                        user.id!);
                                               } else {
                                                 wishListController
                                                     .addToWishlist(user.id!);
@@ -161,7 +166,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                             },
                                             child: Icon(
                                               wishListController
-                                                  .isInWishlist(user.id!)
+                                                      .isInWishlist(user.id!)
                                                   ? Icons.favorite
                                                   : Icons.favorite_border,
                                               size: 24.sp,
@@ -172,30 +177,30 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       ],
                                     ),
                                     Text(
-                                        user.personalInfo != null
-                                            ? '25 years 5 months, ${(user.generalInfo?.height ?? '').toUpperCase()}'
-                                            : '',
+                                        '25 years 5 months, ${(user.biodata?.generalInfo?.height ?? '').toUpperCase()}',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodySmall!
                                             .copyWith(color: greyClr)),
                                     Text(
-                                        (user.permanentAddress?.division ?? '')
+                                        (user.biodata?.permanentAddress
+                                                    ?.division ??
+                                                '')
                                             .toUpperCase(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
                                             .copyWith(color: greyClr)),
                                     Text(
-                                        (user.educationInfo?.highestEducation ??
-                                            '')
+                                        (user.biodata?.educationInfo?.highestEducation ??
+                                                '')
                                             .toUpperCase(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
                                             .copyWith(color: greyClr)),
                                     Text(
-                                        (user.occupationInfo?.occupation ?? '')
+                                        (user.biodata?.occupationInfo?.occupation ?? '')
                                             .toUpperCase(),
                                         style: Theme.of(context)
                                             .textTheme
@@ -203,7 +208,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                             .copyWith(color: greyClr)),
                                     Row(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         CircleAvatar(
                                             backgroundColor: Colors.green,
@@ -236,7 +241,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         );
                       },
                       separatorBuilder: (context, index) => Gap(8.h),
-                      itemCount: allUserController.allUser!.data!.length,
+                      itemCount: allBioDataController.allBioData!.data!.length,
                     ),
                   ),
                   Gap(8.h),

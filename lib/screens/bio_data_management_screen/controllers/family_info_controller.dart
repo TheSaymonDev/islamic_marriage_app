@@ -34,36 +34,6 @@ class FamilyInfoController extends GetxController {
     }
     _setLoading(true);
     try {
-      // final familyInfo = FamilyInfo(
-      //     fatherName: fathersNameController.text,
-      //     fatherAlive: selectedFatherAlive!.value,
-      //     fatherOccupation: fathersProfessionController.text,
-      //     motherName: mothersNameController.text,
-      //     motherAlive: selectedMotherAlive!.value,
-      //     motherOccupation: mothersProfessionController.text,
-      //     brotherCount: brotherCountController.text,
-      //     brothersInfo: brothersInfoController.text,
-      //     sisterCount: sisterCountController.text,
-      //     sistersInfo: sistersInfoController.text,
-      //     uncleAuntOccuption: professionOfUnclesController.text,
-      //     familyStatus: selectedFamilyIncomeStatus!.value,
-      //     familyRelagiousEnvironment: religiousConditionController.text);
-      // print(familyInfo.fatherName);
-      // print(familyInfo.fatherAlive);
-      // print(familyInfo.fatherOccupation);
-      // print(familyInfo.motherName);
-      // print(familyInfo.motherAlive);
-      // print(familyInfo.motherOccupation);
-      // print(familyInfo.brotherCount);
-      // print(familyInfo.sisterCount);
-      // print(familyInfo.brothersInfo);
-      // print(familyInfo.sistersInfo);
-      // print(familyInfo.uncleAuntOccuption);
-      // print(familyInfo.familyStatus);
-      // print(familyInfo.familyRelagiousEnvironment);
-      // final Map<String, dynamic> data = {
-      //   "familyInfo": familyInfo.toJson(),
-      // };
       final data = FamilyInfoModel(
         familyInfo: FamilyInfo(
             fatherName: fathersNameController.text,

@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/expected_life_partner_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/current_user_biodata_model.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
@@ -39,39 +40,20 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
     DropdownItem(title: "anyValue".tr, value: "any"),
   ];
 
-
   final _expectedPartnerController = Get.find<ExpectedLifePartnerController>();
 
   @override
   void initState() {
     super.initState();
-    final _expectedLifePartnerData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.expectedLifePartnerInfo;
-
+    final _expectedLifePartnerData = Get.find<CurrentUserBioDataController>()
+        .currentUserBioData
+        ?.data
+        ?.biodata
+        ?.expectedLifePartnerInfo;
     if (_expectedLifePartnerData != null) {
-      _expectedPartnerController.expectedMinAge = int.parse(_expectedLifePartnerData.expectedMinAge!);
-      _expectedPartnerController.expectedMaxAge = int.parse(_expectedLifePartnerData.expectedMaxAge!);
-      _ageRange = RangeValues(
-        _expectedPartnerController.expectedMinAge?.toDouble() ?? 18,
-        _expectedPartnerController.expectedMaxAge?.toDouble() ?? 30,
-      );
-      _expectedPartnerController.expectedComplexion = _complexion.firstWhereOrNull((item) => item.value == _expectedLifePartnerData.expectedComplexion);
-      _expectedPartnerController.expectedHeight.text = _expectedLifePartnerData.expectedHeight ?? '';
-      _expectedPartnerController.expectedEducation.text = _expectedLifePartnerData.exptectedEducation ?? '';
-      _expectedPartnerController.expectedDistrict.text = _expectedLifePartnerData.exptectedDistrict ?? '';
-      _expectedPartnerController.expectedMaritalStatus = _maritalStatus.firstWhereOrNull((item) => item.value == _expectedLifePartnerData.expectedMaritialStatus);
-      _expectedPartnerController.expectedProfession.text = _expectedLifePartnerData.expectedProfession ?? '';
-      _expectedPartnerController.expectedFinancialCondition.text = _expectedLifePartnerData.expectedFinancialCondition ?? '';
-      _expectedPartnerController.expectedQualityAttributes.text = _expectedLifePartnerData.expectedAttributes ?? '';
+      _assignData(_expectedLifePartnerData);
     } else {
-      _ageRange = RangeValues(18, 30);
-      _expectedPartnerController.expectedComplexion = null;
-      _expectedPartnerController.expectedHeight.text = '';
-      _expectedPartnerController.expectedEducation.text = '';
-      _expectedPartnerController.expectedDistrict.text = '';
-      _expectedPartnerController.expectedMaritalStatus = null;
-      _expectedPartnerController.expectedProfession.text = '';
-      _expectedPartnerController.expectedFinancialCondition.text = '';
-      _expectedPartnerController.expectedQualityAttributes.text = '';
+      _clearData();
     }
   }
 
@@ -166,9 +148,8 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
           InputTitleText(title: "expectedDistrictTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-            validator: requiredValidator,
-            controller: _expectedPartnerController.expectedDistrict
-          ),
+              validator: requiredValidator,
+              controller: _expectedPartnerController.expectedDistrict),
           //Gap(4.h),
           // Text("expectedDistrictNB".tr,
           //     style: Theme.of(context)
@@ -194,9 +175,8 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
           InputTitleText(title: "expectedProfessionTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-            validator: requiredValidator,
-            controller: _expectedPartnerController.expectedProfession
-          ),
+              validator: requiredValidator,
+              controller: _expectedPartnerController.expectedProfession),
           //Gap(4.h),
           // Text("expectedProfessionNB".tr,
           //     style: Theme.of(context)
@@ -208,9 +188,9 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
           InputTitleText(title: "expectedFinancialConditionTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-            validator:requiredValidator,
-            controller: _expectedPartnerController.expectedFinancialCondition
-          ),
+              validator: requiredValidator,
+              controller:
+                  _expectedPartnerController.expectedFinancialCondition),
           // Gap(4.h),
           // Text("expectedFinancialConditionNB".tr,
           //     style: Theme.of(context)
@@ -222,9 +202,8 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
           InputTitleText(title: "expectedAttributesTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-            validator: requiredValidator,
-            controller: _expectedPartnerController.expectedQualityAttributes
-          ),
+              validator: requiredValidator,
+              controller: _expectedPartnerController.expectedQualityAttributes),
           Gap(4.h),
           Text("expectedAttributesNB".tr,
               style: Theme.of(context)
@@ -235,5 +214,46 @@ class _ExpectedLifePartnerFormState extends State<ExpectedLifePartnerForm> {
         ],
       ),
     );
+  }
+
+  void _assignData(ExpectedLifePartnerInfo _expectedLifePartnerData) {
+    _expectedPartnerController.expectedMinAge =
+        int.parse(_expectedLifePartnerData.expectedMinAge!);
+    _expectedPartnerController.expectedMaxAge =
+        int.parse(_expectedLifePartnerData.expectedMaxAge!);
+    _ageRange = RangeValues(
+      _expectedPartnerController.expectedMinAge?.toDouble() ?? 18,
+      _expectedPartnerController.expectedMaxAge?.toDouble() ?? 30,
+    );
+    _expectedPartnerController.expectedComplexion =
+        _complexion.firstWhereOrNull((item) =>
+            item.value == _expectedLifePartnerData.expectedComplexion);
+    _expectedPartnerController.expectedHeight.text =
+        _expectedLifePartnerData.expectedHeight ?? '';
+    _expectedPartnerController.expectedEducation.text =
+        _expectedLifePartnerData.exptectedEducation ?? '';
+    _expectedPartnerController.expectedDistrict.text =
+        _expectedLifePartnerData.exptectedDistrict ?? '';
+    _expectedPartnerController.expectedMaritalStatus =
+        _maritalStatus.firstWhereOrNull((item) =>
+            item.value == _expectedLifePartnerData.expectedMaritialStatus);
+    _expectedPartnerController.expectedProfession.text =
+        _expectedLifePartnerData.expectedProfession ?? '';
+    _expectedPartnerController.expectedFinancialCondition.text =
+        _expectedLifePartnerData.expectedFinancialCondition ?? '';
+    _expectedPartnerController.expectedQualityAttributes.text =
+        _expectedLifePartnerData.expectedAttributes ?? '';
+  }
+
+  void _clearData() {
+    _ageRange = RangeValues(18, 30);
+    _expectedPartnerController.expectedComplexion = null;
+    _expectedPartnerController.expectedHeight.text = '';
+    _expectedPartnerController.expectedEducation.text = '';
+    _expectedPartnerController.expectedDistrict.text = '';
+    _expectedPartnerController.expectedMaritalStatus = null;
+    _expectedPartnerController.expectedProfession.text = '';
+    _expectedPartnerController.expectedFinancialCondition.text = '';
+    _expectedPartnerController.expectedQualityAttributes.text = '';
   }
 }

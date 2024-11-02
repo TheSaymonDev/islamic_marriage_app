@@ -128,13 +128,15 @@ class ProfileScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4.r),
                       color: violetClr))),
-          Gap(16.h),
-          Center(child: Text('logout'.tr, style: Theme.of(context).textTheme.titleLarge)),
+          Gap(32.h),
+          Center(
+              child: Text('logout'.tr,
+                  style: Theme.of(context).textTheme.titleLarge)),
           Gap(16.h),
           Center(
               child: Text('areYouSure'.tr,
                   style: Theme.of(context).textTheme.bodyMedium)),
-          Gap(16.h),
+          Gap(32.h),
           Row(
             children: [
               Expanded(

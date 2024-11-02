@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/family_info_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/current_user_biodata_model.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
@@ -39,36 +40,16 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
   @override
   void initState() {
     super.initState();
-    final _familyInfoData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.familyInfo;
+    final _familyInfoData = Get.find<CurrentUserBioDataController>()
+        .currentUserBioData
+        ?.data
+        ?.biodata
+        ?.familyInfo;
 
     if (_familyInfoData != null) {
-      _familyInfoController.fathersNameController.text = _familyInfoData.fatherName ?? '';
-      _familyInfoController.selectedFatherAlive = _alive.firstWhereOrNull((item) => item.value == _familyInfoData.fatherAlive);
-      _familyInfoController.fathersProfessionController.text = _familyInfoData.fatherOccupation ?? '';
-      _familyInfoController.mothersNameController.text = _familyInfoData.motherName ?? '';
-      _familyInfoController.selectedMotherAlive = _alive.firstWhereOrNull((item) => item.value == _familyInfoData.motherAlive);
-      _familyInfoController.mothersProfessionController.text = _familyInfoData.motherOccupation ?? '';
-      _familyInfoController.brotherCountController.text = _familyInfoData.brotherCount ?? '';
-      _familyInfoController.brothersInfoController.text = _familyInfoData.brothersInfo ?? '';
-      _familyInfoController.sisterCountController.text = _familyInfoData.sisterCount ?? '';
-      _familyInfoController.sistersInfoController.text = _familyInfoData.sistersInfo ?? '';
-      _familyInfoController.professionOfUnclesController.text = _familyInfoData.uncleAuntOccuption ?? '';
-      _familyInfoController.selectedFamilyIncomeStatus = _familyIncomeStatus.firstWhereOrNull((item) => item.value == _familyInfoData.familyStatus);
-      _familyInfoController.religiousConditionController.text = _familyInfoData.familyReligiousEnvironment ?? '';
+      _assignData(_familyInfoData);
     } else {
-      _familyInfoController.fathersNameController.text = '';
-      _familyInfoController.selectedFatherAlive = null;
-      _familyInfoController.fathersProfessionController.text = '';
-      _familyInfoController.mothersNameController.text = '';
-      _familyInfoController.selectedMotherAlive = null;
-      _familyInfoController.mothersProfessionController.text = '';
-      _familyInfoController.brotherCountController.text = '';
-      _familyInfoController.brothersInfoController.text = '';
-      _familyInfoController.sisterCountController.text = '';
-      _familyInfoController.sistersInfoController.text = '';
-      _familyInfoController.professionOfUnclesController.text = '';
-      _familyInfoController.selectedFamilyIncomeStatus = null;
-      _familyInfoController.religiousConditionController.text = '';
+      _clearData();
     }
   }
 
@@ -92,7 +73,6 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
                   .bodySmall!
                   .copyWith(color: violetClr)),
           Gap(16.h),
-
           InputTitleText(title: "fatherAliveTitle".tr),
           Gap(4.h),
           CustomDropdownButtonTest(
@@ -105,13 +85,11 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
                 });
               }),
           Gap(16.h),
-
           InputTitleText(title: "fathersProfessionTitle".tr),
           Gap(4.h),
           CustomTextFormField(
-            controller: _familyInfoController.fathersProfessionController,
-            validator: requiredValidator
-          ),
+              controller: _familyInfoController.fathersProfessionController,
+              validator: requiredValidator),
           Gap(4.h),
           Text('fathersProfessionNB'.tr,
               style: Theme.of(context)
@@ -143,14 +121,12 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
                 });
               }),
           Gap(16.h),
-
           InputTitleText(title: "mothersProfessionTitle".tr),
           Gap(4.h),
           CustomTextFormField(
               controller: _familyInfoController.mothersProfessionController,
               validator: requiredValidator),
           Gap(16.h),
-
           InputTitleText(title: "brothersCountTitle".tr),
           Gap(4.h),
           CustomTextFormField(
@@ -158,14 +134,12 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
               controller: _familyInfoController.brotherCountController,
               keyBoardType: TextInputType.phone),
           Gap(16.h),
-
           InputTitleText(title: "brothersInfoTitle".tr, isRequired: false),
           Gap(4.h),
           CustomTextFormField(
               controller: _familyInfoController.brothersInfoController,
               maxLines: 5),
           Gap(16.h),
-
           InputTitleText(title: "sistersCountTitle".tr),
           Gap(4.h),
           CustomTextFormField(
@@ -185,7 +159,8 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
                   .bodySmall!
                   .copyWith(color: violetClr)),
           Gap(16.h),
-          InputTitleText(title: "professionOfUnclesTitle".tr, isRequired: false),
+          InputTitleText(
+              title: "professionOfUnclesTitle".tr, isRequired: false),
           Gap(4.h),
           CustomTextFormField(
               controller: _familyInfoController.professionOfUnclesController,
@@ -221,5 +196,50 @@ class _FamilyInfoFormState extends State<FamilyInfoForm> {
         ],
       ),
     );
+  }
+
+  void _assignData(FamilyInfo _familyInfoData) {
+    _familyInfoController.fathersNameController.text =
+        _familyInfoData.fatherName ?? '';
+    _familyInfoController.selectedFatherAlive = _alive
+        .firstWhereOrNull((item) => item.value == _familyInfoData.fatherAlive);
+    _familyInfoController.fathersProfessionController.text =
+        _familyInfoData.fatherOccupation ?? '';
+    _familyInfoController.mothersNameController.text =
+        _familyInfoData.motherName ?? '';
+    _familyInfoController.selectedMotherAlive = _alive
+        .firstWhereOrNull((item) => item.value == _familyInfoData.motherAlive);
+    _familyInfoController.mothersProfessionController.text =
+        _familyInfoData.motherOccupation ?? '';
+    _familyInfoController.brotherCountController.text =
+        _familyInfoData.brotherCount ?? '';
+    _familyInfoController.brothersInfoController.text =
+        _familyInfoData.brothersInfo ?? '';
+    _familyInfoController.sisterCountController.text =
+        _familyInfoData.sisterCount ?? '';
+    _familyInfoController.sistersInfoController.text =
+        _familyInfoData.sistersInfo ?? '';
+    _familyInfoController.professionOfUnclesController.text =
+        _familyInfoData.uncleAuntOccuption ?? '';
+    _familyInfoController.selectedFamilyIncomeStatus = _familyIncomeStatus
+        .firstWhereOrNull((item) => item.value == _familyInfoData.familyStatus);
+    _familyInfoController.religiousConditionController.text =
+        _familyInfoData.familyReligiousEnvironment ?? '';
+  }
+
+  void _clearData() {
+    _familyInfoController.fathersNameController.clear();
+    _familyInfoController.selectedFatherAlive = null;
+    _familyInfoController.fathersProfessionController.clear();
+    _familyInfoController.mothersNameController.clear();
+    _familyInfoController.selectedMotherAlive = null;
+    _familyInfoController.mothersProfessionController.clear();
+    _familyInfoController.brotherCountController.clear();
+    _familyInfoController.brothersInfoController.clear();
+    _familyInfoController.sisterCountController.clear();
+    _familyInfoController.sistersInfoController.clear();
+    _familyInfoController.professionOfUnclesController.clear();
+    _familyInfoController.selectedFamilyIncomeStatus = null;
+    _familyInfoController.religiousConditionController.clear();
   }
 }

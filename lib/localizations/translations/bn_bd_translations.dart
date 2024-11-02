@@ -362,6 +362,13 @@ final Map<String, String> bnBd = {
   'faqAns3':
       "১. আপনি যদি মুসলিম না হন।\n ২. আপনি যদি মিথ্যা তথ্য প্রদান করেন।\n ৩. আপনি যদি সমস্ত তথ্য পূরণ না করেন। \n ৪. আপনার যোগাযোগের তথ্য যদি সঠিক না হয়। \n ৫. আপনি যদি আমাদের শর্তাবলীতে সম্মত না হন।",
 
+  // For SubmitBioData Bottom Sheet
+  'submitTitle': 'সাবমিট বায়োডাটা',
+  'submitSubTitle': 'আপনি কি আপনার বায়োডাটা সাবমিট করতে চান?',
+  'submitCancelBtn': 'বাতিল',
+  'submitBtn': 'সাবমিট',
+
+
   // For WishList Screen
   'wishlistAppbarTitle': 'প্রিয় বায়োডাটা',
 

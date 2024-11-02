@@ -19,19 +19,26 @@ class AddressForm extends StatefulWidget {
 
 class _AddressFormState extends State<AddressForm> {
   late List<Division> divisions;
-
+  final _addressInfoController = Get.find<AddressInfoController>();
   @override
   void initState() {
     super.initState();
 
-    final _bioData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata;
+    final _bioData = Get.find<CurrentUserBioDataController>()
+        .currentUserBioData
+        ?.data
+        ?.biodata;
 
     // Permanent Address Null Check
     if (_bioData?.permanentAddress != null) {
-      _addressInfoController.divisionController.text = _bioData!.permanentAddress!.division ?? '';
-      _addressInfoController.districtController.text = _bioData.permanentAddress!.district ?? '';
-      _addressInfoController.subDistrictController.text = _bioData.permanentAddress!.subDistrict ?? '';
-      _addressInfoController.areaController.text = _bioData.permanentAddress!.areaName ?? '';
+      _addressInfoController.divisionController.text =
+          _bioData!.permanentAddress!.division ?? '';
+      _addressInfoController.districtController.text =
+          _bioData.permanentAddress!.district ?? '';
+      _addressInfoController.subDistrictController.text =
+          _bioData.permanentAddress!.subDistrict ?? '';
+      _addressInfoController.areaController.text =
+          _bioData.permanentAddress!.areaName ?? '';
     } else {
       _addressInfoController.divisionController.clear();
       _addressInfoController.districtController.clear();
@@ -41,10 +48,14 @@ class _AddressFormState extends State<AddressForm> {
 
     // Present Address Null Check
     if (_bioData?.currentAddress != null) {
-      _addressInfoController.currentDivisionController.text = _bioData!.currentAddress!.currentDivision ?? '';
-      _addressInfoController.currentDistrictController.text = _bioData.currentAddress!.currentDistrict ?? '';
-      _addressInfoController.currentSubDistrictController.text = _bioData.currentAddress!.currentSubDistrict ?? '';
-      _addressInfoController.currentAreaController.text = _bioData.currentAddress!.areaName ?? '';
+      _addressInfoController.currentDivisionController.text =
+          _bioData!.currentAddress!.currentDivision ?? '';
+      _addressInfoController.currentDistrictController.text =
+          _bioData.currentAddress!.currentDistrict ?? '';
+      _addressInfoController.currentSubDistrictController.text =
+          _bioData.currentAddress!.currentSubDistrict ?? '';
+      _addressInfoController.currentAreaController.text =
+          _bioData.currentAddress!.areaName ?? '';
     } else {
       _addressInfoController.currentDivisionController.clear();
       _addressInfoController.currentDistrictController.clear();
@@ -59,9 +70,6 @@ class _AddressFormState extends State<AddressForm> {
       _addressInfoController.growUpController.clear();
     }
   }
-
-
-  final _addressInfoController = Get.find<AddressInfoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +93,7 @@ class _AddressFormState extends State<AddressForm> {
           //   },
           // ),
           CustomTextFormField(
-            hintText: 'divisionHint'.tr,
+              hintText: 'divisionHint'.tr,
               controller: _addressInfoController.divisionController,
               validator: requiredValidator),
           Gap(8.h),
@@ -93,7 +101,7 @@ class _AddressFormState extends State<AddressForm> {
             children: [
               Expanded(
                   child: CustomTextFormField(
-                    hintText: 'districtHint'.tr,
+                      hintText: 'districtHint'.tr,
                       controller: _addressInfoController.districtController,
                       validator: requiredValidator)),
               // Expanded(
@@ -112,7 +120,7 @@ class _AddressFormState extends State<AddressForm> {
               Gap(8.w),
               Expanded(
                   child: CustomTextFormField(
-                    hintText: 'subDistrictHint'.tr,
+                      hintText: 'subDistrictHint'.tr,
                       controller: _addressInfoController.subDistrictController,
                       validator: requiredValidator)),
               // Expanded(
@@ -134,9 +142,11 @@ class _AddressFormState extends State<AddressForm> {
               hintText: 'areaNameHint'.tr,
               controller: _addressInfoController.areaController),
           Gap(4.h),
-          Text(
-              'areaNameNB'.tr,
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.violetClr)),
+          Text('areaNameNB'.tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: AppColors.violetClr)),
           Gap(16.h),
           InputTitleText(title: 'presentAddressTitle'.tr),
           Row(
@@ -160,8 +170,9 @@ class _AddressFormState extends State<AddressForm> {
             replacement: Column(
               children: [
                 CustomTextFormField(
-                  hintText: 'divisionHint'.tr,
-                    controller: _addressInfoController.currentDivisionController,
+                    hintText: 'divisionHint'.tr,
+                    controller:
+                        _addressInfoController.currentDivisionController,
                     validator: requiredValidator),
                 // CustomDropdownButton1<Division>(
                 //   validator: dropdownValidator,
@@ -180,8 +191,9 @@ class _AddressFormState extends State<AddressForm> {
                   children: [
                     Expanded(
                         child: CustomTextFormField(
-                          hintText: 'districtHint'.tr,
-                            controller: _addressInfoController.currentDistrictController,
+                            hintText: 'districtHint'.tr,
+                            controller: _addressInfoController
+                                .currentDistrictController,
                             validator: requiredValidator)),
                     // Expanded(
                     //   child: CustomDropdownButton1<District>(
@@ -199,8 +211,9 @@ class _AddressFormState extends State<AddressForm> {
                     Gap(8.w),
                     Expanded(
                         child: CustomTextFormField(
-                          hintText: 'subDistrictHint'.tr,
-                            controller: _addressInfoController.currentSubDistrictController,
+                            hintText: 'subDistrictHint'.tr,
+                            controller: _addressInfoController
+                                .currentSubDistrictController,
                             validator: requiredValidator)),
                     // Expanded(
                     //   child: CustomDropdownButton1<SubDistrict>(
@@ -221,15 +234,20 @@ class _AddressFormState extends State<AddressForm> {
                     hintText: 'areaNameHint'.tr,
                     controller: _addressInfoController.currentAreaController),
                 Gap(4.h),
-                Text(
-                    'areaNameNB'.tr,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.violetClr)),
+                Text('areaNameNB'.tr,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: AppColors.violetClr)),
               ],
             ),
             child: const SizedBox(),
           ),
           Gap(16.h),
-          InputTitleText(title: 'growUpTitle'.tr, isRequired: false,),
+          InputTitleText(
+            title: 'growUpTitle'.tr,
+            isRequired: false,
+          ),
           Gap(4.h),
           CustomTextFormField(
               controller: _addressInfoController.growUpController),

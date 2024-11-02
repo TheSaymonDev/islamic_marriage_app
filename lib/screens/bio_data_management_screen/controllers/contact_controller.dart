@@ -22,14 +22,6 @@ class ContactController extends GetxController {
     }
     _setLoading(true);
     try {
-      // final contact = Contact(
-      //     groomName: nameController.text,
-      //     guardianMobile: guardiansMobileController.text,
-      //     relationShipWithGuardian: relationshipController.text,
-      //     email: emailController.text);
-      // final Map<String, dynamic> data = {
-      //   "contactInfo": contact.toJson(),
-      // };
       final data = ContactInfoModel(
         contactInfo: ContactInfo(
             groomName: nameController.text,

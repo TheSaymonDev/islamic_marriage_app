@@ -10,21 +10,10 @@ import 'package:islamic_marriage/widgets/custom_expansion_tile.dart';
 import 'package:islamic_marriage/widgets/custom_bio_data_table.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
-class MyBioDataScreen extends StatefulWidget {
+class MyBioDataScreen extends StatelessWidget {
   const MyBioDataScreen({
     super.key,
   });
-
-  @override
-  State<MyBioDataScreen> createState() => _MyBioDataScreenState();
-}
-
-class _MyBioDataScreenState extends State<MyBioDataScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Get.find<MyBioDataController>().getCurrentUser();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +31,12 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
           child: GetBuilder<MyBioDataController>(
             builder: (controller) => controller.isLoading
                 ? customCircularProgressIndicator
-                : _buildMyBioData(controller),
+                : _buildMyBioData(context, controller),
           ),
         ));
   }
 
-  Widget _buildMyBioData(MyBioDataController controller) {
+  Widget _buildMyBioData(BuildContext context, MyBioDataController controller) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -74,36 +63,49 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
                         .titleLarge!
                         .copyWith(color: darkFontClr)),
                 Gap(8.h),
-                CustomBioDataTable(data: removeEmptyFields(generateGeneralInfo(controller))),
+                CustomBioDataTable(
+                    data: removeEmptyFields(generateGeneralInfo(controller))),
               ],
             ),
           ),
           CustomExpansionTile(title: 'addressTitle'.tr, children: [
-            CustomBioDataTable(data: removeEmptyFields(generateAddress(controller)))
+            CustomBioDataTable(
+                data: removeEmptyFields(generateAddress(controller)))
           ]),
           CustomExpansionTile(title: 'eduQualificationTitle'.tr, children: [
-            CustomBioDataTable(data: removeEmptyFields(generateEduQualificationInfo(controller)))
+            CustomBioDataTable(
+                data:
+                    removeEmptyFields(generateEduQualificationInfo(controller)))
           ]),
           CustomExpansionTile(title: 'familyInfoTitle'.tr, children: [
-            CustomBioDataTable(data: removeEmptyFields(generateFamilyInfo(controller)))
+            CustomBioDataTable(
+                data: removeEmptyFields(generateFamilyInfo(controller)))
           ]),
           CustomExpansionTile(title: 'personalInfoTitle'.tr, children: [
-            CustomBioDataTable(data: removeEmptyFields(generatePersonalInfo(controller)))
+            CustomBioDataTable(
+                data: removeEmptyFields(generatePersonalInfo(controller)))
           ]),
           CustomExpansionTile(title: 'occupationalInfoTitle'.tr, children: [
-            CustomBioDataTable(data: removeEmptyFields(generateOccupationalInfo(controller)))
+            CustomBioDataTable(
+                data: removeEmptyFields(generateOccupationalInfo(controller)))
           ]),
           CustomExpansionTile(title: 'marriageInfoTitle'.tr, children: [
-            CustomBioDataTable(data: removeEmptyFields(generateMarriageRelatedInfo(controller)))
+            CustomBioDataTable(
+                data:
+                    removeEmptyFields(generateMarriageRelatedInfo(controller)))
           ]),
           CustomExpansionTile(title: 'expectedLifePartnerTitle'.tr, children: [
-            CustomBioDataTable(data: removeEmptyFields(generateExpectedLifePartner(controller)))
+            CustomBioDataTable(
+                data:
+                    removeEmptyFields(generateExpectedLifePartner(controller)))
           ]),
-          CustomExpansionTile(
-              title: 'authorizedQueTitle'.tr,
-              children: [CustomBioDataTable(data: removeEmptyFields(generatePledge(controller)))]),
+          CustomExpansionTile(title: 'authorizedQueTitle'.tr, children: [
+            CustomBioDataTable(
+                data: removeEmptyFields(generatePledge(controller)))
+          ]),
           CustomExpansionTile(title: 'contactTitle'.tr, children: [
-            CustomBioDataTable(data: removeEmptyFields(generateContact(controller)))
+            CustomBioDataTable(
+                data: removeEmptyFields(generateContact(controller)))
           ]),
         ],
       ),
@@ -116,7 +118,7 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
   }
 
   Map<String, String?> generateGeneralInfo(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.generalInfo;
+    final data = controller.myBioData?.data?.biodata?.generalInfo;
     if (data != null) {
       return {
         'bioDataTypeTitle'.tr: data.bioDataType ?? '',
@@ -144,17 +146,16 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
   }
 
   Map<String, String?> generateAddress(MyBioDataController controller) {
-    final permanentAdd =
-        controller.currentUser?.data?.biodata?.permanentAddress;
-    final currentAdd = controller.currentUser?.data?.biodata?.currentAddress;
-    final grewUp = controller.currentUser?.data?.biodata?.grewUp;
+    final permanentAdd = controller.myBioData?.data?.biodata?.permanentAddress;
+    final currentAdd = controller.myBioData?.data?.biodata?.currentAddress;
+    final grewUp = controller.myBioData?.data?.biodata?.grewUp;
 
     return {
       'permanentAddressTitle'.tr: permanentAdd != null
           ? '${permanentAdd.division ?? ''}, ${permanentAdd.district ?? ''}, ${permanentAdd.subDistrict ?? ''}'
           : '',
       'presentAddressTitle'.tr: currentAdd != null
-          ? '${currentAdd.division ?? ''}, ${currentAdd.district ?? ''}, ${currentAdd.subDistrict ?? ''}'
+          ? '${currentAdd.currentDivision ?? ''}, ${currentAdd.currentDistrict ?? ''}, ${currentAdd.currentSubDistrict ?? ''}'
           : '',
       'growUpTitle'.tr: grewUp ?? '',
     };
@@ -162,7 +163,7 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
 
   Map<String, String?> generateEduQualificationInfo(
       MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.educationInfo;
+    final data = controller.myBioData?.data?.biodata?.educationInfo;
     return {
       'educationalMethodTitle'.tr: data?.educationMethod ?? '',
       'highestEducationalTitle'.tr: data?.highestEducation ?? '',
@@ -175,7 +176,7 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
   }
 
   Map<String, String?> generateFamilyInfo(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.familyInfo;
+    final data = controller.myBioData?.data?.biodata?.familyInfo;
     return {
       "fathersNameTitle".tr: data?.fatherName ?? '',
       'fatherAliveTitle'.tr: data?.fatherAlive ?? '',
@@ -190,17 +191,16 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
       'professionOfUnclesTitle'.tr: data?.uncleAuntOccuption ?? '',
       'familyIncomeStatusTitle'.tr: data?.familyStatus ?? '',
       "familyReligiousConditionTitle".tr:
-          data?.familyRelagiousEnvironment ?? '',
+          data?.familyReligiousEnvironment ?? '',
     };
   }
 
   Map<String, String?> generatePersonalInfo(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.personalInfo;
+    final data = controller.myBioData?.data?.biodata?.personalInfo;
     return {
       'clothingOutSideTitle'.tr: data?.clothingOutside ?? '',
       'sunnahBeardSinceTitle'.tr: data?.sunnahBeardSince ?? '',
-      'clothesAboveAnklesTitle'.tr:
-          data?.clothesAboveAnkles?.toString() ?? '',
+      'clothesAboveAnklesTitle'.tr: data?.clothesAboveAnkles?.toString() ?? '',
       'fiveTimesPrayerSinceTitle'.tr: data?.fiveTimesPrayerSince ?? '',
       'prayerMissWeeklyTitle'.tr: data?.prayerMissDaily ?? '',
       'complyMahramNonMahramTitle'.tr: data?.complyNonMahram ?? '',
@@ -219,7 +219,7 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
 
   Map<String, String?> generateOccupationalInfo(
       MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.occupationInfo;
+    final data = controller.myBioData?.data?.biodata?.occupationInfo;
     return {
       'occupationTitle'.tr: data?.occupation ?? '',
       'descriptionOfProfessionTitle'.tr: data?.descriptionOfProfession ?? '',
@@ -229,7 +229,7 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
 
   Map<String, String?> generateMarriageRelatedInfo(
       MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.marriageInfo;
+    final data = controller.myBioData?.data?.biodata?.marriageInfo;
     return {
       'guardianAgreeTitle'.tr: data?.guardianAgree ?? '',
       'wifeInVeilTitle'.tr: data?.wifeInVeil ?? '',
@@ -243,9 +243,11 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
 
   Map<String, String?> generateExpectedLifePartner(
       MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.expectedLifePartnerInfo;
+    final data = controller.myBioData?.data?.biodata?.expectedLifePartnerInfo;
     return {
-      //'expectedAgeTitle'.tr: data != null ? '${data.expectedMinAge ?? 'N/A'}-${data.expectedMaxAge ?? 'N/A'}' : 'N/A',
+      'expectedAgeTitle'.tr: data != null
+          ? '${data.expectedMinAge ?? ''}-${data.expectedMaxAge ?? ''}'
+          : '',
       'expectedComplexionTitle'.tr: data?.expectedComplexion ?? '',
       'expectedHeightTitle'.tr: data?.expectedHeight ?? '',
       'expectedEducationTitle'.tr: data?.exptectedEducation ?? '',
@@ -259,7 +261,7 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
   }
 
   Map<String, String?> generatePledge(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.pledgeInfo;
+    final data = controller.myBioData?.data?.biodata?.pledgeInfo;
     return {
       'parentalAwarenessTitle'.tr: data?.parentalAwareness ?? '',
       'informationTruthTitle'.tr: data?.informationTruth ?? '',
@@ -268,12 +270,11 @@ class _MyBioDataScreenState extends State<MyBioDataScreen> {
   }
 
   Map<String, String?> generateContact(MyBioDataController controller) {
-    final data = controller.currentUser?.data?.biodata?.contactInfo;
+    final data = controller.myBioData?.data?.biodata?.contactInfo;
     return {
       "brideOrGroomNameTitle".tr: data?.groomName ?? '',
       "guardiansPhoneTitle".tr: data?.guardianMobile ?? '',
-      'relationshipWithGuardianTitle'.tr:
-          data?.relationShipWithGuardian ?? '',
+      'relationshipWithGuardianTitle'.tr: data?.relationShipWithGuardian ?? '',
       'emailToReceivedBioDataTitle'.tr: data?.email ?? '',
     };
   }

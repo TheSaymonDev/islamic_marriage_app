@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:im_stepper/stepper.dart';
+import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/address_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/contact_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
@@ -15,6 +16,7 @@ import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/occupational_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/personal_info_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/pledge_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/submit_bio_data_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/address_info_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/contact_form.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/edu_qualifications_form.dart';
@@ -28,6 +30,7 @@ import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/pled
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/widgets/custom_appbar/custom_appbar.dart';
+import 'package:islamic_marriage/widgets/custom_bottom_sheet.dart';
 import 'package:islamic_marriage/widgets/custom_elevated_button.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
@@ -126,7 +129,6 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
                     ],
                   )),
       ),
-
     );
   }
 
@@ -274,8 +276,7 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
                   CustomElevatedButton(
                     onPressed: () async {
                       if (controller.formKey.currentState!.validate()) {
-                        final result =
-                            await controller.upsertEduInfo();
+                        final result = await controller.upsertEduInfo();
                         if (result) {
                           setState(() {
                             activeStep++;
@@ -461,9 +462,7 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
                       if (controller.formKey.currentState!.validate()) {
                         final result = await controller.upsertContact();
                         if (result) {
-                          setState(() {
-                            Navigator.pop(context);
-                          });
+                          _showSubmitBioDataBottomSheet(context);
                         }
                       }
                     },
@@ -484,5 +483,48 @@ class _BioDataManagementScreenState extends State<BioDataManagementScreen> {
       buttonName: 'previousBtn'.tr,
       buttonWidth: 140.w,
     );
+  }
+
+  void _showSubmitBioDataBottomSheet(BuildContext context) {
+    Get.bottomSheet(CustomBottomSheet(children: [
+      Center(
+          child: Container(
+              height: 5.h,
+              width: 60.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.r), color: violetClr))),
+      Gap(32.h),
+      Center(
+          child: Text('submitTitle'.tr,
+              style: Theme.of(context).textTheme.titleLarge)),
+      Gap(16.h),
+      Center(
+          child: Text('submitSubTitle'.tr,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center)),
+      Gap(32.h),
+      Row(
+        children: [
+          Expanded(
+              child: CustomElevatedButton(
+                  onPressed: () => Get.back(),
+                  buttonName: 'submitCancelBtn'.tr)),
+          Gap(32.w),
+          Expanded(
+              child: GetBuilder<SubmitBioDataController>(
+                  builder: (controller) => controller.isLoading
+                      ? customCircularProgressIndicator
+                      : CustomElevatedButton(
+                          onPressed: () async {
+                            final result = await controller.submitBioData();
+                            if (result) {
+                              Get.offNamed(AppRoutes.homeScreen);
+                            }
+                          },
+                          buttonName: 'submitBtn'.tr)))
+        ],
+      ),
+      Gap(32.h)
+    ]));
   }
 }

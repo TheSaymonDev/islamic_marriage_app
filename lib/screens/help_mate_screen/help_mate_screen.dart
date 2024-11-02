@@ -4,8 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/routes/app_routes.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
-import 'package:islamic_marriage/screens/explore_screens/models/all_user.dart';
-import 'package:islamic_marriage/screens/help_mate_screen/controllers/all_bio_data_controller.dart';
+import 'package:islamic_marriage/screens/explore_screens/models/all_bio_data_model.dart';
+import 'package:islamic_marriage/screens/help_mate_screen/controllers/filtered_bio_data_controller.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_text_styles.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -41,7 +41,7 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AllBioDataController>(builder: (controller) {
+    return GetBuilder<FilteredBioDataController>(builder: (controller) {
       return Container(
         height: double.infinity.h,
         width: double.infinity.w,
@@ -78,7 +78,7 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
     });
   }
 
-  Row _buildClearItem(AllBioDataController controller) {
+  Row _buildClearItem(FilteredBioDataController controller) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -98,7 +98,7 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
     );
   }
 
-  Column _buildSearchFiltering(AllBioDataController controller) {
+  Column _buildSearchFiltering(FilteredBioDataController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -187,7 +187,7 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
     );
   }
 
-  Widget _buildBioData(AllBioDataController controller) {
+  Widget _buildBioData(FilteredBioDataController controller) {
     return ListView.separated(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -201,7 +201,7 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
     );
   }
 
-  CustomBioDataBg _buildBioDataCard(Data bioData) {
+  CustomBioDataBg _buildBioDataCard(Data user) {
     return CustomBioDataBg(
       child: Column(
         children: [
@@ -214,16 +214,16 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
           ),
           Gap(8.h),
           Text(
-              'Name ${(bioData.contactInfo?.groomName ?? 'N/A').toUpperCase()}',
+              'Name ${(user.biodata?.contactInfo?.groomName ?? '').toUpperCase()}',
               style: AppTextStyles.titleLarge(color: AppColors.whiteClr)),
           Gap(16.h),
-          CustomBioDataTable(data: generateGeneralInfo(bioData)),
+          CustomBioDataTable(data: generateGeneralInfo(user)),
           Gap(16.h),
           CustomElevatedButton(
             onPressed: () {
               Get.toNamed(
                 AppRoutes.bioDataDetailsScreen,
-                arguments: {'user': bioData},
+                arguments: {'user': user},
               );
             },
             buttonName: 'Full Bio Data',
@@ -235,8 +235,8 @@ class _HelpMateScreenState extends State<HelpMateScreen> {
     );
   }
 
-  Map<String, String?> generateGeneralInfo(Data bioData) {
-    final data = bioData.generalInfo;
+  Map<String, String?> generateGeneralInfo(Data user) {
+    final data = user.biodata?.generalInfo;
     if (data != null) {
       return {
         'Date of Birth':

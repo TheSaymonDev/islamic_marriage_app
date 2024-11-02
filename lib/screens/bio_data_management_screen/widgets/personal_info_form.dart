@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/personal_info_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/current_user_biodata_model.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
@@ -30,102 +31,22 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
 
   String? imageUrl;
   final _personalInfoController = Get.find<PersonalInfoController>();
-  String? _bioDataType ;
+  String? _bioDataType;
 
   @override
   void initState() {
     super.initState();
-   _initializeData();
-  }
-
-  void _initializeData() {
-    final currentBioData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata;
+    final currentBioData = Get.find<CurrentUserBioDataController>()
+        .currentUserBioData
+        ?.data
+        ?.biodata;
     _bioDataType = currentBioData?.generalInfo?.bioDataType;
     final personalInfo = currentBioData?.personalInfo;
-
     if (personalInfo != null) {
-      _personalInfoController.clothesController.text = personalInfo.clothingOutside ?? '';
-      _personalInfoController.beardController.text = personalInfo.sunnahBeardSince ?? '';
-      _personalInfoController.aboveTheAnklesController.text = personalInfo.clothesAboveAnkles ?? '';
-      _personalInfoController.veilController.text = personalInfo.veil ?? '';
-      _personalInfoController.prayController.text = personalInfo.fiveTimesPrayerSince ?? '';
-      _personalInfoController.qazaController.text = personalInfo.prayerMissDaily ?? '';
-      _personalInfoController.mahramController.text = personalInfo.complyNonMahram ?? '';
-      _personalInfoController.reciteQuranController.text = personalInfo.reciteQuranCorrectly ?? '';
-      _personalInfoController.selectedFiqh = _fiqh.firstWhereOrNull((item) => item.value == personalInfo.followedFiqah);
-      _personalInfoController.watchOrListenController.text = personalInfo.watchIslamicDramaSong ?? '';
-      _personalInfoController.diseaseController.text = personalInfo.mentalPhysicalDiseases ?? '';
-      _personalInfoController.specialWorkController.text = personalInfo.involvedSpecialDeenWork ?? '';
-      _personalInfoController.mazarController.text = personalInfo.believeAboutMazar ?? '';
-      _personalInfoController.islamicBooksController.text = personalInfo.islamicReadedBookName ?? '';
-      _personalInfoController.islamicScholarsController.text = personalInfo.islamicFollowedScholarName ?? '';
-      _personalInfoController.hobbiesController.text = personalInfo.hobbiesLikeDislike ?? '';
-      _personalInfoController.mobileController.text = personalInfo.groomPhone ?? '';
-      _personalInfoController.imageUrl = personalInfo.groomSelfieUrl ?? '';
+      _assignData(personalInfo);
     } else {
-      _clearAllFields();
+      _clearData();
     }
-  }
-
-  void _clearAllFields() {
-    _personalInfoController.clothesController.clear();
-    _personalInfoController.beardController.clear();
-    _personalInfoController.aboveTheAnklesController.clear();
-    _personalInfoController.veilController.clear();
-    _personalInfoController.prayController.clear();
-    _personalInfoController.qazaController.clear();
-    _personalInfoController.mahramController.clear();
-    _personalInfoController.reciteQuranController.clear();
-    _personalInfoController.selectedFiqh = null;
-    _personalInfoController.watchOrListenController.clear();
-    _personalInfoController.diseaseController.clear();
-    _personalInfoController.specialWorkController.clear();
-    _personalInfoController.mazarController.clear();
-    _personalInfoController.islamicBooksController.clear();
-    _personalInfoController.islamicScholarsController.clear();
-    _personalInfoController.hobbiesController.clear();
-    _personalInfoController.mobileController.clear();
-    _personalInfoController.imageUrl = null;
-  }
-
-  Widget _maleBioDataWidget() {
-    _personalInfoController.veilController.clear();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InputTitleText(title: "sunnahBeardSinceTitle".tr),
-        Gap(4.h),
-        CustomTextFormField(
-          validator: requiredValidator,
-          controller: _personalInfoController.beardController,
-        ),
-        Gap(4.h),
-        Text('sunnahBeardSinceNB'.tr, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: violetClr)),
-        Gap(16.h),
-        InputTitleText(title: "clothesAboveAnklesTitle".tr),
-        Gap(4.h),
-        CustomTextFormField(
-          validator: requiredValidator,
-          controller: _personalInfoController.aboveTheAnklesController,
-        ),
-      ],
-    );
-  }
-
-  Widget _femaleBioDataWidget() {
-    _personalInfoController.beardController.clear();
-    _personalInfoController.aboveTheAnklesController.clear();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InputTitleText(title: "veilTitle".tr),
-        Gap(4.h),
-        CustomTextFormField(
-          validator: requiredValidator,
-          controller: _personalInfoController.veilController,
-        ),
-      ],
-    );
   }
 
   @override
@@ -149,7 +70,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                 .copyWith(color: violetClr),
           ),
           Gap(16.h),
-          _bioDataType == 'malesBioData' ? _maleBioDataWidget() : _femaleBioDataWidget(),
+          _bioDataType == 'malesBioData'
+              ? _maleBioDataWidget()
+              : _femaleBioDataWidget(),
           Gap(16.h),
           InputTitleText(title: "fiveTimesPrayerSinceTitle".tr),
           Gap(4.h),
@@ -338,5 +261,107 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         ],
       );
     });
+  }
+
+  void _assignData(PersonalInfo personalInfo) {
+    _personalInfoController.clothesController.text =
+        personalInfo.clothingOutside ?? '';
+    _personalInfoController.beardController.text =
+        personalInfo.sunnahBeardSince ?? '';
+    _personalInfoController.aboveTheAnklesController.text =
+        personalInfo.clothesAboveAnkles ?? '';
+    _personalInfoController.veilController.text = personalInfo.veil ?? '';
+    _personalInfoController.prayController.text =
+        personalInfo.fiveTimesPrayerSince ?? '';
+    _personalInfoController.qazaController.text =
+        personalInfo.prayerMissDaily ?? '';
+    _personalInfoController.mahramController.text =
+        personalInfo.complyNonMahram ?? '';
+    _personalInfoController.reciteQuranController.text =
+        personalInfo.reciteQuranCorrectly ?? '';
+    _personalInfoController.selectedFiqh = _fiqh
+        .firstWhereOrNull((item) => item.value == personalInfo.followedFiqah);
+    _personalInfoController.watchOrListenController.text =
+        personalInfo.watchIslamicDramaSong ?? '';
+    _personalInfoController.diseaseController.text =
+        personalInfo.mentalPhysicalDiseases ?? '';
+    _personalInfoController.specialWorkController.text =
+        personalInfo.involvedSpecialDeenWork ?? '';
+    _personalInfoController.mazarController.text =
+        personalInfo.believeAboutMazar ?? '';
+    _personalInfoController.islamicBooksController.text =
+        personalInfo.islamicReadedBookName ?? '';
+    _personalInfoController.islamicScholarsController.text =
+        personalInfo.islamicFollowedScholarName ?? '';
+    _personalInfoController.hobbiesController.text =
+        personalInfo.hobbiesLikeDislike ?? '';
+    _personalInfoController.mobileController.text =
+        personalInfo.groomPhone ?? '';
+    _personalInfoController.imageUrl = personalInfo.groomSelfieUrl ?? '';
+  }
+
+  void _clearData() {
+    _personalInfoController.clothesController.clear();
+    _personalInfoController.beardController.clear();
+    _personalInfoController.aboveTheAnklesController.clear();
+    _personalInfoController.veilController.clear();
+    _personalInfoController.prayController.clear();
+    _personalInfoController.qazaController.clear();
+    _personalInfoController.mahramController.clear();
+    _personalInfoController.reciteQuranController.clear();
+    _personalInfoController.selectedFiqh = null;
+    _personalInfoController.watchOrListenController.clear();
+    _personalInfoController.diseaseController.clear();
+    _personalInfoController.specialWorkController.clear();
+    _personalInfoController.mazarController.clear();
+    _personalInfoController.islamicBooksController.clear();
+    _personalInfoController.islamicScholarsController.clear();
+    _personalInfoController.hobbiesController.clear();
+    _personalInfoController.mobileController.clear();
+    _personalInfoController.imageUrl = null;
+  }
+
+  Widget _maleBioDataWidget() {
+    _personalInfoController.veilController.clear();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InputTitleText(title: "sunnahBeardSinceTitle".tr),
+        Gap(4.h),
+        CustomTextFormField(
+          validator: requiredValidator,
+          controller: _personalInfoController.beardController,
+        ),
+        Gap(4.h),
+        Text('sunnahBeardSinceNB'.tr,
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: violetClr)),
+        Gap(16.h),
+        InputTitleText(title: "clothesAboveAnklesTitle".tr),
+        Gap(4.h),
+        CustomTextFormField(
+          validator: requiredValidator,
+          controller: _personalInfoController.aboveTheAnklesController,
+        ),
+      ],
+    );
+  }
+
+  Widget _femaleBioDataWidget() {
+    _personalInfoController.beardController.clear();
+    _personalInfoController.aboveTheAnklesController.clear();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InputTitleText(title: "veilTitle".tr),
+        Gap(4.h),
+        CustomTextFormField(
+          validator: requiredValidator,
+          controller: _personalInfoController.veilController,
+        ),
+      ],
+    );
   }
 }

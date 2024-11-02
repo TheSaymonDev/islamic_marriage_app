@@ -1,16 +1,16 @@
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/explore_screens/models/all_user.dart';
+import 'package:islamic_marriage/screens/explore_screens/models/all_bio_data_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/services/shared_preference_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
-class AllUserController extends GetxController {
+class AllBioDataController extends GetxController {
   bool isLoading = false;
-  AllUser? allUser;
+  AllBioDataModel? allBioData;
 
-  Future<void> getAllUser() async {
+  Future<void> getAllBioData() async {
     if (!await ConnectivityService.isConnected()) {
       customErrorMessage(message: 'Please check your internet connection');
       return;
@@ -23,7 +23,7 @@ class AllUserController extends GetxController {
       );
 
       if (response.success) {
-        allUser = AllUser.fromJson(response.data);
+        allBioData = AllBioDataModel.fromJson(response.data);
         _setLoading(false);
       } else {
         final errorMessage =
@@ -49,7 +49,7 @@ class AllUserController extends GetxController {
     super.onInit();
     final token = SharedPreferencesService().getToken();
     if (token.isNotEmpty) {
-      getAllUser();
+      getAllBioData();
     }
   }
 }

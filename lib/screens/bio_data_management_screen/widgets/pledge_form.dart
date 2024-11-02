@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/pledge_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/current_user_biodata_model.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
@@ -34,19 +35,9 @@ class _PledgeFormState extends State<PledgeForm> {
         ?.pledgeInfo;
 
     if (_pledgeData != null) {
-      _pledgeController.selectedParentalAwareness = _pledge.firstWhereOrNull(
-          (item) => item.value == _pledgeData.parentalAwareness);
-      _pledgeController.selectedInformationTruth = _pledge.firstWhereOrNull(
-          (item) => item.value == _pledgeData.informationTruth);
-      _pledgeController.selectedAgreement = _pledge
-          .firstWhereOrNull((item) => item.value == _pledgeData.agreement);
-      _pledgeController.selectedNoAuthorityLiability = _pledge
-          .firstWhereOrNull((item) => item.value == _pledgeData.noAuthorityLiability);
+      _assignData(_pledgeData);
     } else {
-      _pledgeController.selectedParentalAwareness = null;
-      _pledgeController.selectedInformationTruth = null;
-      _pledgeController.selectedAgreement = null;
-      _pledgeController.selectedNoAuthorityLiability = null;
+      _clearData();
     }
   }
 
@@ -108,5 +99,23 @@ class _PledgeFormState extends State<PledgeForm> {
         ],
       ),
     );
+  }
+
+  void _assignData(PledgeInfo _pledgeData) {
+    _pledgeController.selectedParentalAwareness = _pledge.firstWhereOrNull(
+        (item) => item.value == _pledgeData.parentalAwareness);
+    _pledgeController.selectedInformationTruth = _pledge
+        .firstWhereOrNull((item) => item.value == _pledgeData.informationTruth);
+    _pledgeController.selectedAgreement =
+        _pledge.firstWhereOrNull((item) => item.value == _pledgeData.agreement);
+    _pledgeController.selectedNoAuthorityLiability = _pledge.firstWhereOrNull(
+        (item) => item.value == _pledgeData.noAuthorityLiability);
+  }
+
+  void _clearData() {
+    _pledgeController.selectedParentalAwareness = null;
+    _pledgeController.selectedInformationTruth = null;
+    _pledgeController.selectedAgreement = null;
+    _pledgeController.selectedNoAuthorityLiability = null;
   }
 }

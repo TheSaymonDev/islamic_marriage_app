@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
-import 'package:islamic_marriage/screens/explore_screens/models/all_user.dart';
+import 'package:islamic_marriage/screens/explore_screens/models/all_bio_data_model.dart';
 import 'package:islamic_marriage/services/api_service.dart';
 import 'package:islamic_marriage/services/connectivity_service.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 
-class AllBioDataController extends GetxController {
+class FilteredBioDataController extends GetxController {
   bool isLoading = false;
-  AllUser? allUser;
+  AllBioDataModel? allUser;
 
   DropdownItem? selectedBioDataType;
   DropdownItem? selectedMaritalStatus;
@@ -32,7 +32,7 @@ class AllBioDataController extends GetxController {
         headers: AppUrls.getHeaderWithToken,
       );
       if (response.success) {
-        allUser = AllUser.fromJson(response.data);
+        allUser = AllBioDataModel.fromJson(response.data);
         _setLoading(false);
       } else {
         _handleError(response.message['message'] ?? 'All Bio Data Read Failed');

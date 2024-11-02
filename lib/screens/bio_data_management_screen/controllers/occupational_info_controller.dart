@@ -21,14 +21,6 @@ class OccupationalInfoController extends GetxController {
     }
     _setLoading(true);
     try {
-      // final occupationalInfo = OccupationalInfo(
-      //   occupation: occupationController.text,
-      //   descriptionOfProfession: descriptionController.text,
-      //   monthlyIncome: incomeController.text
-      // );
-      // final Map<String, dynamic> data = {
-      //   "occupationInfo": occupationalInfo.toJson(),
-      // };
       final data = OccupationalInfoModel(
         occupationInfo: OccupationInfo(
             occupation: occupationController.text,

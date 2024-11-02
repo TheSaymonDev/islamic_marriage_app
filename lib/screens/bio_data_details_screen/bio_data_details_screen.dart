@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:islamic_marriage/screens/explore_screens/models/all_user.dart';
+import 'package:islamic_marriage/screens/explore_screens/models/all_bio_data_model.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
 import 'package:islamic_marriage/utils/app_constant_functions.dart';
 import 'package:islamic_marriage/utils/app_urls.dart';
@@ -132,7 +132,7 @@ class _BioDataDetailsScreenState extends State<BioDataDetailsScreen> {
   }
 
   Map<String, String?> generateGeneralInfo(Data user) {
-    final data = user.generalInfo;
+    final data = user.biodata?.generalInfo;
     if (data != null) {
       return {
         'bioDataTypeTitle'.tr: data.bioDataType ?? '',
@@ -160,9 +160,9 @@ class _BioDataDetailsScreenState extends State<BioDataDetailsScreen> {
   }
 
   Map<String, String?> generateAddress(Data user) {
-    final permanentAdd = user.permanentAddress;
-    final currentAdd = user.currentAddress;
-    final grewUp = user.grewUp;
+    final permanentAdd = user.biodata?.permanentAddress;
+    final currentAdd = user.biodata?.currentAddress;
+    final grewUp = user.biodata?.grewUp;
 
     return {
       'permanentAddressTitle'.tr: permanentAdd != null
@@ -176,7 +176,7 @@ class _BioDataDetailsScreenState extends State<BioDataDetailsScreen> {
   }
 
   Map<String, String?> generateEduQualificationInfo(Data user) {
-    final data = user.educationInfo;
+    final data = user.biodata?.educationInfo;
     return {
       'educationalMethodTitle'.tr: data?.educationMethod ?? '',
       'highestEducationalTitle'.tr: data?.highestEducation ?? '',
@@ -189,7 +189,7 @@ class _BioDataDetailsScreenState extends State<BioDataDetailsScreen> {
   }
 
   Map<String, String?> generateFamilyInfo(Data user) {
-    final data = user.familyInfo;
+    final data = user.biodata?.familyInfo;
     return {
       "fathersNameTitle".tr: data?.fatherName ?? '',
       'fatherAliveTitle'.tr: data?.fatherAlive ?? '',
@@ -197,24 +197,24 @@ class _BioDataDetailsScreenState extends State<BioDataDetailsScreen> {
       "mothersNameTitle".tr: data?.motherName ?? '',
       'mothersAliveTitle'.tr: data?.motherAlive ?? '',
       "mothersProfessionTitle".tr: data?.motherOccupation ?? '',
-      "brothersCountTitle".tr: data?.brotherCount?.toString() ?? '',
-      "brothersInfoTitle".tr: data?.brothersInfo?.toString() ?? '',
-      "sistersCountTitle".tr: data?.sisterCount?.toString() ?? '',
-      "sistersInfoTitle".tr: data?.sistersInfo?.toString() ?? '',
+      "brothersCountTitle".tr: data?.brotherCount ?? '',
+      "brothersInfoTitle".tr: data?.brothersInfo ?? '',
+      "sistersCountTitle".tr: data?.sisterCount ?? '',
+      "sistersInfoTitle".tr: data?.sistersInfo ?? '',
       'professionOfUnclesTitle'.tr: data?.uncleAuntOccuption ?? '',
       'familyIncomeStatusTitle'.tr: data?.familyStatus ?? '',
       "familyReligiousConditionTitle".tr:
-          data?.familyRelagiousEnvironment ?? '',
+          data?.familyReligiousEnvironment ?? '',
     };
   }
 
   Map<String, String?> generatePersonalInfo(Data user) {
-    final data = user.personalInfo;
+    final data = user.biodata?.personalInfo;
     return {
       'clothingOutSideTitle'.tr: data?.clothingOutside ?? '',
       'sunnahBeardSinceTitle'.tr: data?.sunnahBeardSince ?? '',
       'clothesAboveAnklesTitle'.tr:
-          data?.clothesAboveAnkles?.toString() ?? '',
+          data?.clothesAboveAnkles ?? '',
       'fiveTimesPrayerSinceTitle'.tr: data?.fiveTimesPrayerSince ?? '',
       'prayerMissWeeklyTitle'.tr: data?.prayerMissDaily ?? '',
       'complyMahramNonMahramTitle'.tr: data?.complyNonMahram ?? '',
@@ -232,7 +232,7 @@ class _BioDataDetailsScreenState extends State<BioDataDetailsScreen> {
   }
 
   Map<String, String?> generateOccupationalInfo(Data user) {
-    final data = user.occupationInfo;
+    final data = user.biodata?.occupationInfo;
     return {
       'occupationTitle'.tr: data?.occupation ?? '',
       'descriptionOfProfessionTitle'.tr: data?.descriptionOfProfession ?? '',
@@ -241,7 +241,7 @@ class _BioDataDetailsScreenState extends State<BioDataDetailsScreen> {
   }
 
   Map<String, String?> generateMarriageRelatedInfo(Data user) {
-    final data = user.marriageInfo;
+    final data = user.biodata?.marriageInfo;
     return {
       'guardianAgreeTitle'.tr: data?.guardianAgree ?? '',
       'wifeInVeilTitle'.tr: data?.wifeInVeil ?? '',
@@ -254,7 +254,7 @@ class _BioDataDetailsScreenState extends State<BioDataDetailsScreen> {
   }
 
   Map<String, String?> generateExpectedLifePartner(Data user) {
-    final data = user.expectedLifePartnerInfo;
+    final data = user.biodata?.expectedLifePartnerInfo;
     return {
       //'expectedAgeTitle'.tr: data != null ? '${data.expectedMinAge ?? 'N/A'}-${data.expectedMaxAge ?? 'N/A'}' : 'N/A',
       'expectedComplexionTitle'.tr: data?.expectedComplexion ?? '',
@@ -270,7 +270,7 @@ class _BioDataDetailsScreenState extends State<BioDataDetailsScreen> {
   }
 
   Map<String, String?> generatePledge(Data user) {
-    final data = user.pledgeInfo;
+    final data = user.biodata?.pledgeInfo;
     return {
       'parentalAwarenessTitle'.tr: data?.parentalAwareness ?? '',
       'informationTruthTitle'.tr: data?.informationTruth ?? '',

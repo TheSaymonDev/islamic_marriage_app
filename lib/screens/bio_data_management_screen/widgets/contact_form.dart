@@ -26,16 +26,24 @@ class _ContactFormState extends State<ContactForm> {
     final _contactData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.contactInfo;
 
     if (_contactData != null) {
-      _contactController.nameController.text = _contactData.groomName ?? '';
-      _contactController.guardiansMobileController.text = _contactData.guardianMobile ?? '';
-      _contactController.relationshipController.text = _contactData.relationShipWithGuardian ?? '';
-      _contactController.emailController.text = _contactData.email ?? '';
+     _assignData(_contactData);
     } else {
-      _contactController.nameController.text = '';
-      _contactController.guardiansMobileController.text = '';
-      _contactController.relationshipController.text = '';
-      _contactController.emailController.text = '';
+     _clearData();
     }
+  }
+
+  void _assignData(dynamic _contactData){
+    _contactController.nameController.text = _contactData.groomName ?? '';
+    _contactController.guardiansMobileController.text = _contactData.guardianMobile ?? '';
+    _contactController.relationshipController.text = _contactData.relationShipWithGuardian ?? '';
+    _contactController.emailController.text = _contactData.email ?? '';
+  }
+
+  void _clearData(){
+    _contactController.nameController.clear();
+    _contactController.guardiansMobileController.clear();
+    _contactController.relationshipController.clear();
+    _contactController.emailController.clear();
   }
 
   @override

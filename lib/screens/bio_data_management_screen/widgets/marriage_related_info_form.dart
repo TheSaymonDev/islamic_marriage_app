@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/marriage_related_info_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/current_user_biodata_model.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/utils/app_validators.dart';
 import 'package:islamic_marriage/widgets/custom_text_form_field.dart';
@@ -23,44 +24,17 @@ class _MarriageRelatedInfoFormState extends State<MarriageRelatedInfoForm> {
   @override
   void initState() {
     super.initState();
-   _initializeData();
-  }
-
-  void _initializeData() {
-    final currentBioData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata;
+    final currentBioData = Get.find<CurrentUserBioDataController>()
+        .currentUserBioData
+        ?.data
+        ?.biodata;
     _bioDataType = currentBioData?.generalInfo?.bioDataType;
     final _marriageRelatedInfoData = currentBioData?.marriageInfo;
     if (_marriageRelatedInfoData != null) {
-      _marriageInfoController.guardiansAgreeController.text =
-          _marriageRelatedInfoData.guardianAgree ?? '';
-      _marriageInfoController.veilController.text =
-          _marriageRelatedInfoData.wifeInVeil ?? '';
-      _marriageInfoController.afterStudyController.text =
-          _marriageRelatedInfoData.studyAfterMarriage ?? '';
-      _marriageInfoController.afterJobController.text =
-          _marriageRelatedInfoData.jobAfterMarriage ?? '';
-      _marriageInfoController.whereLiveController.text =
-          _marriageRelatedInfoData.livingPlaceAfterMarriage ?? '';
-      _marriageInfoController.giftController.text =
-          _marriageRelatedInfoData.expectGiftFromBrideFamily ?? '';
-      _marriageInfoController.getMarriedController.text =
-          _marriageRelatedInfoData.thoughtAboutMarriage ?? '';
-      _marriageInfoController.femaleStudyController.text = _marriageRelatedInfoData.studyFemale ?? '';
-      _marriageInfoController.femaleJobController.text = _marriageRelatedInfoData.jobFemale ?? '';
+      _assignData(_marriageRelatedInfoData);
     } else {
-      _clearAllFields();}
-  }
-
-  void _clearAllFields() {
-    _marriageInfoController.guardiansAgreeController.clear();
-    _marriageInfoController.veilController.clear();
-    _marriageInfoController.afterStudyController.clear();
-    _marriageInfoController.afterJobController.clear();
-    _marriageInfoController.whereLiveController.clear();
-    _marriageInfoController.femaleJobController.clear();
-    _marriageInfoController.femaleStudyController.clear();
-    _marriageInfoController.giftController.clear();
-    _marriageInfoController.getMarriedController.clear();
+      _clearData();
+    }
   }
 
   Widget _maleBioDataWidget() {
@@ -75,35 +49,30 @@ class _MarriageRelatedInfoFormState extends State<MarriageRelatedInfoForm> {
             validator: requiredValidator,
             controller: _marriageInfoController.veilController),
         Gap(16.h),
-        InputTitleText(
-            title: "afterStudyTitle".tr, isRequired: false),
+        InputTitleText(title: "afterStudyTitle".tr, isRequired: false),
         Gap(4.h),
         CustomTextFormField(
-            controller:
-            _marriageInfoController.afterStudyController),
+            controller: _marriageInfoController.afterStudyController),
         Gap(16.h),
-        InputTitleText(
-            title: "afterJobTitle".tr, isRequired: false),
+        InputTitleText(title: "afterJobTitle".tr, isRequired: false),
         Gap(4.h),
         CustomTextFormField(
             controller: _marriageInfoController.afterJobController),
         Gap(16.h),
-        InputTitleText(
-            title: "livingPlaceTitle".tr, isRequired: false),
+        InputTitleText(title: "livingPlaceTitle".tr, isRequired: false),
         Gap(4.h),
         CustomTextFormField(
-            controller:
-            _marriageInfoController.whereLiveController),
+            controller: _marriageInfoController.whereLiveController),
         Gap(16.h),
       ],
     );
   }
 
   Widget _femaleBioDataWidget() {
-  _marriageInfoController.veilController.clear();
-  _marriageInfoController.afterJobController.clear();
-  _marriageInfoController.afterStudyController.clear();
-  _marriageInfoController.whereLiveController.clear();
+    _marriageInfoController.veilController.clear();
+    _marriageInfoController.afterJobController.clear();
+    _marriageInfoController.afterStudyController.clear();
+    _marriageInfoController.whereLiveController.clear();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -111,15 +80,13 @@ class _MarriageRelatedInfoFormState extends State<MarriageRelatedInfoForm> {
         Gap(4.h),
         CustomTextFormField(
             validator: requiredValidator,
-            controller:
-            _marriageInfoController.femaleJobController),
+            controller: _marriageInfoController.femaleJobController),
         Gap(16.h),
         InputTitleText(title: "femaleStudyTitle".tr),
         Gap(4.h),
         CustomTextFormField(
             validator: requiredValidator,
-            controller:
-            _marriageInfoController.femaleStudyController),
+            controller: _marriageInfoController.femaleStudyController),
         Gap(16.h),
       ],
     );
@@ -138,7 +105,9 @@ class _MarriageRelatedInfoFormState extends State<MarriageRelatedInfoForm> {
               validator: requiredValidator,
               controller: _marriageInfoController.guardiansAgreeController),
           Gap(16.h),
-          _bioDataType == 'malesBioData' ? _maleBioDataWidget() : _femaleBioDataWidget(),
+          _bioDataType == 'malesBioData'
+              ? _maleBioDataWidget()
+              : _femaleBioDataWidget(),
           InputTitleText(title: "expectedGiftTitle".tr),
           Gap(4.h),
           CustomTextFormField(
@@ -154,5 +123,38 @@ class _MarriageRelatedInfoFormState extends State<MarriageRelatedInfoForm> {
         ],
       ),
     );
+  }
+
+  void _assignData(MarriageInfo _marriageRelatedInfoData) {
+    _marriageInfoController.guardiansAgreeController.text =
+        _marriageRelatedInfoData.guardianAgree ?? '';
+    _marriageInfoController.veilController.text =
+        _marriageRelatedInfoData.wifeInVeil ?? '';
+    _marriageInfoController.afterStudyController.text =
+        _marriageRelatedInfoData.studyAfterMarriage ?? '';
+    _marriageInfoController.afterJobController.text =
+        _marriageRelatedInfoData.jobAfterMarriage ?? '';
+    _marriageInfoController.whereLiveController.text =
+        _marriageRelatedInfoData.livingPlaceAfterMarriage ?? '';
+    _marriageInfoController.giftController.text =
+        _marriageRelatedInfoData.expectGiftFromBrideFamily ?? '';
+    _marriageInfoController.getMarriedController.text =
+        _marriageRelatedInfoData.thoughtAboutMarriage ?? '';
+    _marriageInfoController.femaleStudyController.text =
+        _marriageRelatedInfoData.studyFemale ?? '';
+    _marriageInfoController.femaleJobController.text =
+        _marriageRelatedInfoData.jobFemale ?? '';
+  }
+
+  void _clearData() {
+    _marriageInfoController.guardiansAgreeController.clear();
+    _marriageInfoController.veilController.clear();
+    _marriageInfoController.afterStudyController.clear();
+    _marriageInfoController.afterJobController.clear();
+    _marriageInfoController.whereLiveController.clear();
+    _marriageInfoController.femaleJobController.clear();
+    _marriageInfoController.femaleStudyController.clear();
+    _marriageInfoController.giftController.clear();
+    _marriageInfoController.getMarriedController.clear();
   }
 }

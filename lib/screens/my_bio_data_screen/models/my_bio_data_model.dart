@@ -1,19 +1,14 @@
-class AllUser {
+class MyBioDataModel {
   int? status;
   bool? success;
-  List<Data>? data;
+  Data? data;
 
-  AllUser({this.status, this.success, this.data});
+  MyBioDataModel({this.status, this.success, this.data});
 
-  AllUser.fromJson(Map<String, dynamic> json) {
+  MyBioDataModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     success = json['success'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -21,13 +16,89 @@ class AllUser {
     data['status'] = this.status;
     data['success'] = this.success;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
+  int? id;
+  String? name;
+  String? profileImage;
+  String? phone;
+  String? email;
+  String? password;
+  String? gender;
+  String? otp;
+  String? passwordResetOtp;
+  bool? passwordResetOtpVerified;
+  bool? otpVerified;
+  Biodata? biodata;
+  String? role;
+  String? createdAt;
+  String? updatedAt;
+
+  Data(
+      {this.id,
+        this.name,
+        this.profileImage,
+        this.phone,
+        this.email,
+        this.password,
+        this.gender,
+        this.otp,
+        this.passwordResetOtp,
+        this.passwordResetOtpVerified,
+        this.otpVerified,
+        this.biodata,
+        this.role,
+        this.createdAt,
+        this.updatedAt});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    profileImage = json['profileImage'];
+    phone = json['phone'];
+    email = json['email'];
+    password = json['password'];
+    gender = json['gender'];
+    otp = json['otp'];
+    passwordResetOtp = json['password_reset_otp'];
+    passwordResetOtpVerified = json['password_reset_otp_verified'];
+    otpVerified = json['otp_verified'];
+    biodata =
+    json['biodata'] != null ? new Biodata.fromJson(json['biodata']) : null;
+    role = json['role'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['profileImage'] = this.profileImage;
+    data['phone'] = this.phone;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['gender'] = this.gender;
+    data['otp'] = this.otp;
+    data['password_reset_otp'] = this.passwordResetOtp;
+    data['password_reset_otp_verified'] = this.passwordResetOtpVerified;
+    data['otp_verified'] = this.otpVerified;
+    if (this.biodata != null) {
+      data['biodata'] = this.biodata!.toJson();
+    }
+    data['role'] = this.role;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Biodata {
   int? id;
   GeneralInfo? generalInfo;
   OccupationInfo? occupationInfo;
@@ -45,7 +116,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
 
-  Data(
+  Biodata(
       {this.id,
         this.generalInfo,
         this.occupationInfo,
@@ -63,7 +134,7 @@ class Data {
         this.createdAt,
         this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Biodata.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     generalInfo = json['generalInfo'] != null
         ? new GeneralInfo.fromJson(json['generalInfo'])
@@ -152,6 +223,7 @@ class GeneralInfo {
   int? id;
   String? bioDataType;
   String? maritialStatus;
+  String? othersNationality;
   String? dateOfBirth;
   String? height;
   String? weight;
@@ -163,6 +235,7 @@ class GeneralInfo {
       {this.id,
         this.bioDataType,
         this.maritialStatus,
+        this.othersNationality,
         this.dateOfBirth,
         this.height,
         this.weight,
@@ -174,6 +247,7 @@ class GeneralInfo {
     id = json['id'];
     bioDataType = json['bioDataType'];
     maritialStatus = json['maritialStatus'];
+    othersNationality = json['othersNationality'];
     dateOfBirth = json['dateOfBirth'];
     height = json['height'];
     weight = json['weight'];
@@ -187,6 +261,7 @@ class GeneralInfo {
     data['id'] = this.id;
     data['bioDataType'] = this.bioDataType;
     data['maritialStatus'] = this.maritialStatus;
+    data['othersNationality'] = this.othersNationality;
     data['dateOfBirth'] = this.dateOfBirth;
     data['height'] = this.height;
     data['weight'] = this.weight;
@@ -230,14 +305,17 @@ class PermanentAddress {
   int? id;
   String? division;
   String? district;
+  String? areaName;
   String? subDistrict;
 
-  PermanentAddress({this.id, this.division, this.district, this.subDistrict});
+  PermanentAddress(
+      {this.id, this.division, this.district, this.areaName, this.subDistrict});
 
   PermanentAddress.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     division = json['division'];
     district = json['district'];
+    areaName = json['areaName'];
     subDistrict = json['subDistrict'];
   }
 
@@ -246,6 +324,7 @@ class PermanentAddress {
     data['id'] = this.id;
     data['division'] = this.division;
     data['district'] = this.district;
+    data['areaName'] = this.areaName;
     data['subDistrict'] = this.subDistrict;
     return data;
   }
@@ -255,18 +334,21 @@ class CurrentAddress {
   int? id;
   String? currentDivision;
   String? currentDistrict;
+  String? areaName;
   String? currentSubDistrict;
 
   CurrentAddress(
       {this.id,
         this.currentDivision,
         this.currentDistrict,
+        this.areaName,
         this.currentSubDistrict});
 
   CurrentAddress.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     currentDivision = json['currentDivision'];
     currentDistrict = json['currentDistrict'];
+    areaName = json['areaName'];
     currentSubDistrict = json['currentSubDistrict'];
   }
 
@@ -275,6 +357,7 @@ class CurrentAddress {
     data['id'] = this.id;
     data['currentDivision'] = this.currentDivision;
     data['currentDistrict'] = this.currentDistrict;
+    data['areaName'] = this.areaName;
     data['currentSubDistrict'] = this.currentSubDistrict;
     return data;
   }
@@ -283,7 +366,9 @@ class CurrentAddress {
 class EducationInfo {
   int? id;
   String? educationMethod;
+  String? othersEducationMethod;
   String? highestEducation;
+  String? othersHighestEducation;
   String? passingYear;
   String? result;
   String? institutionName;
@@ -293,7 +378,9 @@ class EducationInfo {
   EducationInfo(
       {this.id,
         this.educationMethod,
+        this.othersEducationMethod,
         this.highestEducation,
+        this.othersHighestEducation,
         this.passingYear,
         this.result,
         this.institutionName,
@@ -303,7 +390,9 @@ class EducationInfo {
   EducationInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     educationMethod = json['educationMethod'];
+    othersEducationMethod = json['othersEducationMethod'];
     highestEducation = json['highestEducation'];
+    othersHighestEducation = json['othersHighestEducation'];
     passingYear = json['passingYear'];
     result = json['result'];
     institutionName = json['institutionName'];
@@ -315,7 +404,9 @@ class EducationInfo {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['educationMethod'] = this.educationMethod;
+    data['othersEducationMethod'] = this.othersEducationMethod;
     data['highestEducation'] = this.highestEducation;
+    data['othersHighestEducation'] = this.othersHighestEducation;
     data['passingYear'] = this.passingYear;
     data['result'] = this.result;
     data['institutionName'] = this.institutionName;
@@ -329,9 +420,10 @@ class PersonalInfo {
   int? id;
   String? clothingOutside;
   String? sunnahBeardSince;
-  bool? clothesAboveAnkles;
+  String? clothesAboveAnkles;
   String? fiveTimesPrayerSince;
   String? prayerMissDaily;
+  String? veil;
   String? complyNonMahram;
   String? reciteQuranCorrectly;
   String? followedFiqah;
@@ -352,6 +444,7 @@ class PersonalInfo {
         this.clothesAboveAnkles,
         this.fiveTimesPrayerSince,
         this.prayerMissDaily,
+        this.veil,
         this.complyNonMahram,
         this.reciteQuranCorrectly,
         this.followedFiqah,
@@ -372,6 +465,7 @@ class PersonalInfo {
     clothesAboveAnkles = json['clothesAboveAnkles'];
     fiveTimesPrayerSince = json['fiveTimesPrayerSince'];
     prayerMissDaily = json['prayerMissDaily'];
+    veil = json['veil'];
     complyNonMahram = json['complyNonMahram'];
     reciteQuranCorrectly = json['reciteQuranCorrectly'];
     followedFiqah = json['followedFiqah'];
@@ -394,6 +488,7 @@ class PersonalInfo {
     data['clothesAboveAnkles'] = this.clothesAboveAnkles;
     data['fiveTimesPrayerSince'] = this.fiveTimesPrayerSince;
     data['prayerMissDaily'] = this.prayerMissDaily;
+    data['veil'] = this.veil;
     data['complyNonMahram'] = this.complyNonMahram;
     data['reciteQuranCorrectly'] = this.reciteQuranCorrectly;
     data['followedFiqah'] = this.followedFiqah;
@@ -424,7 +519,7 @@ class FamilyInfo {
   String? sistersInfo;
   String? uncleAuntOccuption;
   String? familyStatus;
-  String? familyRelagiousEnvironment;
+  String? familyReligiousEnvironment;
 
   FamilyInfo(
       {this.id,
@@ -440,7 +535,7 @@ class FamilyInfo {
         this.sistersInfo,
         this.uncleAuntOccuption,
         this.familyStatus,
-        this.familyRelagiousEnvironment});
+        this.familyReligiousEnvironment});
 
   FamilyInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -456,7 +551,7 @@ class FamilyInfo {
     sistersInfo = json['sistersInfo'];
     uncleAuntOccuption = json['uncleAuntOccuption'];
     familyStatus = json['familyStatus'];
-    familyRelagiousEnvironment = json['familyRelagiousEnvironment'];
+    familyReligiousEnvironment = json['familyReligiousEnvironment'];
   }
 
   Map<String, dynamic> toJson() {
@@ -474,7 +569,7 @@ class FamilyInfo {
     data['sistersInfo'] = this.sistersInfo;
     data['uncleAuntOccuption'] = this.uncleAuntOccuption;
     data['familyStatus'] = this.familyStatus;
-    data['familyRelagiousEnvironment'] = this.familyRelagiousEnvironment;
+    data['familyReligiousEnvironment'] = this.familyReligiousEnvironment;
     return data;
   }
 }
@@ -485,6 +580,8 @@ class MarriageInfo {
   String? wifeInVeil;
   String? studyAfterMarriage;
   String? jobAfterMarriage;
+  String? jobFemale;
+  String? studyFemale;
   String? livingPlaceAfterMarriage;
   String? expectGiftFromBrideFamily;
   String? thoughtAboutMarriage;
@@ -495,6 +592,8 @@ class MarriageInfo {
         this.wifeInVeil,
         this.studyAfterMarriage,
         this.jobAfterMarriage,
+        this.jobFemale,
+        this.studyFemale,
         this.livingPlaceAfterMarriage,
         this.expectGiftFromBrideFamily,
         this.thoughtAboutMarriage});
@@ -505,6 +604,8 @@ class MarriageInfo {
     wifeInVeil = json['wifeInVeil'];
     studyAfterMarriage = json['studyAfterMarriage'];
     jobAfterMarriage = json['jobAfterMarriage'];
+    jobFemale = json['jobFemale'];
+    studyFemale = json['studyFemale'];
     livingPlaceAfterMarriage = json['livingPlaceAfterMarriage'];
     expectGiftFromBrideFamily = json['expectGiftFromBrideFamily'];
     thoughtAboutMarriage = json['thoughtAboutMarriage'];
@@ -517,6 +618,8 @@ class MarriageInfo {
     data['wifeInVeil'] = this.wifeInVeil;
     data['studyAfterMarriage'] = this.studyAfterMarriage;
     data['jobAfterMarriage'] = this.jobAfterMarriage;
+    data['jobFemale'] = this.jobFemale;
+    data['studyFemale'] = this.studyFemale;
     data['livingPlaceAfterMarriage'] = this.livingPlaceAfterMarriage;
     data['expectGiftFromBrideFamily'] = this.expectGiftFromBrideFamily;
     data['thoughtAboutMarriage'] = this.thoughtAboutMarriage;
@@ -526,8 +629,8 @@ class MarriageInfo {
 
 class ExpectedLifePartnerInfo {
   int? id;
-  int? expectedMinAge;
-  int? expectedMaxAge;
+  String? expectedMinAge;
+  String? expectedMaxAge;
   String? expectedComplexion;
   String? expectedHeight;
   String? exptectedEducation;
@@ -619,15 +722,21 @@ class PledgeInfo {
   String? parentalAwareness;
   String? informationTruth;
   String? agreement;
+  String? noAuthorityLiability;
 
   PledgeInfo(
-      {this.id, this.parentalAwareness, this.informationTruth, this.agreement});
+      {this.id,
+        this.parentalAwareness,
+        this.informationTruth,
+        this.agreement,
+        this.noAuthorityLiability});
 
   PledgeInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     parentalAwareness = json['parentalAwareness'];
     informationTruth = json['informationTruth'];
     agreement = json['agreement'];
+    noAuthorityLiability = json['noAuthorityLiability'];
   }
 
   Map<String, dynamic> toJson() {
@@ -636,6 +745,7 @@ class PledgeInfo {
     data['parentalAwareness'] = this.parentalAwareness;
     data['informationTruth'] = this.informationTruth;
     data['agreement'] = this.agreement;
+    data['noAuthorityLiability'] = this.noAuthorityLiability;
     return data;
   }
 }

@@ -171,7 +171,8 @@ final Map<String, String> enUs = {
   'districtHint': 'District',
   'subDistrictHint': 'Sub-District',
   'areaNameHint': 'Area Name Details',
-  'areaNameNB': 'Write the name of the village or area without entering the house number. Example- Mirpur 10, Baghmara',
+  'areaNameNB':
+      'Write the name of the village or area without entering the house number. Example- Mirpur 10, Baghmara',
 
   // For Educational Qualifications Form
   'educationalMethodTitle': 'Educational Method',
@@ -222,8 +223,10 @@ final Map<String, String> enUs = {
   'onlyForAuthority': 'Only for authority',
   'yesAlive': 'Yes, Alive',
   'notAlive': 'Not, Alive',
-  "fathersProfessionNB": "Don't write only 'Businessman' or 'Job'. If he is an employee, write the type of organization and title and if he is a businessman, what kind of business he does etc",
-  "sistersInfoNB": "Write down educational qualifications, marital status and occupation. If you have more than one sister, write in a separate line with a comma.",
+  "fathersProfessionNB":
+      "Don't write only 'Businessman' or 'Job'. If he is an employee, write the type of organization and title and if he is a businessman, what kind of business he does etc",
+  "sistersInfoNB":
+      "Write down educational qualifications, marital status and occupation. If you have more than one sister, write in a separate line with a comma.",
   'lowerClass': 'Lower Class',
   'lowerMiddleClass': 'Lower Middle Class',
   'middleClass': 'Middle Class',
@@ -231,40 +234,54 @@ final Map<String, String> enUs = {
   'upperClass': 'Upper Class',
   'workingClass': 'Working Class',
   'wealthy': 'Wealthy',
-  "familyReligiousConditionNB": "Write about your family member's religious practices and environment of maintaining mahram & non-mahram",
+  "familyReligiousConditionNB":
+      "Write about your family member's religious practices and environment of maintaining mahram & non-mahram",
 
   // For PersonalInfo Form
-  'clothingOutSideTitle': 'What kind of clothes do you usually wear outside the house?',
+  'clothingOutSideTitle':
+      'What kind of clothes do you usually wear outside the house?',
   'sunnahBeardSinceTitle': 'Do you have beard according to sunnah? Since when?',
   'clothesAboveAnklesTitle': 'Do you wear clothes above the ankles?',
   'veilTitle': 'Do you observe veil with niqab? If so, since when?',
   'fiveTimesPrayerSinceTitle': 'Do you pray 5 times a day? Since when?',
-  'prayerMissWeeklyTitle': 'Usually how many times(waqt) a week are your prayers missed (Qaza)?',
+  'prayerMissWeeklyTitle':
+      'Usually how many times(waqt) a week are your prayers missed (Qaza)?',
   'complyMahramNonMahramTitle': 'Do you comply with mahram/non-mahram?',
   'reciteQuranTitle': 'Are you able to recite the quran correctly?',
   'followedFiqh': 'Which fiqh do you follow?',
-  'watchOrListenTitle': 'Do you watch or listen to dramas/movies/serials/songs?',
+  'watchOrListenTitle':
+      'Do you watch or listen to dramas/movies/serials/songs?',
   'diseaseTitle': 'Do you have any mental or physical disease?',
   'involvedInSpecialWorkTitle': 'Are you involved in any special work of deen?',
-  'aboutShrineTitle': 'What are your ideas or beliefs about the shrine (Mazar)?',
-  'islamicBooksTitle': 'Write the names of at least 3 Islamic books you have read',
-  'islamicScholarsTitle': 'Write the names of at least 3 Islamic Scholars of your choice',
-  'hobbiesTitle': 'Write about your hobbies, likes and dislikes, tastes, dreams and so on',
+  'aboutShrineTitle':
+      'What are your ideas or beliefs about the shrine (Mazar)?',
+  'islamicBooksTitle':
+      'Write the names of at least 3 Islamic books you have read',
+  'islamicScholarsTitle':
+      'Write the names of at least 3 Islamic Scholars of your choice',
+  'hobbiesTitle':
+      'Write about your hobbies, likes and dislikes, tastes, dreams and so on',
   'groomsPhoneTitle': "Groom's / Bride's  Mobile Number",
   'selfieTitle': 'Take a selfie of the groom right now and upload it.',
 
-  'clothingOutSideNB': 'For the bride, you can write like following- "Wear black burqa with niqab and hand foot socks" or "Wear burqa and hijab, do not wear niqab" or "Wear mask with hijab, do not wear niqab" or "Wear salwar kameez, do not wear niqab"',
-  'sunnahBeardSinceNB': 'Please clearly write how many years you have been keeping a beard. If you have less beard growth due to biological reasons, it should be mentioned.',
-  'fiveTimesPrayerSinceNB': 'Please write a clear answer with "Yes" or "No" It must be mentioned how many years you have been praying five times a day?',
+  'clothingOutSideNB':
+      'For the bride, you can write like following- "Wear black burqa with niqab and hand foot socks" or "Wear burqa and hijab, do not wear niqab" or "Wear mask with hijab, do not wear niqab" or "Wear salwar kameez, do not wear niqab"',
+  'sunnahBeardSinceNB':
+      'Please clearly write how many years you have been keeping a beard. If you have less beard growth due to biological reasons, it should be mentioned.',
+  'fiveTimesPrayerSinceNB':
+      'Please write a clear answer with "Yes" or "No" It must be mentioned how many years you have been praying five times a day?',
   'hanafi': 'Hanafi',
   'maliki': 'Maliki',
   'shafi': 'Shafi',
   'hanbali': 'Hanbali',
   'ahleHadith': 'Ahle Hadith',
   'involvedInSpecialWorkNB': 'Example: Tablig etc.',
-  'hobbiesNB': 'The more details you provide, the easier it will be for others to understand you and the higher the chances of receiving relevant proposals',
-  'groomsPhoneNB': "Groom's personal mobile number are being taken for Bio Data verification. It will not be disclosed to anyone except the authorities.",
-  'selfieNB': 'Submitting a photo other than a selfie or a clear frontal photo where the face can be clearly seen may result in the bio data not been approved. Photo is taken only for identity verification. Upload a recent photo where the face is clearly defined. Your photo will not be disclosed to anyone other than the Islamic Marriage authorities',
+  'hobbiesNB':
+      'The more details you provide, the easier it will be for others to understand you and the higher the chances of receiving relevant proposals',
+  'groomsPhoneNB':
+      "Groom's personal mobile number are being taken for Bio Data verification. It will not be disclosed to anyone except the authorities.",
+  'selfieNB':
+      'Submitting a photo other than a selfie or a clear frontal photo where the face can be clearly seen may result in the bio data not been approved. Photo is taken only for identity verification. Upload a recent photo where the face is clearly defined. Your photo will not be disclosed to anyone other than the Islamic Marriage authorities',
   'uploadPhotoBtn': 'Upload Photo',
 
   // For OccupationalInfo Form
@@ -272,16 +289,22 @@ final Map<String, String> enUs = {
   'descriptionOfProfessionTitle': 'Description of Profession',
   'monthlyIncomeTitle': 'Monthly Income',
 
-  'descriptionOfProfessionNB': 'You may write where your working place is, which company you are working in whether your earnings are halal or not etc.',
+  'descriptionOfProfessionNB':
+      'You may write where your working place is, which company you are working in whether your earnings are halal or not etc.',
 
   // For MarriageInfo Form
   'guardianAgreeTitle': 'Do your guardians agree to your marriage?',
-  'wifeInVeilTitle': 'Will you be able to keep your wife in the veil after marriage?',
-  'afterStudyTitle': 'Would you like to allow your wife to study after marriage?',
-  'afterJobTitle': 'Would you like to allow your wife to do any job after marriage?',
+  'wifeInVeilTitle':
+      'Will you be able to keep your wife in the veil after marriage?',
+  'afterStudyTitle':
+      'Would you like to allow your wife to study after marriage?',
+  'afterJobTitle':
+      'Would you like to allow your wife to do any job after marriage?',
   'livingPlaceTitle': 'Where will you live with your wife after marriage?',
-  'expectedGiftTitle': "Would you or your family expect any gift from the bride's family?",
-  'thoughAboutTitle': 'Why are you getting married? What are your thoughts on marriage?',
+  'expectedGiftTitle':
+      "Would you or your family expect any gift from the bride's family?",
+  'thoughAboutTitle':
+      'Why are you getting married? What are your thoughts on marriage?',
   'femaleJobTitle': 'Do you wish to work after marriage?',
   'femaleStudyTitle': 'Do you wish to continue studying after marriage?',
 
@@ -307,10 +330,12 @@ final Map<String, String> enUs = {
 
   // For Pledge Form
   'parentalAwarenessTitle': 'Is your family aware of your desire to marry?',
-  'informationTruthTitle': 'By Allah, testify that all the information given is true',
+  'informationTruthTitle':
+      'By Allah, testify that all the information given is true',
   'agreementTitle':
-  'If you provide any false information, islamic-marriage.net will not take any responsibility for the conventional law and the hereafter. Do you agree?',
-  'agreementTitle2': 'IslamicMarriage.net will not be liable for any future relationship matters with the selected biodata. Do you agree to this commitment?',
+      'If you provide any false information, islamic-marriage.net will not take any responsibility for the conventional law and the hereafter. Do you agree?',
+  'agreementTitle2':
+      'IslamicMarriage.net will not be liable for any future relationship matters with the selected biodata. Do you agree to this commitment?',
 
   'yes': 'Yes',
   'no': 'No',
@@ -345,19 +370,26 @@ final Map<String, String> enUs = {
   'faqQue1': 'How much does it cost to submit a Bio Data?',
   'faqQue2': 'Is this website for everyone?',
   'faqQue3': 'What could be the reason for not approving the Bio Data?',
-  'faqAns1': "It does not cost any money to submit the bio-data. But if you want to communicate by choosing someone's bio-data, you have to pay a subscription fee.",
-  'faqAns2': "This website is not for everyone. Only Muslims can submit the bio-data.",
-  'faqAns3': "1. If you are not a Muslim.\n 2. If you provide any false information.\n 3. If you do not fill up all information. \n 4. If your contact information is not correct. \n 5. if you do not agree to our terms and conditions.",
+  'faqAns1':
+      "It does not cost any money to submit the bio-data. But if you want to communicate by choosing someone's bio-data, you have to pay a subscription fee.",
+  'faqAns2':
+      "This website is not for everyone. Only Muslims can submit the bio-data.",
+  'faqAns3':
+      "1. If you are not a Muslim.\n 2. If you provide any false information.\n 3. If you do not fill up all information. \n 4. If your contact information is not correct. \n 5. if you do not agree to our terms and conditions.",
+
+  // For SubmitBioData Bottom Sheet
+  'submitTitle': 'Submit Bio Data',
+  'submitSubTitle': 'Do you want to submit your biodata?',
+  'submitCancelBtn': 'Cancel',
+  'submitBtn': 'Submit',
 
   // For WishList Screen
   'wishlistAppbarTitle': 'Favourite Bio Data',
 
-
-  'dropDownValidationMsg' : 'Please select an item',
+  'dropDownValidationMsg': 'Please select an item',
   'dobValidationMsg': 'Please select date',
   'fieldRequiredMsg': 'Field is required',
   'writeHere': 'Write here',
   'othersValue': 'Others',
   'anyValue': 'Any'
-
 };

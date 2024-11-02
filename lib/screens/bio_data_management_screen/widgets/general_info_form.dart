@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/current_user_biodata_controller.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/controllers/general_info_controller.dart';
+import 'package:islamic_marriage/screens/bio_data_management_screen/models/current_user_biodata_model.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/models/dropdown_item.dart';
 import 'package:islamic_marriage/screens/bio_data_management_screen/widgets/input_title_text.dart';
 import 'package:islamic_marriage/utils/app_colors.dart';
@@ -61,7 +62,8 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
     for (int feet = 4; feet <= 7; feet++) {
       for (int inches = 0; inches <= 11; inches++) {
         if (feet == 7 && inches > 0) {
-          heights.add(DropdownItem(title: 'More than 7 feet', value: 'moreThan7Feet'));
+          heights.add(
+              DropdownItem(title: 'More than 7 feet', value: 'moreThan7Feet'));
           break; // Maximum height reached
         }
         String heightTitle = inches == 0 ? '$feet\'' : '$feet\' $inches"';
@@ -69,10 +71,10 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
         heights.add(DropdownItem(title: heightTitle, value: heightValue));
       }
     }
-    heights.insert(0, DropdownItem(title: 'Less than 4 feet', value: 'lessThan4Feet'));
+    heights.insert(
+        0, DropdownItem(title: 'Less than 4 feet', value: 'lessThan4Feet'));
     return heights;
   }
-
 
   List<DropdownItem> _createWeightList() {
     List<DropdownItem> weights = [];
@@ -81,51 +83,31 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       String weightValue = '${i}kg';
       weights.add(DropdownItem(title: weightTitle, value: weightValue));
     }
-    weights.insert(0, DropdownItem(title: 'Less than 30 kg', value: 'lessThan30kg'));
-    weights.add(DropdownItem(title: 'More than 120 kg', value: 'moreThan120kg'));
+    weights.insert(
+        0, DropdownItem(title: 'Less than 30 kg', value: 'lessThan30kg'));
+    weights
+        .add(DropdownItem(title: 'More than 120 kg', value: 'moreThan120kg'));
     return weights;
   }
 
+  final _generalInfoController = Get.find<GeneralInfoController>();
 
   @override
   void initState() {
     super.initState();
     _height = _createHeightList();
     _weight = _createWeightList();
-
-    final _generalInfoData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.generalInfo;
-
+    final _generalInfoData = Get.find<CurrentUserBioDataController>()
+        .currentUserBioData
+        ?.data
+        ?.biodata
+        ?.generalInfo;
     if (_generalInfoData != null) {
-      _generalInfoController.selectedBioDataType = _bioDataType.firstWhereOrNull((item) => item.value == _generalInfoData.bioDataType);
-      _generalInfoController.selectedMaritalStatus = _maritalStatus.firstWhereOrNull((item) => item.value == _generalInfoData.maritialStatus);
-      _generalInfoController.selectedComplexion = _complexion.firstWhereOrNull((item) => item.value == _generalInfoData.complexion);
-      _generalInfoController.selectedHeight = _height.firstWhereOrNull((item) => item.value == _generalInfoData.height);
-      _generalInfoController.selectedWeight = _weight.firstWhereOrNull((item) => item.value == _generalInfoData.weight);
-      _generalInfoController.selectedBloodGroup = _bloodGroup.firstWhereOrNull((item) => item.value == _generalInfoData.bloodGroup);
-      _generalInfoController.selectedNationality = _nationality.firstWhereOrNull((item) => item.value == _generalInfoData.nationality);
-      if (_generalInfoController.selectedNationality?.value == "others") {
-        _generalInfoController.isOtherNationality = true;
-      } else {
-        _generalInfoController.isOtherNationality = false;
-      }
-      _generalInfoController.dateOfBirthController.text = _generalInfoData.dateOfBirth ?? '';
-      _generalInfoController.otherNationalityController.text = _generalInfoData.othersNationality ?? '';
+      _assignData(_generalInfoData);
     } else {
-      // Set default values when _generalInfoData is null
-      _generalInfoController.selectedBioDataType = null;
-      _generalInfoController.selectedMaritalStatus = null;
-      _generalInfoController.selectedComplexion = null;
-      _generalInfoController.selectedHeight = null;
-      _generalInfoController.selectedWeight = null;
-      _generalInfoController.selectedBloodGroup = null;
-      _generalInfoController.selectedNationality = null;
-      _generalInfoController.dateOfBirthController.text = '';
-      _generalInfoController.otherNationalityController.text = '';
+      _clearData();
     }
   }
-
-
-  final _generalInfoController = Get.find<GeneralInfoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -234,20 +216,6 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
           ),
           Gap(16.h),
 
-          // InputTitleText(title: 'nationalityTitle'.tr),
-          // Gap(4.h),
-          // CustomDropdownButtonTest(
-          //   value: _generalInfoController.selectedNationality,
-          //   validator: dropdownValidator,
-          //   items: _nationality,
-          //   onChanged: (newValue) {
-          //     setState(() {
-          //       _generalInfoController.selectedNationality = newValue;
-          //     });
-          //   },
-          // ),
-
-          // Nationality Dropdown
           InputTitleText(title: 'nationalityTitle'.tr),
           Gap(4.h),
           CustomDropdownButtonTest(
@@ -274,7 +242,8 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
               child: CustomTextFormField(
                 controller: _generalInfoController.otherNationalityController,
                 validator: (value) {
-                  if (_generalInfoController.isOtherNationality && (value == null || value.isEmpty)) {
+                  if (_generalInfoController.isOtherNationality &&
+                      (value == null || value.isEmpty)) {
                     return "nationalityHint".tr;
                   }
                   return null;
@@ -296,7 +265,48 @@ class _GeneralInfoFormState extends State<GeneralInfoForm> {
       lastDate: DateTime.now(),
     );
     if (selectedDate != null) {
-      _generalInfoController.dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(selectedDate);
+      _generalInfoController.dateOfBirthController.text =
+          DateFormat('yyyy-MM-dd').format(selectedDate);
     }
+  }
+
+  void _assignData(GeneralInfo _generalInfoData) {
+    _generalInfoController.selectedBioDataType = _bioDataType
+        .firstWhereOrNull((item) => item.value == _generalInfoData.bioDataType);
+    _generalInfoController.selectedMaritalStatus =
+        _maritalStatus.firstWhereOrNull(
+            (item) => item.value == _generalInfoData.maritialStatus);
+    _generalInfoController.selectedComplexion = _complexion
+        .firstWhereOrNull((item) => item.value == _generalInfoData.complexion);
+    _generalInfoController.selectedHeight = _height
+        .firstWhereOrNull((item) => item.value == _generalInfoData.height);
+    _generalInfoController.selectedWeight = _weight
+        .firstWhereOrNull((item) => item.value == _generalInfoData.weight);
+    _generalInfoController.selectedBloodGroup = _bloodGroup
+        .firstWhereOrNull((item) => item.value == _generalInfoData.bloodGroup);
+    _generalInfoController.selectedNationality = _nationality
+        .firstWhereOrNull((item) => item.value == _generalInfoData.nationality);
+    if (_generalInfoController.selectedNationality?.value == "others") {
+      _generalInfoController.isOtherNationality = true;
+      _generalInfoController.otherNationalityController.text =
+          _generalInfoData.othersNationality ?? '';
+    } else {
+      _generalInfoController.isOtherNationality = false;
+      _generalInfoController.otherNationalityController.clear();
+    }
+    _generalInfoController.dateOfBirthController.text =
+        _generalInfoData.dateOfBirth ?? '';
+  }
+
+  void _clearData() {
+    _generalInfoController.selectedBioDataType = null;
+    _generalInfoController.selectedMaritalStatus = null;
+    _generalInfoController.selectedComplexion = null;
+    _generalInfoController.selectedHeight = null;
+    _generalInfoController.selectedWeight = null;
+    _generalInfoController.selectedBloodGroup = null;
+    _generalInfoController.selectedNationality = null;
+    _generalInfoController.dateOfBirthController.clear();
+    _generalInfoController.otherNationalityController.clear();
   }
 }

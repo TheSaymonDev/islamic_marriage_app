@@ -38,58 +38,74 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
     DropdownItem(title: 'othersValue'.tr, value: 'others'),
   ];
 
+  final _eduQualificationsController = Get.find<EduQualificationsController>();
+
   @override
   void initState() {
     super.initState();
-    final _eduQualificationData = Get.find<CurrentUserBioDataController>().currentUserBioData?.data?.biodata?.educationInfo;
+    final _eduQualificationData = Get.find<CurrentUserBioDataController>()
+        .currentUserBioData
+        ?.data
+        ?.biodata
+        ?.educationInfo;
 
     if (_eduQualificationData != null) {
-      _eduQualificationsController.selectedEduMethod =
-          _eduMethod.firstWhereOrNull(
-              (item) => item.value == _eduQualificationData.educationMethod);
-
-      if (_eduQualificationsController.selectedEduMethod?.value == "others") {
-        _eduQualificationsController.isOtherEduMethod = true;
-        _eduQualificationsController.otherEduMethodController.text = _eduQualificationData.othersEducationMethod ??'';
-      } else {
-        _eduQualificationsController.isOtherEduMethod = false;
-        _eduQualificationsController.otherEduMethodController.text = '';
-      }
-
-      _eduQualificationsController.selectedHighestEduQualification =
-          _highestEduQualification.firstWhereOrNull(
-              (item) => item.value == _eduQualificationData.highestEducation);
-      if (_eduQualificationsController.selectedHighestEduQualification?.value == "others") {
-        _eduQualificationsController.isOtherHighestEduMethod = true;
-        _eduQualificationsController.otherHighestEduMethodController.text = _eduQualificationData.othersHighestEducation??'';
-      } else {
-        _eduQualificationsController.isOtherHighestEduMethod = false;
-        _eduQualificationsController.otherHighestEduMethodController.text = '';
-      }
-
-      _eduQualificationsController.resultController.text = _eduQualificationData.result ?? '';
-      _eduQualificationsController.passingYearController.text =
-          _eduQualificationData.passingYear ?? '';
-      _eduQualificationsController.institutionController.text =
-          _eduQualificationData.institutionName ?? '';
-      _eduQualificationsController.othersController.text =
-          _eduQualificationData.otherEducation ?? '';
-      _eduQualificationsController.religiousEduController.text =
-          _eduQualificationData.religiousEducation ?? '';
+      _assignData(_eduQualificationData);
     } else {
-      _eduQualificationsController.selectedEduMethod = null;
-      _eduQualificationsController.otherEduMethodController.text = '';
-      _eduQualificationsController.selectedHighestEduQualification = null;
-      _eduQualificationsController.otherHighestEduMethodController.text = '';
-      _eduQualificationsController.resultController.text = '';
-      _eduQualificationsController.passingYearController.text = '';
-      _eduQualificationsController.institutionController.text = '';
-      _eduQualificationsController.othersController.text = '';
-      _eduQualificationsController.religiousEduController.text = '';
+      _clearData();
     }
   }
 
-  final _eduQualificationsController = Get.find<EduQualificationsController>();
+  void _assignData(dynamic _eduQualificationData) {
+    _eduQualificationsController.selectedEduMethod =
+        _eduMethod.firstWhereOrNull(
+            (item) => item.value == _eduQualificationData.educationMethod);
+
+    if (_eduQualificationsController.selectedEduMethod?.value == "others") {
+      _eduQualificationsController.isOtherEduMethod = true;
+      _eduQualificationsController.otherEduMethodController.text =
+          _eduQualificationData.othersEducationMethod ?? '';
+    } else {
+      _eduQualificationsController.isOtherEduMethod = false;
+      _eduQualificationsController.otherEduMethodController.clear();
+    }
+
+    _eduQualificationsController.selectedHighestEduQualification =
+        _highestEduQualification.firstWhereOrNull(
+            (item) => item.value == _eduQualificationData.highestEducation);
+    if (_eduQualificationsController.selectedHighestEduQualification?.value ==
+        "others") {
+      _eduQualificationsController.isOtherHighestEduMethod = true;
+      _eduQualificationsController.otherHighestEduMethodController.text =
+          _eduQualificationData.othersHighestEducation ?? '';
+    } else {
+      _eduQualificationsController.isOtherHighestEduMethod = false;
+      _eduQualificationsController.otherHighestEduMethodController.clear();
+    }
+
+    _eduQualificationsController.resultController.text =
+        _eduQualificationData.result ?? '';
+    _eduQualificationsController.passingYearController.text =
+        _eduQualificationData.passingYear ?? '';
+    _eduQualificationsController.institutionController.text =
+        _eduQualificationData.institutionName ?? '';
+    _eduQualificationsController.othersController.text =
+        _eduQualificationData.otherEducation ?? '';
+    _eduQualificationsController.religiousEduController.text =
+        _eduQualificationData.religiousEducation ?? '';
+  }
+
+  void _clearData() {
+    _eduQualificationsController.selectedEduMethod = null;
+    _eduQualificationsController.otherEduMethodController.clear();
+    _eduQualificationsController.selectedHighestEduQualification = null;
+    _eduQualificationsController.otherHighestEduMethodController.clear();
+    _eduQualificationsController.resultController.clear();
+    _eduQualificationsController.passingYearController.clear();
+    _eduQualificationsController.institutionController.clear();
+    _eduQualificationsController.othersController.clear();
+    _eduQualificationsController.religiousEduController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,15 +116,6 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
         children: [
           InputTitleText(title: 'educationalMethodTitle'.tr),
           Gap(4.h),
-          // CustomDropdownButtonTest(
-          //     value: _eduQualificationsController.selectedEduMethod,
-          //     validator: dropdownValidator,
-          //     items: _eduMethod,
-          //     onChanged: (newValue) {
-          //       setState(() {
-          //         _eduQualificationsController.selectedEduMethod = newValue;
-          //       });
-          //     }),
           CustomDropdownButtonTest(
             value: _eduQualificationsController.selectedEduMethod,
             validator: dropdownValidator,
@@ -146,17 +153,6 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
 
           InputTitleText(title: 'highestEducationalTitle'.tr),
           Gap(4.h),
-          // CustomDropdownButtonTest(
-          //     value:
-          //         _eduQualificationsController.selectedHighestEduQualification,
-          //     validator: dropdownValidator,
-          //     items: _highestEduQualification,
-          //     onChanged: (newValue) {
-          //       setState(() {
-          //         _eduQualificationsController.selectedHighestEduQualification =
-          //             newValue;
-          //       });
-          //     }),
           CustomDropdownButtonTest(
             value: _eduQualificationsController.selectedHighestEduQualification,
             validator: dropdownValidator,
@@ -203,15 +199,8 @@ class _EduQualificationsFormState extends State<EduQualificationsForm> {
 
           InputTitleText(title: 'resultTitle'.tr, isRequired: false),
           Gap(4.h),
-          CustomTextFormField(controller: _eduQualificationsController.resultController),
-          // CustomDropdownButtonTest(
-          //     value: _eduQualificationsController.selectedResult,
-          //     items: _result,
-          //     onChanged: (newValue) {
-          //       setState(() {
-          //         _eduQualificationsController.selectedResult = newValue;
-          //       });
-          //     }),
+          CustomTextFormField(
+              controller: _eduQualificationsController.resultController),
           Gap(16.h),
 
           InputTitleText(title: 'institutionNameTitle'.tr, isRequired: false),
